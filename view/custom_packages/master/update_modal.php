@@ -376,6 +376,18 @@ function inclexcl_reflect(offset=''){
     });
 }
 inclexcl_reflect('1');
+$(document).ready(function(){
+  $('#inclusions1').wysiwyg({
+    controls:"bold,italic,|,undo,redo,image",
+    initialContent: '',
+  });
+});
+$(document).ready(function(){
+  $('#exclusions1').wysiwyg({
+    controls:"bold,italic,|,undo,redo,image",
+    initialContent: '',
+  });
+});
 /////////////********** Package Master Information Save start **********/////////////
 function calculate_days(){
    var total_nights = $("#total_nights1").val();

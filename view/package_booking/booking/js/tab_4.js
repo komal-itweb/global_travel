@@ -1,6 +1,7 @@
 $('#txt_payment_date1, #txt_payment_date2, #txt_balance_due_date').datetimepicker({ timepicker: false, format: 'd-m-Y' });
 $('#txt_booking_date').datetimepicker({ format: 'd-m-Y H:i:s' });
-
+destinationLoading('select[name^=pickup_from]', 'Pickup Location');
+destinationLoading('select[name^=drop_to]', 'Drop-off Location');
 /////////////////////////////////////Package Tour Master Tab4 validate start/////////////////////////////////////
 function package_tour_booking_tab4_validate() {
   g_validate_status = true;

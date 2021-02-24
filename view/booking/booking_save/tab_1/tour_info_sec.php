@@ -13,7 +13,7 @@
               </button>
             </div>
             <div class="pull-right header_btn">
-              <button data-target="#myModal" data-toggle="modal">
+              <button data-target="#myModalg" data-toggle="modal" type="button">
                 <a title="Help">
                   <i class="fa fa-question" aria-hidden="true"></i>
                 </a>
@@ -23,8 +23,4 @@
       </div> 
 
   <!--=======Header panel end======-->
-
-
-   
- 
 

@@ -105,7 +105,7 @@ public function finance_update($booking_id, $row_spec,$particular)
   $payment_date = $booking_date;
   $payment_particular = $particular;
   $ledger_particular = get_ledger_particular('To','Package Sales');
-  $old_gl_id = $gl_id = ($reflections[0]->hotel_sc != '') ? $reflections[0]->hotel_sc : 186;
+  $old_gl_id = $gl_id = ($reflections[0]->hotel_sc != '') ? $reflections[0]->hotel_sc : 185;
   $payment_side = "Credit";
   $clearance_status = "";
   $transaction_master->transaction_update($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular,$old_gl_id, $gl_id,'', $payment_side, $clearance_status, $row_spec,$ledger_particular,'INVOICE');

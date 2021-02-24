@@ -408,7 +408,7 @@ if($sq_trans_count>0){
             </ul>
           </div>
         </div>
-        </div>
+      </div>
       <div class="row">
         <div class="col-xs-12 Itinenary_detail app_accordion">
           <div class="panel-group main_block" id="pkg_accordion" role="tablist" aria-multiselectable="true">

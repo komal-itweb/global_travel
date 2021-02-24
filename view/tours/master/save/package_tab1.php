@@ -11,7 +11,7 @@
                 <input class="form-control" type="text" onchange="fname_validate(this.id)" id="txt_tour_name" name="txt_tour_name" placeholder="*Tour Name" title="Tour Name"/>
              </div>
              <div class="col-md-3 col-sm-6 mg_bt_10 ">
-                <select id="dest_name_s"  name="dest_name_s" title="Select Destination" class="form-control"  style="width:100%"> 
+                <select id="dest_name_s"  name="dest_name_s" title="Select Destination" class="form-control"  style="width:100%" required> 
                     <option value="">*Destination</option>
                     <?php 
                     $sq_query = mysql_query("select * from destination_master where status != 'Inactive'"); 
@@ -67,7 +67,7 @@
 <script src="<?= BASE_URL ?>js/ajaxupload.3.5.js"></script>
 
 <script>
-
+$('#dest_name_s').select2();
 jQuery('#txt_from_date1, #txt_to_date1').datetimepicker({ timepicker:false, minDate:new Date(), format:"d-m-Y" });
 generate_list();
 
@@ -77,9 +77,10 @@ $(function(){
         cmb_tour_type : { required: true },
         txt_tour_name : { required: true },
         active_flag : { required : true },
-         day_program : { required : true },
-         special_attaraction : { required : true },
-         overnight_stay : { required : true },
+        day_program : { required : true },
+        special_attaraction : { required : true },
+        overnight_stay : { required : true },
+        dest_name_s : {required:true}
     },
     submitHandler:function(form){
 
@@ -87,7 +88,7 @@ $(function(){
         var valid_state1 = table_date_validate();
         if((valid_state==false) || (valid_state1==false)){ return false; }
 
-       $('a[href="#tab2"]').tab('show');
+      $('a[href="#tab2"]').tab('show');
 
       return false;
 

@@ -120,7 +120,7 @@
         }
         else{ ?>
         <div class="row" style="margin-top: 5px"> <div class="col-md-12 text-right">
-            <button type="button" class="btn btn-excel btn-sm" onClick="addRow('tbl_package_transport_infomration')" title="Add Row"><i class="fa fa-plus"></i></button>
+            <button type="button" class="btn btn-excel btn-sm" onClick="addRow('tbl_package_transport_infomration');destinationLoading('.pickup_from', 'Pickup Location');destinationLoading('.drop_to', 'Pickup Location');" title="Add Row"><i class="fa fa-plus"></i></button>
         </div> </div>
         <div class="row mg_tp_10">
             <div class="col-xs-12"> 
@@ -186,38 +186,20 @@
                                     <option value="<?= $row_transport_bus['entry_id'] ?>"><?= $row_transport_bus['vehicle_name'] ?></option>
                                     <?php } ?>
                                 </select></td>
-                            <td><input type="text" id="txt_tsp_from_date<?= $count_tt ?>-u" name="txt_tsp_from_date<?= $count_tt ?>-u" placeholder="Start Date" title="Start Date" value="<?= get_date_user($row_trans_acc['transport_from_date']) ?>" class="form-control app_datepicker" style="width:150px"></td>
-                            <td><select name="pickup_from<?= $count_tt ?>-u" id="pickup_from<?= $count_tt ?>-u" data-toggle="tooltip" style="width:250px;" title="Pickup Location" class="form-control app_select2">
+                            <td><input type="text" id="txt_tsp_from_date<?= $count_tt ?>-u" name="txt_tsp_from_date<?= $count_tt ?>-u" placeholder="Start Date" title="Start Date" value="<?= get_date_user($row_trans_acc['transport_from_date']) ?>" class="form-control app_datepicker"></td>
+                            <td><select name="pickup_from<?= $count_tt ?>-u" id="pickup_from<?= $count_tt ?>-u" data-toggle="tooltip" style="width:250px;" title="Pickup Location" class="form-control app_select2 pickup_from">
                                 <optgroup value='<?=$row_trans_acc['pickup_type']?>' label="<?=$plabel?>">
-								<option value="<?= $row_trans_acc['pickup'] ?>"><?= $pickup ?></option>
-                                <option value="">Pickup Location</option>
-                                <optgroup value='city' label="City Name">
-                                <?php get_cities_dropdown('1'); ?>
-                                </optgroup>
-                                <optgroup value='airport' label="Airport Name">
-                                <?php get_airport_dropdown(); ?>
-                                </optgroup>
-                                <optgroup value='hotel' label="Hotel Name">
-                                <?php get_hotel_dropdown(); ?>
-                                </optgroup>
+								<option value="<?= $row_trans_acc['pickup_type'].'-'.$row_trans_acc['pickup'] ?>"><?= $pickup ?></option>
                             </select></td>
-                            <td><select name="drop_to<?= $count_tt ?>-u" id="drop_to<?= $count_tt ?>-u" style="width:250px;" data-toggle="tooltip" title="Drop-off Location" class="form-control app_select2">
+                            <td><select name="drop_to<?= $count_tt ?>-u" id="drop_to<?= $count_tt ?>-u" style="width:250px;" data-toggle="tooltip" title="Drop-off Location" class="form-control app_select2 drop_to">
                                 <optgroup value='<?=$row_trans_acc['drop_type']?>' label="<?=$dlabel?>">
-								<option value="<?= $row_trans_acc['drop'] ?>"><?= $drop ?></option>
-                                <option value="">Drop-off Location</option>
-                                <optgroup value='city' label="City Name">
-                                <?php get_cities_dropdown('1'); ?></optgroup>
-                                <optgroup value='airport' label="Airport Name">
-                                <?php get_airport_dropdown(); ?></optgroup>
-                                <optgroup value='hotel' label="Hotel Name">
-                                <?php get_hotel_dropdown(); ?></optgroup>
+								<option value="<?= $row_trans_acc['drop_type'].'-'.$row_trans_acc['drop'] ?>"><?= $drop ?></option>
                                 </select></td>
                             <td><input type="text" id="no_vehicles<?= $count_tt ?>-u" name="no_vehicles<?= $count_tt ?>-u" placeholder="No.Of vehicles" title="No.Of vehicles" style="width:150px" value="<?=$row_trans_acc['vehicle_count']?>"></td>
                             <td style="display:none"><input type="text" value="<?php echo $row_trans_acc['entry_id'] ?>"></td>
                         </tr>
                         <script>
                         $( "#txt_tsp_from_date<?= $count_tt ?>-u,#txt_tsp_to_date<?= $count_tt ?>-u").datetimepicker({ timepicker:false,format: "d-m-Y"  });
-                        $('#pickup_from<?= $count_tt ?>-u,#drop_to<?= $count_tt ?>-u').select2();
                         </script>
                         <?php } ?>
                 </table>
@@ -235,7 +217,7 @@
         }
         else{ ?>
         <div class="row" style="margin-top: 5px"> <div class="col-md-12 text-right">
-            <button type="button" class="btn btn-excel btn-sm" onClick="addRow('tbl_package_exc_infomration')" title="Add Row"><i class="fa fa-plus"></i></button>
+            <button type="button" class="btn btn-excel btn-sm" onClick="addRow('tbl_package_exc_infomration');destinationLoading('.pickup_from', 'Pickup Location');destinationLoading('.drop_to', 'Pickup Location');" title="Add Row"><i class="fa fa-plus"></i></button>
         </div> </div>
         <div class="row mg_tp_10">
             <div class="col-xs-12"> 
@@ -299,6 +281,8 @@
 $('#transport_bus_id').select2();
 $(document).ready(function(){
     city_lzloading('.city_name');
+    destinationLoading(".pickup_from", 'Pickup Location');
+    destinationLoading(".drop_to", 'Drop-off Location');
 })
 
 function generating_hotel_acc_date(){

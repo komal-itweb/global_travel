@@ -66,7 +66,6 @@ $(document).ready(function(){
         <div class="col-md-2 col-sm-4 col-xs-12 mg_bt_10_xs">
             <label>Tax</label>
             <select name="train_taxation_id" id="train_taxation_id" title="Tax" placeholder="Tax" onchange="generic_tax_reflect(this.id, 'train_service_tax', 'calculate_total_train_expense');">
-                <?php get_taxation_dropdown(); ?>
             </select>
             <input type="hidden" id="train_service_tax" name="train_service_tax" value="0">            
         </div>

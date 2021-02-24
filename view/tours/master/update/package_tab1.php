@@ -12,23 +12,17 @@
                 <input type="text" id="txt_tour_name" name="txt_tour_name" class="form-control" value="<?php echo $tour_info['tour_name'] ?>"  placeholder="Tour Name" onchange="fname_validate(this.id)" title="Tour Name"/>
             </div>
             <div class="col-md-3 col-sm-6 mg_bt_10 ">
-                <select id="dest_name_s"  name="dest_name_s" title="Select Destination" class="form-control"  style="width:100%">
-                <?php if($tour_info['tour_name']!=""){ ?>
-                    <option value="<?= $tour_info['tour_name'] ?>"><?= $tour_info['tour_name'] ?></option>
+                <select id="dest_name_s"  name="dest_name_s" title="Select Destination" class="form-control"  style="width:100%" required>
+                    <?php $sq_query1 = mysql_fetch_assoc(mysql_query("select dest_id,dest_name from destination_master where dest_id = '$tour_info[dest_id]'")); ?>
+                    <option value="<?php echo $sq_query1['dest_id']; ?>"><?php echo $sq_query1['dest_name']; ?></option>
                     <option value="">*Destination</option>
-                    <?php 
-                    $sq_query = mysql_query("select * from destination_master where status != 'Inactive'"); 
+                    <?php
+                    $sq_query = mysql_query("select * from destination_master where status != 'Inactive'");
                     while($row_dest = mysql_fetch_assoc($sq_query)){ ?>
                         <option value="<?php echo $row_dest['dest_id']; ?>"><?php echo $row_dest['dest_name']; ?></option>
-                        <?php } }else{ ?>
-                          <option value="">*Destination</option>
-                    <?php 
-                    $sq_query = mysql_query("select * from destination_master where status != 'Inactive'"); 
-                    while($row_dest = mysql_fetch_assoc($sq_query)){ ?>
-                        <option value="<?php echo $row_dest['dest_id']; ?>"><?php echo $row_dest['dest_name']; ?></option>
-                    <?php } }?>
+                    <?php } ?>
                 </select>
-             </div>
+            </div>
         </div>
 
         <div class="panel panel-default panel-body app_panel_style mg_tp_20 mg_bt_20">
@@ -118,6 +112,7 @@
 </form>
 
 <script>
+$('#dest_name_s').select2();
 /////////////********** Tour Master Information Update start ***********************************
 $(function(){
   $('#frm_tour_master_update').validate({

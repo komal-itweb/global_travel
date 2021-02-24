@@ -117,14 +117,7 @@
                             <div class="col-md-3 col-sm-6 col-xs-12 mg_bt_10_xs hidden">
                                 <label for="txt_tour_service_tax">Tax</label>
                                 <select name="tour_taxation_id" id="tour_taxation_id" title="Tax" placeholder="Tax" onchange="generic_tax_reflect(this.id, 'txt_tour_service_tax', 'calculate_total_tour_cost');">
-                                    <?php 
-                                    if($sq_booking_info['tour_taxation_id']!='0'){
-                                        $sq_taxation = mysql_fetch_assoc(mysql_query("select * from taxation_master where taxation_id='$sq_booking_info[tour_taxation_id]'"));
-                                        $sq_tax_type = mysql_fetch_assoc(mysql_query("select * from tax_type_master where tax_type_id='$sq_taxation[tax_type_id]'"));
-                                        ?>
-                                        <option value="<?= $sq_taxation['taxation_id'] ?>"><?= $sq_tax_type['tax_type'].'-'.$sq_taxation['tax_in_percentage'] ?></option>
-                                    <?php } ?>
-                                    <?php get_taxation_dropdown(); ?>
+                                   
                                      <input type="hidden" id="txt_tour_service_tax" name="txt_tour_service_tax" value="<?php echo $sq_booking_info['tour_service_tax']; ?>">
                                 </select>                               
                             </div> 
@@ -147,14 +140,7 @@
                             </div>
                             <div class="col-md-2 col-sm-4 col-xs-12 mg_bt_10">
                                 <select name="visa_taxation_id" id="visa_taxation_id" title="Tax" placeholder="Tax" onchange="generic_tax_reflect(this.id, 'visa_service_tax', 'calculate_total_tour_cost');">
-                                    <?php 
-                                    if($sq_booking_info['visa_taxation_id']!='0'){
-                                        $sq_taxation = mysql_fetch_assoc(mysql_query("select * from taxation_master where taxation_id='$sq_booking_info[visa_taxation_id]'"));
-                                        $sq_tax_type = mysql_fetch_assoc(mysql_query("select * from tax_type_master where tax_type_id='$sq_taxation[tax_type_id]'"));
-                                        ?>
-                                        <option value="<?= $sq_taxation['taxation_id'] ?>"><?= $sq_tax_type['tax_type'].'-'.$sq_taxation['tax_in_percentage'] ?></option>
-                                        <?php } ?>
-                                    <?php get_taxation_dropdown(); ?>
+                                   
                                 </select>
                                 <input type="hidden" id="visa_service_tax" name="visa_service_tax" value="<?= $sq_booking_info['visa_service_tax'] ?>">        
                             </div>
@@ -177,14 +163,7 @@
                             </div>
                             <div class="col-md-2 col-sm-4 col-xs-12 mg_bt_10_xs">
                                 <select name="insuarance_taxation_id" id="insuarance_taxation_id" title="Tax" placeholder="Tax" onchange="generic_tax_reflect(this.id, 'insuarance_service_tax', 'calculate_total_tour_cost');">
-                                    <?php 
-                                    if($sq_booking_info['insuarance_taxation_id']!='0'){
-                                        $sq_taxation = mysql_fetch_assoc(mysql_query("select * from taxation_master where taxation_id='$sq_booking_info[insuarance_taxation_id]'"));
-                                        $sq_tax_type = mysql_fetch_assoc(mysql_query("select * from tax_type_master where tax_type_id='$sq_taxation[tax_type_id]'"));
-                                        ?>
-                                        <option value="<?= $sq_taxation['taxation_id'] ?>"><?= $sq_tax_type['tax_type'].'-'.$sq_taxation['tax_in_percentage'] ?></option>
-                                        <?php }  ?>
-                                    <?php get_taxation_dropdown(); ?>
+                                    
                                 </select>
                                 <input type="hidden" id="insuarance_service_tax" name="insuarance_service_tax" value="<?= $sq_booking_info['insuarance_service_tax'] ?>">        
                             </div>

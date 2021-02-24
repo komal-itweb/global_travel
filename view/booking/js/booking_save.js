@@ -4,7 +4,6 @@ $('#frm_tab_3').validate({
 		txt_repeater_discount: { required: true },
 		txt_adjustment_discount: { required: true },
 		txt_date: { required: true },
-		txt_balance_due_date : { required : true },
 
 		txt_payment_date1: {
 			required: function () {

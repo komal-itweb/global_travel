@@ -18,7 +18,7 @@
     if($sq_plane_info_count==0)
     { ?>
         <tr>
-        <td ><input id="check-btn-plane-1" type="checkbox" onchange="calculate_plane_expense('tbl_plane_travel_details_dynamic_row',true)" ></td>
+        <td ><input id="check-btn-plane-1" type="checkbox" onchange="calculate_plane_expense('tbl_plane_travel_details_dynamic_row',true)" checked ></td>
         <td><input maxlength="15" type="text" id="" name="username" value="1" placeholder="Sr.No." disabled/></td>
 
         <td><input type="text" id="txt_plane_date-1" name="txt_plane_date-1" title="Departure Date & Time" onchange="validate_transportDate('txt_plane_date-1','txt_arravl-1');get_to_datetime(this.id,'txt_arravl-1')" placeholder="Departure Date & Time"/></td>
@@ -53,7 +53,7 @@
 
         <tr>
 
-            <td ><input id="check-btn-plane-<?= $offset.$count ?>_d" type="checkbox" onchange="calculate_plane_expense('tbl_plane_travel_details_dynamic_row',true)" checked ></td>
+            <td ><input id="check-btn-plane-<?= $offset.$count ?>_d" type="checkbox" onchange="calculate_plane_expense('tbl_plane_travel_details_dynamic_row',true)" checked  ></td>
 
             <td><input maxlength="15" type="text" id="" name="username" value="<?php echo $count ?>" placeholder="Sr.No." disabled/></td>
 
@@ -97,14 +97,7 @@
         <div class="col-md-2 col-sm-4 col-xs-12 mg_bt_10_xs">
             <label>Tax</label>
             <select name="plane_taxation_id" id="plane_taxation_id" onchange="generic_tax_reflect(this.id, 'plane_service_tax', 'calculate_total_plane_expense');">
-                <?php 
-                if($sq_booking_info['plane_taxation_id']!='0'){
-                    $sq_taxation = mysql_fetch_assoc(mysql_query("select * from taxation_master where taxation_id='$sq_booking_info[plane_taxation_id]'"));
-                    $sq_tax_type = mysql_fetch_assoc(mysql_query("select * from tax_type_master where tax_type_id='$sq_taxation[tax_type_id]'"));
-                    ?>
-                    <option value="<?= $sq_taxation['taxation_id'] ?>"><?= $sq_tax_type['tax_type'].'-'.$sq_taxation['tax_in_percentage'] ?></option>
-                    <?php } ?>
-                <?php get_taxation_dropdown(); ?>
+               
             </select>
             <input type="hidden" id="plane_service_tax" name="plane_service_tax" value="<?= $sq_booking_info['plane_service_tax'] ?>">            
         </div>

@@ -89,15 +89,8 @@ $sq_city2 = mysql_fetch_assoc(mysql_query("select city_name from city_master whe
         <div class="col-md-2 col-sm-4 col-xs-12 mg_bt_10_xs">
             <label>Tax</label>
             <select name="plane_taxation_id" id="plane_taxation_id" title="Tax" onchange="generic_tax_reflect(this.id, 'plane_service_tax', 'calculate_total_plane_expense');">
-                <?php 
-                $sq_taxation = mysql_fetch_assoc(mysql_query("select * from taxation_master where taxation_id='$tourwise_details[plane_taxation_id]'"));
-                $sq_tax_type = mysql_fetch_assoc(mysql_query("select * from tax_type_master where tax_type_id='$sq_taxation[tax_type_id]'"));
-                ?>
-                <?php if($tourwise_details['plane_taxation_id'] != '0'){
-                    ?>
-                    <option value="<?= $sq_taxation['taxation_id'] ?>"><?= $sq_tax_type['tax_type'].'-'.$sq_taxation['tax_in_percentage'] ?></option>    
-                <?php } ?>                
-                <?php get_taxation_dropdown(); ?>
+
+                
             </select>
             <input type="hidden" id="plane_service_tax" name="plane_service_tax" value="<?= $tourwise_details['plane_service_tax'] ?>">            
         </div>

@@ -9,7 +9,6 @@ $(function () {
 			rue_cost: { required: true },
 			txt_actual_tour_cost: { required: true },
 			txt_booking_date: { required: true },
-			txt_balance_due_date: { required: true },
 			txt_payment_date1: {
 				required: function () {
 					if ($('#chk_pay_for_tour').is(':checked') == 1) {

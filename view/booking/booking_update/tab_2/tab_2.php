@@ -55,7 +55,7 @@
 
         <div class="panel panel-default main_block bg_light pad_8 text-center mg_bt_0">
             <button type="button" onclick="switch_to_tab_1()" class="btn btn-sm btn-info ico_left"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Previous</button> &nbsp;&nbsp;
-            <button class="btn btn-sm btn-info ico_right">Next&nbsp;&nbsp;<i class="fa fa-arrow-right"></i></button>
+            <button class="btn btn-sm btn-info ico_right" onclick="calculate_cruise_expense('tbl_dynamic_cruise_package_booking')">Next&nbsp;&nbsp;<i class="fa fa-arrow-right"></i></button>
         </div>
 
 <?= end_panel() ?>

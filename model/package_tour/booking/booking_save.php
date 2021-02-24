@@ -847,7 +847,13 @@ function package_tour_tranpsort_information_save($max_booking_id, $transp_vehicl
         $trans_count_arr[$i] = mysql_real_escape_string($trans_count_arr[$i]);
 
         $transp_start_date[$i] = date("Y-m-d", strtotime($transp_start_date[$i]));
-        $sq = mysql_query("INSERT INTO `package_tour_transport_master`(`entry_id`, `booking_id`, `transport_bus_id`, `transport_from_date`, `pickup`, `pickup_type`, `drop`, `drop_type`, `vehicle_count`) values ('$max_entry_id', '$max_booking_id', '$transp_vehicle_arr[$i]', '$transp_start_date[$i]', '$trans_pickup_arr[$i]', '$trans_pickuptype_arr[$i]', '$trans_drop_arr[$i]', '$trans_droptype_arr[$i]', '$trans_count_arr[$i]')");
+
+        $pickup_type = explode("-",$trans_pickup_arr[$i])[0];
+        $drop_type = explode("-",$trans_drop_arr[$i])[0];
+        $pickup = explode("-",$trans_pickup_arr[$i])[1];
+        $drop = explode("-",$trans_drop_arr[$i])[1];
+
+        $sq = mysql_query("INSERT INTO `package_tour_transport_master`(`entry_id`, `booking_id`, `transport_bus_id`, `transport_from_date`, `pickup`, `pickup_type`, `drop`, `drop_type`, `vehicle_count`) values ('$max_entry_id', '$max_booking_id', '$transp_vehicle_arr[$i]', '$transp_start_date[$i]', '$pickup', '$pickup_type', '$drop', '$drop_type', '$trans_count_arr[$i]')");
 
         if(!$sq){
           $GLOBALS['flag'] = false;
@@ -955,9 +961,9 @@ function package_tour_itinerary_inf_save($max_booking_id, $special_attraction_ar
 
 
         //Bank and Cash Book Save
-
-        $booking_save_transaction->bank_cash_book_save($max_booking_id, $max_payment_id, $payment_date[$i], $payment_mode[$i], $payment_amount[$i], $transaction_id[$i], $payment_date[$i], $bank_name[$i], $bank_id_arr[$i], $branch_admin_id,$credit_charges_arr[$i],$credit_card_details_arr[$i]);
-
+        if($payment_mode[$i] != 'Credit Note'){
+          $booking_save_transaction->bank_cash_book_save($max_booking_id, $max_payment_id, $payment_date[$i], $payment_mode[$i], $payment_amount[$i], $transaction_id[$i], $payment_date[$i], $bank_name[$i], $bank_id_arr[$i], $branch_admin_id,$credit_charges_arr[$i],$credit_card_details_arr[$i]);
+        }
 
 
       }  

@@ -34,11 +34,9 @@ $quot_info_arr['tour_cost'] = $sq_costing['tour_cost'] + $sq_costing['transport_
 $quot_info_arr['markup_cost'] = $sq_costing['markup_subtotal'];
 $quot_info_arr['taxation_id'] = $sq_costing['taxation_id'];
 
-$sq_taxation = mysql_fetch_assoc(mysql_query("select * from taxation_master where taxation_id='$sq_costing[taxation_id]'"));
-$sq_tax_type = mysql_fetch_assoc(mysql_query("select * from tax_type_master where tax_type_id='$sq_taxation[tax_type_id]'"));
-$quot_info_arr['tax_type'] =  $sq_tax_type['tax_type'];
+$quot_info_arr['tax_type'] =  '';
 
-$quot_info_arr['tax_in_percentage'] = $sq_taxation['tax_in_percentage'];
+$quot_info_arr['tax_in_percentage'] = '';
 $quot_info_arr['service_tax'] = $sq_costing['service_tax'];
 
 $quot_info_arr['service_tax_subtotal'] = $sq_costing['service_tax_subtotal'];

@@ -80,8 +80,6 @@ public function quotation_master_save()
 	$vehicle_count_arr = $_POST['vehicle_count_arr'];
 	$transport_cost_arr1 = $_POST['transport_cost_arr1'];
 	$package_name_arr1 = $_POST['package_name_arr1'];
-	$pickup_type_arr = $_POST['pickup_type_arr'];
-	$drop_type_arr = $_POST['drop_type_arr'];
 	
 	//Excursion
 	$city_name_arr_e = $_POST['city_name_arr_e'];
@@ -291,16 +289,22 @@ public function tranport_entries_save($quotation_id_arr,$vehicle_name_arr,$start
 		$sq_package = mysql_fetch_assoc(mysql_query("select * from custom_package_master where package_name = '$package_name_arr1[$i]'"));
 		$package_id = $sq_package['package_id'];
 
+		$pickup_type = explode("-",$pickup_arr[$i])[0];
+        $drop_type = explode("-",$drop_arr[$i])[0];
+        $pickup = explode("-",$pickup_arr[$i])[1];
+        $drop = explode("-",$drop_arr[$i])[1];
+		
+
 		if($i == 0){
-			$sq_plane = mysql_query("INSERT INTO `package_tour_quotation_transport_entries2`(`id`, `quotation_id`, `vehicle_name`, `start_date`, `pickup`, `drop`, `pickup_type`, `drop_type`, `package_id`, `transport_cost`,`vehicle_count`) values ( '$id', '$quotation_id_arr[$j]', '$vehicle_name_arr[$i]', '$start_date_arr[$i]', '$pickup_arr[$i]','$drop_arr[$i]','$pickup_type_arr[$i]','$drop_type_arr[$i]','$package_id','$transport_cost_arr1[$i]','$vehicle_count_arr[$i]' )");
+			$sq_plane = mysql_query("INSERT INTO `package_tour_quotation_transport_entries2`(`id`, `quotation_id`, `vehicle_name`, `start_date`, `pickup`, `drop`, `pickup_type`, `drop_type`, `package_id`, `transport_cost`,`vehicle_count`) values ( '$id', '$quotation_id_arr[$j]', '$vehicle_name_arr[$i]', '$start_date_arr[$i]', '$pickup','$drop','$pickup_type','$drop_type','$package_id','$transport_cost_arr1[$i]','$vehicle_count_arr[$i]' )");
 		}
 		else{
 			if($package_name_arr1[$i] == $package_name_arr1[$i-1]){
-				$sq_plane = mysql_query("INSERT INTO `package_tour_quotation_transport_entries2`(`id`, `quotation_id`, `vehicle_name`, `start_date`, `pickup`, `drop`, `pickup_type`, `drop_type`, `package_id`, `transport_cost`,`vehicle_count`) values ( '$id', '$quotation_id_arr[$j]', '$vehicle_name_arr[$i]', '$start_date_arr[$i]', '$pickup_arr[$i]','$drop_arr[$i]','$pickup_type_arr[$i]','$drop_type_arr[$i]','$package_id','$transport_cost_arr1[$i]','$vehicle_count_arr[$i]')");
+				$sq_plane = mysql_query("INSERT INTO `package_tour_quotation_transport_entries2`(`id`, `quotation_id`, `vehicle_name`, `start_date`, `pickup`, `drop`, `pickup_type`, `drop_type`, `package_id`, `transport_cost`,`vehicle_count`) values ( '$id', '$quotation_id_arr[$j]', '$vehicle_name_arr[$i]', '$start_date_arr[$i]', '$pickup','$drop','$pickup_type','$drop_type','$package_id','$transport_cost_arr1[$i]','$vehicle_count_arr[$i]')");
 			}
 			else{
 				$quotation_id_arr[$j] = $quotation_id_arr[$j] + 1;	
-				$sq_plane = mysql_query("INSERT INTO `package_tour_quotation_transport_entries2`(`id`, `quotation_id`, `vehicle_name`, `start_date`, `pickup`, `drop`, `pickup_type`, `drop_type`, `package_id`, `transport_cost`,`vehicle_count`) values ( '$id', '$quotation_id_arr[$j]', '$vehicle_name_arr[$i]', '$start_date_arr[$i]', '$pickup_arr[$i]','$drop_arr[$i]','$pickup_type_arr[$i]','$drop_type_arr[$i]','$package_id','$transport_cost_arr1[$i]','$vehicle_count_arr[$i]' )");
+				$sq_plane = mysql_query("INSERT INTO `package_tour_quotation_transport_entries2`(`id`, `quotation_id`, `vehicle_name`, `start_date`, `pickup`, `drop`, `pickup_type`, `drop_type`, `package_id`, `transport_cost`,`vehicle_count`) values ( '$id', '$quotation_id_arr[$j]', '$vehicle_name_arr[$i]', '$start_date_arr[$i]', '$pickup','$drop','$pickup_type','$drop_type','$package_id','$transport_cost_arr1[$i]','$vehicle_count_arr[$i]' )");
 			}
 		}		
 		if(!$sq_plane){

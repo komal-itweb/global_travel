@@ -53,8 +53,7 @@ function package_tour_booking_master_update()
     $plane_service_tax = $_POST['plane_service_tax'];
     $plane_service_tax_subtotal = $_POST['plane_service_tax_subtotal'];
     $total_plane_expense = $_POST['total_plane_expense'];
-    $plane_checked_programe_arr = $_POST['plane_checked_programe_arr'];
-    
+
     $cruise_expense = $_POST['cruise_expense'];
     $cruise_service_charge = $_POST['cruise_service_charge'];
     $cruise_taxation_id = $_POST['cruise_taxation_id'];
@@ -90,6 +89,7 @@ function package_tour_booking_master_update()
     $plane_seats = $_POST['plane_seats'];
     $plane_company = $_POST['plane_company'];
     $arrval_arr = $_POST['arrval_arr'];
+    $plane_checked_programe_arr = $_POST['plane_checked_programe_arr'];
 
     $plane_id = $_POST['plane_id'];
 
@@ -208,7 +208,7 @@ function package_tour_booking_master_update()
     }
     $bsmValues = json_encode($bsmValues);
     begin_t();
-    $sq_booking = mysql_query("update package_tour_booking_master set customer_id='$customer_id', tour_name='$tour_name', tour_type='$tour_type', tour_from_date='$tour_from_date', tour_to_date='$tour_to_date', total_tour_days='$total_tour_days', taxation_type='$taxation_type', required_rooms='', child_with_bed='', child_without_bed='', contact_person_name='$contact_person_name', email_id='$email_id', mobile_no='$mobile_no', address='$address', country_name='$country_name', city='$city', state='$state', train_upload_ticket='$train_upload_ticket', plane_upload_ticket='$plane_upload_ticket', cruise_upload_ticket='$cruise_upload_ticket',train_expense = '$train_expense', train_service_charge = '$train_service_charge', train_taxation_id = '$train_taxation_id', train_service_tax = '$train_service_tax', train_service_tax_subtotal = '$train_service_tax_subtotal', total_train_expense = '$total_train_expense', plane_expense = '$plane_expense', plane_service_charge = '$plane_service_charge', plane_taxation_id = '$plane_taxation_id', plane_service_tax = '$plane_service_tax', plane_service_tax_subtotal = '$plane_service_tax_subtotal', total_plane_expense = '$total_plane_expense',cruise_expense = '$cruise_expense', cruise_service_charge = '$cruise_service_charge', cruise_taxation_id = '$cruise_taxation_id', cruise_service_tax = '$cruise_service_tax', cruise_service_tax_subtotal = '$cruise_service_tax_subtotal', total_cruise_expense = '$total_cruise_expense', total_travel_expense='$total_travel_expense', total_hotel_expense='$total_hotel_expense', visa_country_name='$visa_country_name', visa_amount='$visa_amount', visa_service_charge='$visa_service_charge', visa_taxation_id='$visa_taxation_id', visa_service_tax='$visa_service_tax', visa_service_tax_subtotal='$visa_service_tax_subtotal', visa_total_amount='$visa_total_amount', insuarance_company_name='$insuarance_company_name', insuarance_amount='$insuarance_amount', insuarance_service_charge='$insuarance_service_charge', insuarance_taxation_id='$insuarance_taxation_id', insuarance_service_tax='$insuarance_service_tax', insuarance_service_tax_subtotal='$insuarance_service_tax_subtotal', insuarance_total_amount='$insuarance_total_amount', service_charge='$service_charge', subtotal='$subtotal', tour_service_tax='$tour_service_tax', tour_service_tax_subtotal='$tour_service_tax_subtotal', currency_code='$currency_code', rue_cost='$rue_cost', subtotal_with_rue='$subtotal_with_rue', service_charge='$service_charge', actual_tour_expense='$actual_tour_cost', special_request='$special_request',inclusions='$incl',exclusions='$excl',reflections='$reflections',basic_amount='$basic_amount',bsm_values = '$bsmValues',roundoff='$roundoff' where booking_id='$booking_id'");
+    $sq_booking = mysql_query("update package_tour_booking_master set customer_id='$customer_id', tour_name='$tour_name', tour_type='$tour_type', tour_from_date='$tour_from_date', tour_to_date='$tour_to_date', total_tour_days='$total_tour_days', taxation_type='$taxation_type', required_rooms='', child_with_bed='', child_without_bed='', contact_person_name='$contact_person_name', email_id='$email_id', mobile_no='$mobile_no', address='$address', country_name='$country_name', city='$city', state='$state', train_upload_ticket='$train_upload_ticket', plane_upload_ticket='$plane_upload_ticket', cruise_upload_ticket='$cruise_upload_ticket',train_expense = '$train_expense', train_service_charge = '$train_service_charge', train_taxation_id = '$train_taxation_id', train_service_tax = '$train_service_tax', train_service_tax_subtotal = '$train_service_tax_subtotal', total_train_expense = '$total_train_expense', plane_expense = '$plane_expense', plane_service_charge = '$plane_service_charge', plane_taxation_id = '$plane_taxation_id', plane_service_tax = '$plane_service_tax', plane_service_tax_subtotal = '$plane_service_tax_subtotal', total_plane_expense = '$total_plane_expense',cruise_expense = '$cruise_expense', cruise_service_charge = '$cruise_service_charge', cruise_taxation_id = '$cruise_taxation_id', cruise_service_tax = '$cruise_service_tax', cruise_service_tax_subtotal = '$cruise_service_tax_subtotal', total_cruise_expense = '$total_cruise_expense', total_travel_expense='$total_travel_expense', total_hotel_expense='$total_hotel_expense', visa_country_name='$visa_country_name', visa_amount='$visa_amount', visa_service_charge='$visa_service_charge', visa_taxation_id='$visa_taxation_id', visa_service_tax='$visa_service_tax', visa_service_tax_subtotal='$visa_service_tax_subtotal', visa_total_amount='$visa_total_amount', insuarance_company_name='$insuarance_company_name', insuarance_amount='$insuarance_amount', insuarance_service_charge='$insuarance_service_charge', insuarance_taxation_id='$insuarance_taxation_id', insuarance_service_tax='$insuarance_service_tax', insuarance_service_tax_subtotal='$insuarance_service_tax_subtotal', insuarance_total_amount='$insuarance_total_amount', service_charge='$service_charge', subtotal='$subtotal', tour_service_tax='$tour_service_tax', tour_service_tax_subtotal='$tour_service_tax_subtotal', currency_code='$currency_code', rue_cost='$rue_cost', subtotal_with_rue='$subtotal_with_rue', service_charge='$service_charge', actual_tour_expense='$actual_tour_cost', special_request='$special_request',inclusions='$incl',exclusions='$excl',reflections='$reflections',basic_amount='$basic_amount',bsm_values = '$bsmValues',roundoff='$roundoff',net_total='$net_total' where booking_id='$booking_id'");
 
     if(!$sq_booking){
       rollback_t();
@@ -282,9 +282,14 @@ function package_tour_tranpsort_information_save($booking_id, $transp_vehicle_ar
 
       $transp_start_date[$i] = date("Y-m-d", strtotime($transp_start_date[$i]));
 
+      $pickup_type = explode("-",$trans_pickup_arr[$i])[0];
+      $drop_type = explode("-",$trans_drop_arr[$i])[0];
+      $pickup = explode("-",$trans_pickup_arr[$i])[1];
+      $drop = explode("-",$trans_drop_arr[$i])[1];
+
       if($trans_entry_id_arr[$i]!=''){
 
-          $sq = mysql_query("update package_tour_transport_master set `transport_bus_id` = '$transp_vehicle_arr[$i]', `transport_from_date` = '$transp_start_date[$i]', `pickup`='$trans_pickup_arr[$i]', `pickup_type`='$trans_pickuptype_arr[$i]', `drop`='$trans_drop_arr[$i]', `drop_type`='$trans_droptype_arr[$i]', `vehicle_count`='$trans_count_arr[$i]' where entry_id='$trans_entry_id_arr[$i]'");
+          $sq = mysql_query("update package_tour_transport_master set `transport_bus_id` = '$transp_vehicle_arr[$i]', `transport_from_date` = '$transp_start_date[$i]', `pickup`='$pickup', `pickup_type`='$pickup_type', `drop`='$drop', `drop_type`='$drop_type', `vehicle_count`='$trans_count_arr[$i]' where entry_id='$trans_entry_id_arr[$i]'");
 
           if(!$sq){
             $GLOBALS['flag'] = false;
@@ -479,7 +484,8 @@ function package_tour_travelers_details_master_update($booking_id, $m_honorific,
       
       for($i=0; $i<sizeof($plane_travel_date); $i++)
       {
-        
+        $plane_checked_programe_arr[$i] = mysql_real_escape_string($plane_checked_programe_arr[$i]);
+
         $from_city_id_arr[$i] = mysql_real_escape_string($from_city_id_arr[$i]);
         $to_city_id_arr[$i] = mysql_real_escape_string($to_city_id_arr[$i]);
         $plane_travel_date[$i] = mysql_real_escape_string($plane_travel_date[$i]);
@@ -488,10 +494,8 @@ function package_tour_travelers_details_master_update($booking_id, $m_honorific,
         $plane_amount[$i] = mysql_real_escape_string($plane_amount[$i]);
         $plane_seats[$i] = mysql_real_escape_string($plane_seats[$i]);
         $plane_company[$i] = mysql_real_escape_string($plane_company[$i]);
-        $plane_id[$i] = mysql_real_escape_string($plane_id[$i]);
         $arrval_arr[$i] = mysql_real_escape_string($arrval_arr[$i]);
-        $plane_checked_programe_arr[$i] = mysql_real_escape_string($plane_checked_programe_arr[$i]);
-        
+
         $from_location = array_slice(explode(' - ', $plane_from_location[$i]), 1);
         $from_location = implode(' - ',$from_location);
         $to_location = array_slice(explode(' - ', $plane_to_location[$i]), 1);
@@ -539,7 +543,7 @@ function package_tour_travelers_details_master_update($booking_id, $m_honorific,
               echo "error--Traveling details not updated!";
               exit;
             }
-        }
+      
       }
 
       //**Saves Cruise Information    

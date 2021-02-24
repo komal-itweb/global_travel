@@ -33,6 +33,7 @@
                        <?php
                        if($sq_booking_info['quotation_id'] != 0){
                         $sq_cost =  mysql_fetch_assoc(mysql_query("select * from package_tour_quotation_costing_entries where quotation_id = '$sq_booking_info[quotation_id]'"));
+                        $sq_quo =  mysql_fetch_assoc(mysql_query("select * from package_tour_quotation_master where quotation_id = '$sq_booking_info[quotation_id]'"));
                         $basic_cost = $sq_cost['basic_amount'];
                         $service_charge = $sq_cost['service_charge'];
                         $tour_cost= $basic_cost + $service_charge;
@@ -67,7 +68,7 @@
 
                         $quotation_cost = $basic_cost +$service_charge+ $service_tax_amount+ $sq_quotation['train_cost'] + $sq_quotation['cruise_cost']+ $sq_quotation['flight_cost'] + $sq_quotation['visa_cost'] + $sq_quotation['guide_cost'] + $sq_quotation['misc_cost'];
                        ?>
-                       <div class="col-md-3 col-sm-4 col-xs-12 mg_bt_10_sm_xs"><input type="text" title="Quotation ID" value="<?= 'PTQ-'.$sq_booking_info['quotation_id'].' : '.$quotation_cost.' /-' ?>" readonly>
+                       <div class="col-md-3 col-sm-4 col-xs-12 mg_bt_10_sm_xs"><input type="text" title="Quotation ID" value="<?= 'PTQ-'.$sq_booking_info['quotation_id'].' : '.$sq_quo['customer_name'].' : '.$quotation_cost.' /-' ?>" readonly>
                        </div> <?php } ?>
                        <?php
                        if($sq_booking_info['new_package_id'] != 0){
@@ -98,7 +99,7 @@
                     <div class="col-md-3 col-sm-4 col-xs-12 hidden">
                       <select name="taxation_type" id="taxation_type" title="Taxation Type">
                         <option value="<?= $sq_booking_info['taxation_type'] ?>"><?= $sq_booking_info['taxation_type'] ?></option>
-                        <?php get_taxation_type_dropdown($setup_country_id) ?>
+                    
                       </select>
                     </div>
                 </div>

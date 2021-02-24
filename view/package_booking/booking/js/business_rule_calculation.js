@@ -299,7 +299,7 @@ function get_tax_charges(
 					var charge_amount = markup;
 				}
 				else if (target_amount === 'Total') {
-					var charge_amount = parseFloat(service_charge) + parseFloat(basic_amount) + parseFloat(markup);
+					var charge_amount = parseFloat(service_charge) + parseFloat(basic_amount) ;
 				}
 				else if (target_amount === 'Discount') {
 					var charge_amount = discount;

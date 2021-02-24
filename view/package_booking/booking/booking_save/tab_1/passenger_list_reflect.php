@@ -32,7 +32,7 @@
                     </select></td>
                 <td style="width: 139px;"><input type="text" id="txt_m_passport_no1" name="txt_m_passport_no1" placeholder="Passport No" onchange="validate_passport(this.id)" title="No" style="text-transform: uppercase;" disabled></td>
                 <td style="width: 130px;"><input type="text"  id="txt_m_passport_issue_date1" name="txt_m_passport_issue_date1" placeholder="Issue Date" onchange="validate_futuredate('txt_m_passport_issue_date1')" title="Passport Issue Date" disabled></td>
-                <td style="width: 132px;"><input type="text" id="txt_m_passport_expiry_date1" name="txt_m_passport_expiry_date1" placeholder="Expiry Date" title="Passport Expiry Date" onchange="checkExpiryDate(this.id)" disabled></td>
+                <td style="width: 132px;"><input type="text" id="txt_m_passport_expiry_date1" name="txt_m_passport_expiry_date1" placeholder="Expiry Date" title="Passport Expiry Date" onchange="validate_pastDate(this.id)" disabled></td>
             </tr>
 
         </table> 

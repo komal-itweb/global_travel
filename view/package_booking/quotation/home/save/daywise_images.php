@@ -12,13 +12,6 @@
                 </a>
             </button>
           </div>
-          <div class="pull-right header_btn">
-            <button data-target="#myModalHint" data-toggle="modal">
-              <a title="Help">
-                <i class="fa fa-question" aria-hidden="true"></i>
-              </a>
-            </button>
-          </div>
       </div>
     </div> 
 <!--=======Header panel end======-->

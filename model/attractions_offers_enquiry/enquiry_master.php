@@ -13,6 +13,7 @@ function enquiry_master_save(){
   $country_code = $_POST['country_code'];
   $email_id = $_POST["email_id"];
   $location = $_POST["location"];
+  $enq_state = $_POST["enq_state"];
   $assigned_emp_id = $_POST['assigned_emp_id'];
   $enquiry_specification = $_POST["enquiry_specification"]; 
   $enquiry_date = $_POST["enquiry_date"]; 
@@ -44,7 +45,7 @@ function enquiry_master_save(){
 
     $name = addslashes($name);
     $enquiry_specification = addslashes($enquiry_specification);
-    $sq_enquiry = mysql_query("insert into enquiry_master (enquiry_id, login_id,branch_admin_id,financial_year_id, enquiry_type,enquiry, name, mobile_no, landline_no, country_code,email_id,location, assigned_emp_id, enquiry_specification, enquiry_date, followup_date, reference_id, enquiry_content ) values ('$enquiry_id', '$login_id', '$branch_admin_id','$financial_year_id', '$enquiry_type','$enquiry', '$name', '$mobile_no', '$landline_no', '$country_code','$email_id','$location', '$assigned_emp_id', '$enquiry_specification', '$enquiry_date', '$followup_date', '$reference_id', '$enquiry_content')");
+    $sq_enquiry = mysql_query("insert into enquiry_master (enquiry_id, login_id,branch_admin_id,financial_year_id, enquiry_type,enquiry, name, mobile_no, landline_no, country_code,email_id,location, assigned_emp_id, enquiry_specification, enquiry_date, followup_date, reference_id, enquiry_content ,enq_state) values ('$enquiry_id', '$login_id', '$branch_admin_id','$financial_year_id', '$enquiry_type','$enquiry', '$name', '$mobile_no', '$landline_no', '$country_code','$email_id','$location', '$assigned_emp_id', '$enquiry_specification', '$enquiry_date', '$followup_date', '$reference_id', '$enquiry_content','$enq_state')");
 
     $sq_max = mysql_fetch_assoc(mysql_query("select max(entry_id) as max from enquiry_master_entries"));
     $entry_id = $sq_max['max'] + 1;
@@ -214,6 +215,7 @@ function enquiry_master_update()
   $mobile_no = $_POST["mobile_no"]; 
   $email_id = $_POST["email_id"];
   $location = $_POST["location"];
+  $enq_state = $_POST["enq_state"];
   $landline_no = $_POST["landline_no"];
   $country_code = $_POST['country_code'];
   $enquiry_date = $_POST['enquiry_date'];
@@ -232,7 +234,7 @@ function enquiry_master_update()
   $name = addslashes($name);
   $enquiry_specification = addslashes($enquiry_specification);
 
-  $sq_enquiry = mysql_query("update enquiry_master set name='$name', country_code = '$country_code', mobile_no='$mobile_no',landline_no = '$landline_no',email_id='$email_id',location='$location', enquiry = '$enquiry', enquiry_date='$enquiry_date', followup_date='$followup_date', reference_id='$reference_id', enquiry_content='$enquiry_content', enquiry_specification='$enquiry_specification', assigned_emp_id ='$assigned_emp_id' where enquiry_id='$enquiry_id'");
+  $sq_enquiry = mysql_query("update enquiry_master set name='$name', country_code = '$country_code', mobile_no='$mobile_no',landline_no = '$landline_no',email_id='$email_id',location='$location', enquiry = '$enquiry', enquiry_date='$enquiry_date', followup_date='$followup_date', reference_id='$reference_id', enquiry_content='$enquiry_content', enquiry_specification='$enquiry_specification', assigned_emp_id ='$assigned_emp_id' , enq_state='$enq_state' where enquiry_id='$enquiry_id'");
 
   if(!$sq_enquiry){
     echo "error--Enquiry Information Not Updated.";
@@ -332,7 +334,7 @@ public function followup_reply_save()
         $contact_no = $encrypt_decrypt->fnEncrypt($sq_enq['mobile_no'], $secret_key);
         $email_id = $encrypt_decrypt->fnEncrypt($sq_enq['email_id'], $secret_key);
       
-         $str="insert into customer_master (customer_id,first_name, country_code,contact_no,email_id, address, active_flag, created_at,branch_admin_id) values ('$customer_id', '$sq_enq[name]', '$sq_enq[country_code]','$contact_no', '$email_id', '$sq_enq[location]', 'Active', '$created_at','$branch_admin_id')";
+         $str="insert into customer_master (customer_id,first_name, country_code,contact_no,email_id, address, active_flag, created_at,branch_admin_id , state_id) values ('$customer_id', '$sq_enq[name]', '$sq_enq[country_code]','$contact_no', '$email_id', '$sq_enq[location]', 'Active', '$created_at','$branch_admin_id', '$sq_enq[enq_state]')";
            $sq_visa = mysql_query($str);
          
       

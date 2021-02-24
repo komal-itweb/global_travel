@@ -5,8 +5,8 @@ $to = $_GET['to'];
 $quotation_id = base64_decode($quotation_id1);
 
 $sq_quotation = mysql_fetch_assoc(mysql_query("select * from group_tour_quotation_master where quotation_id='$quotation_id'"));
-
 $sq_tour = mysql_fetch_assoc(mysql_query("select * from tour_master where tour_id='$sq_quotation[tour_group_id]'"));
+$sq_dest = mysql_fetch_assoc(mysql_query("select link from video_itinerary_master where dest_id = '$sq_tour[dest_id]'"));
 ?>
 <!DOCTYPE html>
 <html>
@@ -149,18 +149,12 @@ $sq_tour = mysql_fetch_assoc(mysql_query("select * from tour_master where tour_i
           <div class="adolence_info mg_tp_25">
 
             <ul class="main_block">
-
               <li class="col-md-2 col-sm-4 col-xs-12 mg_bt_10_xs"><span>Adult : </span><?= $sq_quotation['total_adult']; ?></li>
-
-              <li class="col-md-2 col-sm-4 col-xs-12 mg_bt_10_xs"><span>Children : </span><?= $sq_quotation['total_children']; ?></li>
-
               <li class="col-md-2 col-sm-4 col-xs-12 mg_bt_10_xs sm_r_brd_r8"><span>Infant : </span><?= $sq_quotation['total_infant']; ?></li>
-
-              <li class="col-md-2 col-sm-4 col-xs-12 mg_bt_10_sm_xs"><span>Total : </span><?= $sq_quotation['total_passangers']; ?></li>
-
               <li class="col-md-2 col-sm-4 col-xs-12 mg_bt_10_sm_xs"><span>With Bed : </span><?= $sq_quotation['children_with_bed']; ?></li>
 
               <li class="col-md-2 col-sm-4 col-xs-12"><span> Without Bed : </span><?= $sq_quotation['children_without_bed']; ?></li>
+              <li class="col-md-2 col-sm-4 col-xs-12 mg_bt_10_sm_xs"><span>Total : </span><?= $sq_quotation['total_passangers']; ?></li>
 
             </ul>
 
@@ -197,12 +191,12 @@ $sq_tour = mysql_fetch_assoc(mysql_query("select * from tour_master where tour_i
             <ul class="main_block">
 
               <div class="row">
-                <?php if($sq_quotation['adult_cost']!='0'){?><li class="col-md-4 col-sm-6 col-xs-12 mg_bt_10_sm_xs"><span>Adult Cost : </span><?=number_format($sq_quotation['adult_cost'],2); ?></li> <?php } ?>
-                <?php if($sq_quotation['child_cost']!='0'){?><li class="col-md-4 col-sm-6 col-xs-12"><span>Child Cost : </span><?=number_format($sq_quotation['child_cost'],2); ?></li> <?php } ?>
-                <?php if($sq_quotation['infant_cost']!='0'){?><li class="col-md-4 col-sm-6 col-xs-12 mg_bt_10_sm_xs"><span>Infant Cost : </span><?=number_format($sq_quotation['infant_cost'],2); ?></li> <?php } ?>
-                <?php if($sq_quotation['child_with']!='0'){?><li class="col-md-4 col-sm-6 col-xs-12"><span>Child with Bed Cost : </span><?=number_format($sq_quotation['child_with'],2); ?></li> <?php } ?>
-                <?php if($sq_quotation['child_without']!='0'){?><li class="col-md-4 col-sm-6 col-xs-12 mg_bt_10_sm_xs"><span>Child w/o Bed Cost : </span><?=number_format($sq_quotation['child_without'],2); ?></li> <?php } ?>
-                <?php if($sq_quotation['extra_bedc']!='0'){?><li class="col-md-4 col-sm-6 col-xs-12"><span>Extra Bed Cost : </span><?=number_format($sq_quotation['extra_bedc'],2); ?></li> <?php } ?>
+                <?php if($sq_quotation['adult_cost']!='0'){?><li class="col-md-3 col-sm-6 col-xs-12 mg_bt_10_sm_xs"><span>Adult Cost : </span><?=number_format($sq_quotation['adult_cost'],2); ?></li> <?php } ?>
+              
+                <?php if($sq_quotation['infant_cost']!='0'){?><li class="col-md-3 col-sm-6 col-xs-12 mg_bt_10_sm_xs"><span>Infant Cost : </span><?=number_format($sq_quotation['infant_cost'],2); ?></li> <?php } ?>
+                <?php if($sq_quotation['with_bed_cost']!='0'){?><li class="col-md-3 col-sm-6 col-xs-12"><span>Child with Bed Cost : </span><?=number_format($sq_quotation['with_bed_cost'],2); ?></li> <?php } ?>
+                <?php if($sq_quotation['children_cost']!='0'){?><li class="col-md-3 col-sm-6 col-xs-12 mg_bt_10_sm_xs"><span>Child w/o Bed Cost : </span><?=number_format($sq_quotation['children_cost'],2); ?></li> <?php } ?>
+               
               </div>
              
 
@@ -294,14 +288,22 @@ if($sq_trans_count>0){
       <div class="sec_heding">
         <h2>Tour Itinerary</h2>
       </div>
-
+      <div class="row mg_bt_30">
+        <div class="col-md-12">
+          <div class="adolence_info mg_tp_15">
+            <ul class="main_block">
+              <li class="col-md-12 col-sm-4 col-xs-12 mg_bt_10_xs"><img src="<?php echo BASE_URL.'images/quotation/youtube-icon.png'; ?>" class="itinerary-img img-responsive">
+                &nbsp;VIDEO ITINERARY :&nbsp;<a href="<?=$sq_dest['link']?>" class="no-marg itinerary-link" target="_blank"><?=$sq_dest['link']?> </a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-xs-12 Itinenary_detail app_accordion">
           <div class="panel-group main_block" id="pkg_accordion" role="tablist" aria-multiselectable="true">
           <?php
           $count = 1;
-         
-	$sq_package_program = mysql_query("select * from group_tour_program where tour_id ='$sq_quotation[tour_group_id]'");
+	        $sq_package_program = mysql_query("select * from group_tour_program where tour_id ='$sq_quotation[tour_group_id]'");
           while($row_itinarary = mysql_fetch_assoc($sq_package_program)){
             // $sq_day_image = mysql_fetch_assoc(mysql_query("select * from package_tour_quotation_images where quotation_id='$row_itinarary[quotation_id]' and package_id='$sq_quotation[package_id]'"));
             // $day_url1 = explode(',',$sq_day_image['image_url']);
@@ -436,7 +438,7 @@ if($sq_trans_count>0){
 
 <?php 
 
-$sq_train_count = mysql_num_rows(mysql_query("select * from group_tour_program where tour_id ='$sq_quotation[tour_group_id]'"));
+$sq_train_count = mysql_num_rows(mysql_query("select * from group_tour_quotation_train_entries where quotation_id ='$quotation_id'"));
 
 
 

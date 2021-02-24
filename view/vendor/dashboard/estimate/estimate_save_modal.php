@@ -60,7 +60,7 @@ $financial_to_date = $sq_finance['to_date'];
 			</div>
 	    </div>      
     </div>
-  </div>
+</div>
 </div>
 </form>
 <script src="<?= BASE_URL ?>js/ajaxupload.3.5.js"></script>

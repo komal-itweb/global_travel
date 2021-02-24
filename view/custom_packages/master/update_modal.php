@@ -4,6 +4,7 @@ $package_id = $_POST['package_id'];
 $sq_pckg = mysql_fetch_assoc(mysql_query("select * from custom_package_master where package_id = '$package_id'"));
 $sq_currency = mysql_fetch_assoc(mysql_query("select * from currency_name_master where id='$sq_pckg[currency_id]'"));
 $taxation = json_decode($sq_pckg['taxation']);
+$readable = ($sq_pckg['clone']=='yes' && $sq_pckg['update_flag']=='0')?'':'readonly';
 ?>
 
 <form id="frm_package_master_update">
@@ -63,7 +64,7 @@ $taxation = json_decode($sq_pckg['taxation']);
 
             <div class="col-md-3 col-sm-6 mg_bt_10_xs"> 
 
-                <input type="text" id="package_name1" name="package_name" class="form-control"  placeholder="Package Name" title="Package Name" value="<?php echo $sq_pckg['package_name']; ?>" />
+                <input type="text" id="package_name1" name="package_name" class="form-control"  placeholder="Package Name" title="Package Name" value="<?php echo $sq_pckg['package_name']; ?>" <?=$readable?>/>
                 <small>Note : Package Name : eg. Kerala amazing</small>
 
             </div>    
@@ -204,7 +205,8 @@ $taxation = json_decode($sq_pckg['taxation']);
         <h3 class="editor_title">Transport Information</h3>
         <div class="panel panel-default panel-body app_panel_style">
         <div class="col-xs-12 text-right mg_tp_10">
-          <button type="button" class="btn btn-info btn-sm ico_left mg_bt_10" onClick="addRow('tbl_package_tour_transport')"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add</button>
+          <button type="button" class="btn btn-info btn-sm ico_left mg_bt_10" onClick="addRow('tbl_package_tour_transport');destinationLoading('select[name^=pickup_from]', 'Pickup Location');
+destinationLoading('select[name^=drop_to]', 'Drop-off Location');"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add</button>
         </div>
         <table id="tbl_package_tour_transport" name="tbl_package_tour_transport" class="table border_0 table-hover" style="padding: 0 !important;">
         <?php
@@ -220,26 +222,10 @@ $taxation = json_decode($sq_pckg['taxation']);
                   while($row_dest = mysql_fetch_assoc($sq_query)){ ?>
                       <option value="<?php echo $row_dest['entry_id']; ?>"><?php echo $row_dest['vehicle_name']; ?></option>
                   <?php } ?></select></td>
-                <td class="col-md-3"><select name="pickup_from" id="pickup_from" data-toggle="tooltip" style="width:250px;" title="Pickup Location" class="form-control app_minselect2">
-                    <option value="">Pickup Location</option>
-                    <optgroup value='city' label="City Name">
-                    <?php get_cities_dropdown('1'); ?>
-                    </optgroup>
-                    <optgroup value='airport' label="Airport Name">
-                    <?php get_airport_dropdown(); ?>
-                    </optgroup>
-                    <optgroup value='hotel' label="Hotel Name">
-                    <?php get_hotel_dropdown(); ?>
+                <td class="col-md-3"><select name="pickup_from" id="pickup_from" data-toggle="tooltip" style="width:250px;" title="Pickup Location" class="form-control app_minselect2 pickup_from_u">
                     </optgroup>
                 </select></td>
-                <td class="col-md-3"><select name="drop_to" id="drop_to" style="width:250px;" data-toggle="tooltip" title="Drop-off Location" class="form-control app_minselect2">
-                  <option value="">Drop-off Location</option>
-                  <optgroup value='city' label="City Name">
-                  <?php get_cities_dropdown('1'); ?></optgroup>
-                  <optgroup value='airport' label="Airport Name">
-                  <?php get_airport_dropdown(); ?></optgroup>
-                  <optgroup value='hotel' label="Hotel Name">
-                  <?php get_hotel_dropdown(); ?></optgroup>
+                <td class="col-md-3"><select name="drop_to" id="drop_to" style="width:250px;" data-toggle="tooltip" title="Drop-off Location" class="form-control app_minselect2 drop_to_u">
                   </select></td>
             </tr>
           <?php }
@@ -261,69 +247,55 @@ $taxation = json_decode($sq_pckg['taxation']);
                     while($row_dest = mysql_fetch_assoc($sq_query)){ ?>
                         <option value="<?php echo $row_dest['entry_id']; ?>"><?php echo $row_dest['vehicle_name']; ?></option>
                     <?php } ?></select></td>
-                  <td class="col-md-3"><select name="pickup_from<?php echo $count_hotel; ?>-u" id="pickup_from<?php echo $count_hotel; ?>-u" data-toggle="tooltip" style="width:250px;" title="Pickup Location" class="form-control app_minselect2">
+                  <td class="col-md-3"><select name="pickup_from<?php echo $count_hotel; ?>-u" id="pickup_from<?php echo $count_hotel; ?>-u" data-toggle="tooltip" style="width:250px;" title="Pickup Location" class="form-control app_minselect2 pickup_from_u">
                       <?php
                       // Pickup
                       if($row_tr['pickup_type'] == 'city'){
                         $row = mysql_fetch_assoc(mysql_query("select city_id,city_name from city_master where city_id='$row_tr[pickup]'"));
-                        $html = '<optgroup value="city" label="City Name"><option value="'.$row['city_id'].'">'.$row['city_name'].'</option></optgroup>';
+                        $html = '<optgroup value="city" label="City Name"><option value="city-'.$row['city_id'].'">'.$row['city_name'].'</option></optgroup>';
                       }
                       else if($row_tr['pickup_type'] == 'hotel'){
                         $row = mysql_fetch_assoc(mysql_query("select hotel_id,hotel_name from hotel_master where hotel_id='$row_tr[pickup]'"));
-                        $html = '<optgroup value="hotel" label="Hotel Name"><option value="'.$row['hotel_id'].'">'.$row['hotel_name'].'</option></optgroup>';
+                        $html = '<optgroup value="hotel" label="Hotel Name"><option value="hotel-'.$row['hotel_id'].'">'.$row['hotel_name'].'</option></optgroup>';
                       }
                       else{
                         $row = mysql_fetch_assoc(mysql_query("select airport_name, airport_code, airport_id from airport_master where airport_id='$row_tr[pickup]'"));
                         $airport_nam = clean($row['airport_name']);
                         $airport_code = clean($row['airport_code']);
                         $pickup = $airport_nam." (".$airport_code.")";
-                        $html = '<optgroup value="airport" label="Airport Name"><option value="'.$row['airport_id'].'">'.$pickup.'</option></optgroup>';
+                        $html = '<optgroup value="airport" label="Airport Name"><option value="airport-'.$row['airport_id'].'">'.$pickup.'</option></optgroup>';
                       }
                       echo $html;
                       ?>
-                      <option value="">Pickup Location</option>
-                      <optgroup value='city' label="City Name">
-                      <?php get_cities_dropdown('1'); ?>
-                      </optgroup>
-                      <optgroup value='airport' label="Airport Name">
-                      <?php get_airport_dropdown(); ?>
-                      </optgroup>
-                      <optgroup value='hotel' label="Hotel Name">
-                      <?php get_hotel_dropdown(); ?>
-                      </optgroup>
+                      </optgroup> -->
                   </select></td>
-                  <td class="col-md-3"><select name="drop_to<?php echo $count_hotel; ?>-u" id="drop_to<?php echo $count_hotel; ?>-u" style="width:250px;" data-toggle="tooltip" title="Drop-off Location" class="form-control app_minselect2">
+                  <td class="col-md-3"><select name="drop_to<?php echo $count_hotel; ?>-u" id="drop_to<?php echo $count_hotel; ?>-u" style="width:250px;" data-toggle="tooltip" title="Drop-off Location" class="form-control app_minselect2 drop_to_u">
                       <?php
                       // Pickup
                       if($row_tr['drop_type'] == 'city'){
                         $row = mysql_fetch_assoc(mysql_query("select city_id,city_name from city_master where city_id='$row_tr[drop]'"));
-                        $html = '<optgroup value="city" label="City Name"><option value="'.$row['city_id'].'">'.$row['city_name'].'</option></optgroup>';
+                        $html = '<optgroup value="city" label="City Name"><option value="city-'.$row['city_id'].'">'.$row['city_name'].'</option></optgroup>';
                       }
                       else if($row_tr['pickup_type'] == 'hotel'){
                         $row = mysql_fetch_assoc(mysql_query("select hotel_id,hotel_name from hotel_master where hotel_id='$row_tr[drop]'"));
-                        $html = '<optgroup value="hotel" label="Hotel Name"><option value="'.$row['hotel_id'].'">'.$row['hotel_name'].'</option></optgroup>';
+                        $html = '<optgroup value="hotel" label="Hotel Name"><option value="hotel-'.$row['hotel_id'].'">'.$row['hotel_name'].'</option></optgroup>';
                       }
                       else{
                         $row = mysql_fetch_assoc(mysql_query("select airport_name, airport_code, airport_id from airport_master where airport_id='$row_tr[drop]'"));
                         $airport_nam = clean($row['airport_name']);
                         $airport_code = clean($row['airport_code']);
                         $pickup = $airport_nam." (".$airport_code.")";
-                        $html = '<optgroup value="airport" label="Airport Name"><option value="'.$row['airport_id'].'">'.$pickup.'</option></optgroup>';
+                        $html = '<optgroup value="airport" label="Airport Name"><option value="airport-
+                        
+                        
+                        '.$row['airport_id'].'">'.$pickup.'</option></optgroup>';
                       }
                       echo $html;
                       ?>
-                    <option value="">Drop-off Location</option>
-                    <optgroup value='city' label="City Name">
-                    <?php get_cities_dropdown('1'); ?></optgroup>
-                    <optgroup value='airport' label="Airport Name">
-                    <?php get_airport_dropdown(); ?></optgroup>
-                    <optgroup value='hotel' label="Hotel Name">
-                    <?php get_hotel_dropdown(); ?></optgroup>
-                    </select></td>
                   <td class="hidden"><input type="text" value="<?php echo $row_tr['entry_id']; ?>"></td>
               </tr>
               <script type="text/javascript">
-                $('#vehicle_name1<?php echo $count_hotel; ?>-u,#pickup_from<?php echo $count_hotel; ?>-u,#drop_to<?php echo $count_hotel; ?>-u').select2();
+                $('#vehicle_name1<?php echo $count_hotel; ?>-u').select2();
               </script>
               <?php } } ?>
           </table>
@@ -354,6 +326,8 @@ $taxation = json_decode($sq_pckg['taxation']);
 <script>
 $('#update_modal1').modal('show');
 $('#vehicle_name1,#currency_code1').select2();
+destinationLoading('.pickup_from_u', "Pickup Location");
+destinationLoading('.drop_to_u', "Drop-off Location");
 function inclexcl_reflect(offset=''){
   var package_id = $("#package_id1").val();
   var base_url = $("#base_url").val();

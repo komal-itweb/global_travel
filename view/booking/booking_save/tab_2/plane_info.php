@@ -57,7 +57,7 @@
         <div class="col-md-2 col-sm-4 col-xs-12 mg_bt_10_xs">
             <label>Tax</label>
             <select name="plane_taxation_id" id="plane_taxation_id" title="Tax" onchange="generic_tax_reflect(this.id, 'plane_service_tax', 'calculate_total_plane_expense');">
-                <?php get_taxation_dropdown(); ?>
+                
             </select>
             <input type="hidden" id="plane_service_tax" name="plane_service_tax" value="0">            
         </div>

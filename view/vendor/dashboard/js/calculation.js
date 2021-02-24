@@ -8,6 +8,7 @@ function get_auto_values(booking_date,sub_total,payment_mode,service_charge,type
     switch(estimate_type.split(' Booking')[0]){
         case 'Ticket'   :   estimate_type = 'Flight';break;
         case 'Train Ticket' :   estimate_type = 'Train';break;
+        case 'Excursion' :   estimate_type = 'Activity';break;
         default : estimate_type = estimate_type.split(' Booking')[0];
     }
     console.log(estimate_type);

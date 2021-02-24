@@ -376,6 +376,11 @@ public function tranport_entries_update($quotation_id,$vehicle_name_arr,$start_d
 {
 	for($i=0; $i<sizeof($vehicle_name_arr); $i++)
 	{
+		$pickup_type = explode("-",$pickup_arr[$i])[0];
+        $drop_type = explode("-",$drop_arr[$i])[0];
+        $pickup = explode("-",$pickup_arr[$i])[1];
+        $drop = explode("-",$drop_arr[$i])[1];
+
 		if($transport_status_arr[$i] == 'true'){
 			$start_date_arr[$i] = date('Y-m-d H:i:s', strtotime($start_date_arr[$i]));
 			$end_date_arr[$i] = date('Y-m-d H:i:s', strtotime($end_date_arr[$i]));
@@ -383,7 +388,7 @@ public function tranport_entries_update($quotation_id,$vehicle_name_arr,$start_d
 					$sq_max = mysql_fetch_assoc(mysql_query("select max(id) as max from package_tour_quotation_transport_entries2"));
 					$id = $sq_max['max']+1;
 
-					$sq_trans = mysql_query("insert into package_tour_quotation_transport_entries2 ( `id`, `quotation_id`, `vehicle_name`, `start_date`, `pickup`, `drop`, `pickup_type`, `drop_type`, `package_id`, `transport_cost`,`vehicle_count`) values ( '$id', '$quotation_id', '$vehicle_name_arr[$i]', '$start_date_arr[$i]','$pickup_arr[$i]','$drop_arr[$i]','$pickup_type_arr[$i]','$drop_type_arr[$i]', '$package_id','$transport_cost_arr1[$i]','$vehicle_count_arr[$i]')");
+					$sq_trans = mysql_query("insert into package_tour_quotation_transport_entries2 ( `id`, `quotation_id`, `vehicle_name`, `start_date`, `pickup`, `drop`, `pickup_type`, `drop_type`, `package_id`, `transport_cost`,`vehicle_count`) values ( '$id', '$quotation_id', '$vehicle_name_arr[$i]', '$start_date_arr[$i]','$pickup','$drop','$pickup_type','$drop_type', '$package_id','$transport_cost_arr1[$i]','$vehicle_count_arr[$i]')");
 					if(!$sq_trans)
 					{
 						echo "Transport information not inserted.";
@@ -391,7 +396,7 @@ public function tranport_entries_update($quotation_id,$vehicle_name_arr,$start_d
 					}
 			}
 			else{
-				$sq_trans = mysql_query("update package_tour_quotation_transport_entries2 set vehicle_name='$vehicle_name_arr[$i]', start_date='$start_date_arr[$i]', `pickup`='$pickup_arr[$i]', `drop`='$drop_arr[$i]', `pickup_type`='$pickup_type_arr[$i]', `drop_type`='$drop_type_arr[$i]', `transport_cost`='$transport_cost_arr1[$i]',`vehicle_count`='$vehicle_count_arr[$i]' where id='$transport_id_arr[$i]'");
+				$sq_trans = mysql_query("update package_tour_quotation_transport_entries2 set vehicle_name='$vehicle_name_arr[$i]', start_date='$start_date_arr[$i]', `pickup`='$pickup', `drop`='$drop', `pickup_type`='$pickup_type', `drop_type`='$drop_type', `transport_cost`='$transport_cost_arr1[$i]',`vehicle_count`='$vehicle_count_arr[$i]' where id='$transport_id_arr[$i]'");
 				if(!$sq_trans){
 					echo "error--Transport information not updated!";
 					exit;

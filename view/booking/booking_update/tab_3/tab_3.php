@@ -100,15 +100,7 @@ $total_seats = $total_adult + $total_child_b + $total_child_wb + $total_infant;
                             </div>
                             <div class="col-md-2 col-sm-4 col-xs-12 mg_bt_10">
                                 <select name="visa_taxation_id" id="visa_taxation_id" title="Tax" onchange="generic_tax_reflect(this.id, 'visa_service_tax', 'calculate_total_discount');">
-                                    <?php 
-                                    if($tourwise_details['visa_taxation_id']!='0'){
-                                        $sq_taxation = mysql_fetch_assoc(mysql_query("select * from taxation_master where taxation_id='$tourwise_details[visa_taxation_id]'"));
-
-                                        $sq_tax_type = mysql_fetch_assoc(mysql_query("select * from tax_type_master where tax_type_id='$sq_taxation[tax_type_id]'"));
-                                        ?>
-                                        <option value="<?= $sq_taxation['taxation_id'] ?>"><?= $sq_tax_type['tax_type'].'-'.$sq_taxation['tax_in_percentage'] ?></option>
-                                        <?php } ?>
-                                    <?php get_taxation_dropdown(); ?>
+                                    
                                 </select>
                                 <input type="hidden" id="visa_service_tax" name="visa_service_tax" value="<?= $tourwise_details['visa_service_tax'] ?>">        
                             </div>
@@ -131,15 +123,7 @@ $total_seats = $total_adult + $total_child_b + $total_child_wb + $total_infant;
                             </div>
                             <div class="col-md-2 col-sm-4 col-xs-12 mg_bt_10_xs">
                                 <select name="insuarance_taxation_id" id="insuarance_taxation_id" title="Tax" onchange="generic_tax_reflect(this.id, 'insuarance_service_tax', 'calculate_total_discount');">
-                                    <?php 
-                                    if($tourwise_details['insuarance_taxation_id']!='0'){
-                                        $sq_taxation = mysql_fetch_assoc(mysql_query("select * from taxation_master where taxation_id='$tourwise_details[insuarance_taxation_id]'"));
-                                        $sq_tax_type = mysql_fetch_assoc(mysql_query("select * from tax_type_master where tax_type_id='$sq_taxation[tax_type_id]'"));
-                                        ?>
-                                        <option value="<?= $sq_taxation['taxation_id'] ?>"><?= $sq_tax_type['tax_type'].'-'.$sq_taxation['tax_in_percentage'] ?></option>
-                                        <?php
-                                    }      ?>
-                                    <?php get_taxation_dropdown(); ?>
+                                   
                                 </select>
                                 <input type="hidden" id="insuarance_service_tax" name="insuarance_service_tax" value="<?= $tourwise_details['insuarance_service_tax'] ?>">        
                             </div>
@@ -214,21 +198,7 @@ $total_seats = $total_adult + $total_child_b + $total_child_wb + $total_infant;
                             <div class="col-md-2 col-sm-3 col-xs-12 mg_bt_10 hidden"><label>Tax(%)</label></div>
                             <div class="col-md-2 col-sm-3 col-xs-12 mg_bt_10 hidden">        
                                 <select name="tour_taxation_id" id="tour_taxation_id" title="Tax" onchange="generic_tax_reflect(this.id, 'service_tax_per', 'calculate_total_discount');">
-                                    <?php 
-                                    if($tourwise_details['tour_taxation_id']=="" || $tourwise_details['tour_taxation_id']==0){
-                                        ?>
-                                        <option value="0">Tax</option>  
-                                        <?php   
-                                    }
-                                    else{
-                                        $sq_taxation = mysql_fetch_assoc(mysql_query("select * from taxation_master where taxation_id='$tourwise_details[tour_taxation_id]'"));
-                                        $sq_tax_type = mysql_fetch_assoc(mysql_query("select * from tax_type_master where tax_type_id='$sq_taxation[tax_type_id]'"));
-                                        ?>
-                                        <option value="<?= $sq_taxation['taxation_id'] ?>"><?= $sq_tax_type['tax_type'].'-'.$sq_taxation['tax_in_percentage'] ?></option>
-                                        <?php
-                                    }
-                                    ?>
-                                    <?php get_taxation_dropdown(); ?>
+                                    
                                 </select>
                             </div>
                             <div class="col-md-2 col-sm-3 col-xs-12 mg_bt_10"><label>Tax Total</label></div>

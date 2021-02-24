@@ -11,13 +11,6 @@
 					</a>
 				</button>
 			</div>
-			<div class="pull-right header_btn">
-				<button data-target="#myModalHint" data-toggle="modal">
-				<a title="Help">
-					<i class="fa fa-question" aria-hidden="true"></i>
-				</a>
-				</button>
-			</div>
 		</div>
 		</div> 
 	<!--=======Header panel end======-->
@@ -251,25 +244,8 @@
 													</select></td>
 											    <td><input type="text" id="transport_start_date-" name="transport_start_date-" placeholder="Start Date" title="Start Date" class="app_datepicker" style="width:150px" onchange="get_transport_cost();"></td>
 											    <td><select name="pickup_from-" id="pickup_from-" data-toggle="tooltip" style="width:250px;" title="Pickup Location" class="form-control app_select2" onchange="get_transport_cost();">
-													<option value="">Pickup Location</option>
-													<optgroup value='city' label="City Name">
-													<?php get_cities_dropdown('1'); ?>
-													</optgroup>
-													<optgroup value='airport' label="Airport Name">
-													<?php get_airport_dropdown(); ?>
-													</optgroup>
-													<optgroup value='hotel' label="Hotel Name">
-													<?php get_hotel_dropdown(); ?>
-													</optgroup>
 												</select></td>
 								                <td><select name="drop_to-" id="drop_to-" style="width:250px;" data-toggle="tooltip" title="Drop-off Location" class="form-control app_select2" onchange="get_transport_cost();">
-													<option value="">Drop-off Location</option>
-													<optgroup value='city' label="City Name">
-													<?php get_cities_dropdown('1'); ?></optgroup>
-													<optgroup value='airport' label="Airport Name">
-													<?php get_airport_dropdown(); ?></optgroup>
-													<optgroup value='hotel' label="Hotel Name">
-													<?php get_hotel_dropdown(); ?></optgroup>
 													</select></td>
 								                <td><input type="text" id="no_vehicles-" name="no_vehicles-" placeholder="No.Of vehicles" title="No.Of vehicles" style="width:150px" onchange="get_transport_cost();"></td> 
 								                <td><input type="text" id="transport_cost-" name="transport_cost-" placeholder="Cost" title="Cost" style="width:150"></td> 
@@ -359,8 +335,8 @@ $('#airline_name1,#room_cat1,#pickup_from-,#drop_to-,#transport_vehicle-').selec
 $('#cruise_departure_date,#cruise_arrival_date,#exc_date-1').datetimepicker({ format:"d-m-Y H:i:s" });
 $('#check_in-1, #check_out-1,#transport_start_date-').datetimepicker({ format:'d-m-Y',timepicker:false });
 city_lzloading('#city_name1,#city_name-1');
-city_lzloading('#train_to_location1', "*To");
-city_lzloading('#train_from_location1', "*From");
+city_lzloading('#train_to_location1', "*To", true);
+city_lzloading('#train_from_location1', "*From", true);
 event_airport('tbl_package_tour_quotation_dynamic_plane');
 // App_accordion
 jQuery(document).ready(function() {
@@ -907,7 +883,7 @@ $(function(){
 				if(unique_package_id_arr.length > 0){
 					for(var i=0;i<unique_package_id_arr.length;i++){
 						if(unique_package_id_arr[i]['package_id'] == package_id){	
-							row.cells[2].childNodes[1].value = unique_package_id_arr[i]['hotel_cost'];
+							row.cells[2].childNodes[1].value = (isNaN(unique_package_id_arr[i]['hotel_cost']) ? 0 : unique_package_id_arr[i]['hotel_cost']) ;
 							row.cells[8].childNodes[1].value = unique_package_id_arr[i]['hotel_cost'];
 						}
 					}
@@ -1020,7 +996,7 @@ $(function(){
 				}	  
 				unique_package_id_arr.push({
 					package_id: uniquepackages[i],
-					transport_cost: transport_cost_total
+					transport_cost: (isNaN(transport_cost_total) ? 0 : transport_cost_total )
 				});
 			}
 		}

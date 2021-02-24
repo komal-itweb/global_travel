@@ -15,7 +15,7 @@
             </button>
           </div>
           <div class="pull-right header_btn">
-            <button data-target="#myModalHint" data-toggle="modal">
+            <button data-target="#myModalHint" data-toggle="modal" type="button">
               <a title="Help">
                 <i class="fa fa-question" aria-hidden="true"></i>
               </a>
@@ -125,7 +125,7 @@
                     </div> 
                     <div class="col-md-3 col-sm-6 col-xs-12 hidden">
                       <select name="taxation_type" id="taxation_type" title="Taxation Type">
-                        <?php get_taxation_type_dropdown($setup_country_id) ?>
+                       
                       </select>
                     </div>    
                 </div>
@@ -277,7 +277,7 @@
                     </select></td>   
                 <td style="width: 139px;"><input type="text" id="txt_m_passport_no1" onchange="validate_specialChar(this.id);" name="txt_m_passport_no1"  placeholder="Passport No" title="Passport No" disabled></td>
                 <td style="width: 130px;"><input type="text" id="txt_m_passport_issue_date1" onchange="validate_futuredate('txt_m_passport_issue_date1')" name="txt_m_passport_issue_date1" placeholder="Issue Date" title="Passport Issue Date" disabled></td>
-                <td style="width: 132px;"><input type="text" id="txt_m_passport_expiry_date1" onchange="validate_issueDate('txt_m_passport_issue_date1','txt_m_passport_expiry_date1');checkExpiryDate(this.id)" name="txt_m_passport_expiry_date1"  placeholder="Expiry Date" title="Passport Expiry Date" disabled></td>
+                <td style="width: 132px;"><input type="text" id="txt_m_passport_expiry_date1" onchange="validate_pastDate(this.id)" name="txt_m_passport_expiry_date1"  placeholder="Expiry Date" title="Passport Expiry Date" disabled></td>
             </tr>
         </table> 
     </div></div></div>
@@ -314,23 +314,23 @@ function validate_issueDate (from, to) {
 
 		var from_date_ms = date.getTime();
 		var to_date_ms = date1.getTime();
-        if(from_date_ms < today){
-        //alert(from_date_ms);
-            error_msg_alert("Date cannot be past date");
-            $('#'+from).css({'border':'1px solid red'});  
-            document.getElementById(from).value="";
-            $('#'+from).focus();
-            g_validate_status = false;
-            return false;
-        } 
-		else if(from_date_ms>to_date_ms ){
-		error_msg_alert(" To Date should be greater than From Date");
-		$('#'+to).css({'border':'1px solid red'});  
-			document.getElementById(to).value="";
-			$('#'+to).focus();
-			g_validate_status = false;
-		return false;
-    } 
+    //     if(from_date_ms < today){
+    //     //alert(from_date_ms);
+    //         error_msg_alert("Date cannot be past date");
+    //         $('#'+from).css({'border':'1px solid red'});  
+    //         document.getElementById(from).value="";
+    //         $('#'+from).focus();
+    //         g_validate_status = false;
+    //         return false;
+    //     } 
+	// 	else if(from_date_ms>to_date_ms ){
+	// 	error_msg_alert(" To Date should be greater than From Date");
+	// 	$('#'+to).css({'border':'1px solid red'});  
+	// 		document.getElementById(to).value="";
+	// 		$('#'+to).focus();
+	// 		g_validate_status = false;
+	// 	return false;
+    // } 
 
   }
   function checkExpiryDate (id) {
@@ -403,7 +403,8 @@ function cust_csv_save(){
             var table = document.getElementById("tbl_package_tour_member");            
             var pass_arr = JSON.parse(result);
             for(var i=0; i<pass_arr.length; i++){
-                var row = table.rows[i]; 
+                var row = table.rows[i];
+                alert(pass_arr[i]['m_age']);
                 row.cells[2].childNodes[0].value = pass_arr[i]['m_honorific'];
                 row.cells[3].childNodes[0].value = pass_arr[i]['m_first_name'];
                 row.cells[4].childNodes[0].value = pass_arr[i]['m_middle_name'];

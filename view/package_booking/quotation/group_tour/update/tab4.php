@@ -44,7 +44,7 @@
 		</div>
 		<div class="col-md-2">
             <small>&nbsp;</small>
-			<input type="hidden" id="pck_child_cost" name="pck_child_cost" value="<?= $row_cost['children_cost'] ?>">
+			<input type="hidden" id="pck_child_cost" name="pck_child_cost" value="<?= $row_cost['child_without_cost'] ?>">
 			<input type="text" id="children_cost2" name="children_cost2" placeholder="Child Without Bed Cost" title="Child Without Bed Cost" onchange="group_quotation_cost_calculate1(this.id);validate_balance(this.id)"  value="<?php echo $sq_quotation['children_cost']; ?>"> 
 			<input type="hidden" id="total_child1" name="total_child1" value="0">  
 		</div>

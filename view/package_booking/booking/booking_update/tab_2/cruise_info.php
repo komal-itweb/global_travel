@@ -56,14 +56,7 @@
         <div class="col-md-2 col-sm-4 col-xs-12 mg_bt_10_xs">
             <label>Tax</label>
             <select name="cruise_taxation_id" id="cruise_taxation_id" title="Tax" placeholder="Tax" onchange="generic_tax_reflect(this.id, 'cruise_service_tax', 'calculate_total_cruise_expense');">
-                <?php 
-                if($sq_booking_info['cruise_taxation_id']!='0'){
-                    $sq_taxation = mysql_fetch_assoc(mysql_query("select * from taxation_master where taxation_id='$sq_booking_info[cruise_taxation_id]'"));
-                    $sq_tax_type = mysql_fetch_assoc(mysql_query("select * from tax_type_master where tax_type_id='$sq_taxation[tax_type_id]'"));
-                    ?>
-                    <option value="<?= $sq_taxation['taxation_id'] ?>"><?= $sq_tax_type['tax_type'].'-'.$sq_taxation['tax_in_percentage'] ?></option>
-                    <?php } ?>
-                <?php get_taxation_dropdown(); ?>
+
             </select>
             <input type="hidden" id="cruise_service_tax" name="cruise_service_tax" value="<?= $sq_booking_info['cruise_service_tax'] ?>">
         </div>

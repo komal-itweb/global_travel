@@ -1,5 +1,6 @@
 <div class="row" style="margin-top: 5px"> <div class="col-md-12 text-right">
-    <button type="button" class="btn btn-excel btn-sm" onClick="addRow('tbl_package_transport_infomration')"><i class="fa fa-plus"></i></button>
+    <button type="button" class="btn btn-excel btn-sm" onClick="addRow('tbl_package_transport_infomration');destinationLoading('select[name^=pickup_from]', 'Pickup Location');
+        destinationLoading('select[name^=drop_to]', 'Drop-off Location');"><i class="fa fa-plus"></i></button>
     <button type="button" class="btn btn-pdf btn-sm" onClick="deleteRow('tbl_package_transport_infomration')"><i class="fa fa-trash"></i></button>
 </div> </div>
 <div class="row main_block">
@@ -20,25 +21,8 @@
                         </select></td>
                     <td><input type="text" id="txt_tsp_from_date" name="txt_tsp_from_date" onchange="validate_validDate('txt_tsp_from_date' ,'txt_tsp_to_date')" placeholder="Start Date" title="Start Date" style="width:170px;" ></td>
                     <td><select name="pickup_from" id="pickup_from" data-toggle="tooltip" style="width:250px;" title="Pickup Location" class="form-control app_select2">
-                        <option value="">Pickup Location</option>
-                        <optgroup value='city' label="City Name">
-                        <?php get_cities_dropdown('1'); ?>
-                        </optgroup>
-                        <optgroup value='airport' label="Airport Name">
-                        <?php get_airport_dropdown(); ?>
-                        </optgroup>
-                        <optgroup value='hotel' label="Hotel Name">
-                        <?php get_hotel_dropdown(); ?>
-                        </optgroup>
                     </select></td>
                     <td><select name="drop_to" id="drop_to" style="width:250px;" data-toggle="tooltip" title="Drop-off Location" class="form-control app_select2">
-                        <option value="">Drop-off Location</option>
-                        <optgroup value='city' label="City Name">
-                        <?php get_cities_dropdown('1'); ?></optgroup>
-                        <optgroup value='airport' label="Airport Name">
-                        <?php get_airport_dropdown(); ?></optgroup>
-                        <optgroup value='hotel' label="Hotel Name">
-                        <?php get_hotel_dropdown(); ?></optgroup>
                         </select></td>
                     <td><input type="text" id="no_vehicles" name="no_vehicles" placeholder="No.Of vehicles" title="No.Of vehicles" style="width:150px"></td>
                 </tr>

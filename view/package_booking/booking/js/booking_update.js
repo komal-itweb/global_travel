@@ -207,7 +207,7 @@ $(function () {
 					plane_company.push(company1);
 					plane_id.push(plane_id1);
 					arrval_arr.push(arrval1);
-			//	}
+				//}
 			}
 
 			//**Cruise travel details starts here
@@ -529,7 +529,6 @@ $(function () {
 								total_travel_expense: total_travel_expense,
 								train_ticket_path: train_ticket_path,
 								plane_ticket_path: plane_ticket_path,
-								plane_checked_programe_arr:plane_checked_programe_arr,
 								'train_travel_date[]': train_travel_date,
 								'train_from_location[]': train_from_location,
 								'train_to_location[]': train_to_location,
@@ -546,6 +545,7 @@ $(function () {
 								'plane_seats[]': plane_seats,
 								'plane_company[]': plane_company,
 								'plane_id[]': plane_id,
+								plane_checked_programe_arr:plane_checked_programe_arr,
 								from_city_id_arr: from_city_id_arr,
 								to_city_id_arr: to_city_id_arr,
 								'city_id[]': city_id,

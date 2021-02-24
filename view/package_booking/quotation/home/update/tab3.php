@@ -18,13 +18,6 @@ $package_name = $sq_package['package_name'];
                 </a>
             </button>
           </div>
-          <div class="pull-right header_btn">
-            <button data-target="#myModalHint" data-toggle="modal">
-              <a title="Help">
-                <i class="fa fa-question" aria-hidden="true"></i>
-              </a>
-            </button>
-          </div>
       </div>
     </div> 
 <!--=======Header panel end======-->
@@ -112,7 +105,7 @@ $package_name = $sq_package['package_name'];
 					        <div class="panel-body">
 					        <div class="row">
 							    <div class="col-xs-12 text-right mg_bt_20_sm_xs">
-							        <button type="button" class="btn btn-excel btn-sm" onClick="addRow('tbl_package_tour_quotation_dynamic_transport_u')"><i class="fa fa-plus"></i></button>
+							        <button type="button" class="btn btn-excel btn-sm" onClick="addRow('tbl_package_tour_quotation_dynamic_transport_u');destinationLoading('.pickup_from', 'Pickup Location');destinationLoading('.drop_to', 'Drop-off Location');"><i class="fa fa-plus"></i></button>
 							    </div>
 							</div>
 				      <div class="row">
@@ -140,26 +133,9 @@ $package_name = $sq_package['package_name'];
 												<?php } ?>
 											</select></td>
 										<td><input type="text" id="transport_start_date-" name="transport_start_date-" placeholder="Start Date" title="Start Date" class="app_datepicker" style="width:150px" onchange="get_transport_cost_update(this.id);"></td>
-										<td><select name="pickup_from-" id="pickup_from-" data-toggle="tooltip" style="width:250px;" title="Pickup Location" class="form-control app_select2" onchange="get_transport_cost_update(this.id);">
-											<option value="">Pickup Location</option>
-											<optgroup value='city' label="City Name">
-											<?php get_cities_dropdown('1'); ?>
-											</optgroup>
-											<optgroup value='airport' label="Airport Name">
-											<?php get_airport_dropdown(); ?>
-											</optgroup>
-											<optgroup value='hotel' label="Hotel Name">
-											<?php get_hotel_dropdown(); ?>
-											</optgroup>
+										<td><select name="pickup_from-" id="pickup_from-" data-toggle="tooltip" style="width:250px;" title="Pickup Location" class="form-control app_select2 pickup_from" onchange="get_transport_cost_update(this.id);">
 										</select></td>
-										<td><select name="drop_to-" id="drop_to-" style="width:250px;" data-toggle="tooltip" title="Drop-off Location" class="form-control app_select2" onchange="get_transport_cost_update(this.id);">
-											<option value="">Drop-off Location</option>
-											<optgroup value='city' label="City Name">
-											<?php get_cities_dropdown('1'); ?></optgroup>
-											<optgroup value='airport' label="Airport Name">
-											<?php get_airport_dropdown(); ?></optgroup>
-											<optgroup value='hotel' label="Hotel Name">
-											<?php get_hotel_dropdown(); ?></optgroup>
+										<td><select name="drop_to-" id="drop_to-" style="width:250px;" data-toggle="tooltip" title="Drop-off Location" class="form-control app_select2 drop_to" onchange="get_transport_cost_update(this.id);">
 											</select></td>
 										<td><input type="text" id="no_vehicles-" name="no_vehicles-" placeholder="No.Of vehicles" title="No.Of vehicles" style="width:150px" onchange="get_transport_cost_update(this.id);"></td> 
 										<td><input type="text" id="transport_cost-" name="transport_cost-" placeholder="Cost" title="Cost" style="width:150"></td> 
@@ -235,30 +211,13 @@ $package_name = $sq_package['package_name'];
 								                ?>
 								            </select></td>
 										    <td class="col-md-3"><input type="text" id="transport_start_date-<?= $count ?>_u" name="transport_start_date-<?= $count ?>_u" style="width:150px" placeholder="Start Date" title="Start Date" class="app_datepicker" onchange="get_transport_cost_update(this.id);" value="<?= date('d-m-Y', strtotime($row_q_tr['start_date'])) ?>"></td>
-											<td><select name="pickup_from-<?= $count ?>_u" id="pickup_from-<?= $count ?>_u" data-toggle="tooltip" style="width:250px;" title="Pickup Location" class="form-control app_select2" onchange="get_transport_cost_update(this.id);">
+											<td><select name="pickup_from-<?= $count ?>_u" id="pickup_from-<?= $count ?>_u" data-toggle="tooltip" style="width:250px;" title="Pickup Location" class="form-control app_select2 pickup_from" onchange="get_transport_cost_update(this.id);">
 												<optgroup value='<?=$row_q_tr['pickup_type']?>' label="<?=$plabel?>">
-												<option value="<?= $row_q_tr['pickup'] ?>"><?= $pickup ?></option>
-												<option value="">Pickup Location</option>
-												<optgroup value='city' label="City Name">
-												<?php get_cities_dropdown('1'); ?>
-												</optgroup>
-												<optgroup value='airport' label="Airport Name">
-												<?php get_airport_dropdown(); ?>
-												</optgroup>
-												<optgroup value='hotel' label="Hotel Name">
-												<?php get_hotel_dropdown(); ?>
-												</optgroup>
+												<option value="<?= $row_q_tr['pickup_type'].'-'.$row_q_tr['pickup'] ?>"><?= $pickup ?></option>
 											</select></td>
-											<td><select name="drop_to-<?= $count ?>_u" id="drop_to-<?= $count ?>_u" style="width:250px;" data-toggle="tooltip" title="Drop-off Location" class="form-control app_select2" onchange="get_transport_cost_update(this.id);">
+											<td><select name="drop_to-<?= $count ?>_u" id="drop_to-<?= $count ?>_u" style="width:250px;" data-toggle="tooltip" title="Drop-off Location" class="form-control app_select2 drop_to" onchange="get_transport_cost_update(this.id);">
 												<optgroup value='<?=$row_q_tr['drop_type']?>' label="<?=$dlabel?>">
-												<option value="<?= $row_q_tr['drop'] ?>"><?= $drop ?></option>
-												<option value="">Drop-off Location</option>
-												<optgroup value='city' label="City Name">
-												<?php get_cities_dropdown('1'); ?></optgroup>
-												<optgroup value='airport' label="Airport Name">
-												<?php get_airport_dropdown(); ?></optgroup>
-												<optgroup value='hotel' label="Hotel Name">
-												<?php get_hotel_dropdown(); ?></optgroup>
+												<option value="<?= $row_q_tr['drop_type'].'-'.$row_q_tr['drop'] ?>"><?= $drop ?></option>
 												</select></td>
 											<td><input type="text" id="no_vehicles-<?= $count ?>_u" name="no_vehicles-<?= $count ?>_u" placeholder="No.Of vehicles" title="No.Of vehicles" style="width:150px" value="<?=$row_q_tr['vehicle_count']?>" onchange="get_transport_cost_update(this.id);"></td> 
 											<td><input type="text" id="transport_cost-<?= $count ?>_u" name="transport_cost-<?= $count ?>_u" placeholder="Cost" title="Cost" style="width:170px" value="<?=$row_q_tr['transport_cost']?>"></td> 
@@ -424,7 +383,8 @@ $package_name = $sq_package['package_name'];
 
 
 <script>
-// $('#train_from_location1').select2();
+destinationLoading(".pickup_from", 'Pickup Location');
+destinationLoading(".drop_to", 'Drop-off Location');	
 city_lzloading('.city_name');
 // App_accordion
 jQuery(document).ready(function() {			

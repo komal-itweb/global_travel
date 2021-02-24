@@ -261,7 +261,7 @@ public function finance_save($refund_id){
     $gl_id = $pay_gl;
     $payment_side = "Credit";
     $clearance_status = "";
-    $transaction_master->transaction_save($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular, $gl_id, $payment_side, $clearance_status, $row_spec,'',$ledger_particular,$type);  
+    $transaction_master->transaction_save($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular, $gl_id,'', $payment_side, $clearance_status, $row_spec,'',$ledger_particular,$type);  
 
   ////////Refund Amount//////
     $module_name = "Group Booking Traveller Refund Paid";
@@ -274,7 +274,7 @@ public function finance_save($refund_id){
     $gl_id = $cust_gl;
     $payment_side = "Debit";
     $clearance_status = "";
-    $transaction_master->transaction_save($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular, $gl_id, $payment_side, $clearance_status, $row_spec,'',$ledger_particular,$type);  
+    $transaction_master->transaction_save($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular, $gl_id,'', $payment_side, $clearance_status, $row_spec,'',$ledger_particular,$type);  
 
 }
 
@@ -330,7 +330,7 @@ public function bank_cash_book_save($refund_id){
 
 public function refund_mail_send($tourwise_id,$total_refund,$refund_date,$refund_mode){
   global $app_email_id, $app_name, $app_contact_no, $admin_logo_url, $app_website, $currency_logo;
-  global $mail_em_style, $mail_em_style1, $mail_font_family, $mail_strong_style, $mail_color;
+  global $mail_em_style, $mail_em_style1, $mail_font_family, $mail_strong_style, $mail_color,$encrypt_decrypt,$secret_key;
    
   $sq_sq_train_info = mysql_fetch_assoc(mysql_query("select * from tourwise_traveler_details where id='$tourwise_id'"));
   $date = $sq_sq_train_info['form_date'];
@@ -344,7 +344,8 @@ public function refund_mail_send($tourwise_id,$total_refund,$refund_date,$refund
   $sq_tour_info = mysql_fetch_assoc(mysql_query("select * from refund_traveler_estimate where tourwise_traveler_id='$tourwise_id'"));
   
   $cust_email = mysql_fetch_assoc(mysql_query("select * from customer_master where customer_id='$sq_sq_train_info[customer_id]'"));
-  $customer_email_id = $cust_email['email_id'];
+  $customer_email_id = $encrypt_decrypt->fnDecrypt($cust_email['email_id'], $secret_key);
+  
   $content = '
   <tr>
       <table width="85%" cellspacing="0" cellpadding="5" style="color: #888888;border: 1px solid #888888;margin: 0px auto;margin-top:20px; min-width: 100%;" role="presentation">

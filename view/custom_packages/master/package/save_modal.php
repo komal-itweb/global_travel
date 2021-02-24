@@ -141,7 +141,8 @@
           <legend>Transport Information</legend>
           <div class="row mg_bt_20">
             <div class="col-xs-12 text-right mg_tp_10">
-              <button type="button" class="btn btn-info btn-sm ico_left mg_bt_10" onClick="addRow('tbl_package_tour_transport')"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add</button>
+              <button type="button" class="btn btn-info btn-sm ico_left mg_bt_10" onClick="addRow('tbl_package_tour_transport');destinationLoading('select[name^=pickup_from]', 'Pickup Location');
+destinationLoading('select[name^=drop_to]', 'Drop-off Location');"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add</button>
               <button type="button" class="btn btn-danger btn-sm ico_left mg_bt_10" onClick="deleteRow('tbl_package_tour_transport')"><i class="fa fa-times"></i>&nbsp;&nbsp;Delete</button>
             </div> 
               <div class="col-xs-12">
@@ -159,25 +160,8 @@
                               <option value="<?php echo $row_dest['entry_id']; ?>"><?php echo $row_dest['vehicle_name']; ?></option>
                           <?php } ?></select></td>
                           <td class="col-md-3"><select name="pickup_from" id="pickup_from" data-toggle="tooltip" style="width:250px;" title="Pickup Location" class="form-control app_minselect2">
-                              <option value="">Pickup Location</option>
-                              <optgroup value='city' label="City Name">
-                              <?php get_cities_dropdown('1'); ?>
-                              </optgroup>
-                              <optgroup value='airport' label="Airport Name">
-                              <?php get_airport_dropdown(); ?>
-                              </optgroup>
-                              <optgroup value='hotel' label="Hotel Name">
-                              <?php get_hotel_dropdown(); ?>
-                              </optgroup>
                           </select></td>
                           <td class="col-md-3"><select name="drop_to" id="drop_to" style="width:250px;" data-toggle="tooltip" title="Drop-off Location" class="form-control app_minselect2">
-                          <option value="">Drop-off Location</option>
-                          <optgroup value='city' label="City Name">
-                          <?php get_cities_dropdown('1'); ?></optgroup>
-                          <optgroup value='airport' label="Airport Name">
-                          <?php get_airport_dropdown(); ?></optgroup>
-                          <optgroup value='hotel' label="Hotel Name">
-                          <?php get_hotel_dropdown(); ?></optgroup>
                           </select></td>
                       </tr>
                     </tbody>
@@ -212,6 +196,8 @@
 <script>
 $('#dest_name_s,#vehicle_name1,#currency_code').select2();
 city_lzloading('select[name^="city_name1"]');
+destinationLoading('select[name^="pickup_from"]', "Pickup Location");
+destinationLoading('select[name^="drop_to"]', "Drop-off Location");
 function generate_list(){
 
     var total_days = $("#total_days").val();

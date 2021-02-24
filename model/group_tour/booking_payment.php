@@ -43,10 +43,10 @@ class booking_payment{
 
         //Finance Save
         $this->finance_save($max_payment_id, $branch_admin_id);
-
+        if($payment_mode != 'Credit Note'){
         //Bank and Cash Book Save
         $this->bank_cash_book_save($max_payment_id,$branch_admin_id);
-
+        }
         if($GLOBALS['flag']){
           commit_t();
     

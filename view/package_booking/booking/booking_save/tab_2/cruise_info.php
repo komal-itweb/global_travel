@@ -50,7 +50,6 @@
         <div class="col-md-2 col-sm-4 col-xs-12 mg_bt_10_xs">
             <label>Tax</label>
             <select name="cruise_taxation_id" id="cruise_taxation_id" title="Tax" placeholder="Tax" onchange="generic_tax_reflect(this.id, 'cruise_service_tax', 'calculate_total_cruise_expense');">
-                <?php get_taxation_dropdown(); ?>
             </select>
             <input type="hidden" id="cruise_service_tax" name="cruise_service_tax" value="0">            
         </div>

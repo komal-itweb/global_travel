@@ -68,6 +68,16 @@ $enq_details = mysql_fetch_assoc(mysql_query("Select * from enquiry_master where
                     <div class="col-md-3 col-sm-6 mg_bt_10">
                         <input type="text" class="form-control" id="location_u" name="location_u" placeholder="Location" title="Location" value="<?= $enq_details[location] ?>">
                     </div>
+                    <div class="col-sm-3 col-xs-12 mg_bt_10_sm_xs">
+                      <select name="enq_state1" id="enq_state1" title="Select State" style="width : 100%" required>
+                        <?php if($enq_details['enq_state']!=''){
+                        $sq_state = mysql_fetch_assoc(mysql_query("select * from state_master where id='$sq_customer[state_id]'"));
+                        ?>
+                        <option value="<?= $sq_state['id'] ?>"><?= $sq_state['state_name'] ?></option>
+                      <?php } ?>
+                        <?php get_states_dropdown() ?>
+                      </select>
+                    </div>
                 </div>
                 <?php
                 $enq_json = json_decode($enq_details['enquiry_content']);                
@@ -291,6 +301,7 @@ $(function(){
       var mobile_no = $("#txt_mobile_no_u").val(); 
       var email_id = $("#txt_email_id_u").val();
       var location = $("#location_u").val();
+      var enq_state = $("#enq_state1").val();
       var landline_no = $("#txt_landline_no_u").val(); 
       var country_code = $('#country_code1').val();
       var enquiry_date = $("#txt_enquiry_date_u").val();
@@ -323,7 +334,7 @@ $(function(){
       $('#btn_enq_edit').button('loading');
       $.post( 
         base_url+"controller/attractions_offers_enquiry/enquiry_master_update_c.php",
-        { enquiry_id : enquiry_id, mobile_no : mobile_no, email_id : email_id,location :location, landline_no : landline_no ,enquiry : enquiry, enquiry_date : enquiry_date , followup_date : followup_date, reference : reference,enquiry_content : enquiry_content, enquiry_specification : enquiry_specification,assigned_emp_id : assigned_emp_id, name : name, country_code : country_code},
+        { enquiry_id : enquiry_id, mobile_no : mobile_no, email_id : email_id,location :location, landline_no : landline_no ,enquiry : enquiry, enquiry_date : enquiry_date , followup_date : followup_date, reference : reference,enquiry_content : enquiry_content, enquiry_specification : enquiry_specification,assigned_emp_id : assigned_emp_id, name : name, country_code : country_code , enq_state:enq_state},
         function(data){
               $('#enquiry_edit_modal').modal('hide');
                 $('#btn_enq_edit').button('reset');

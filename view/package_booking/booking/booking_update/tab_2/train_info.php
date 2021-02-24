@@ -110,14 +110,7 @@
         <div class="col-md-2 col-sm-4 col-xs-12 mg_bt_10_xs">
             <label>Tax</label>
             <select name="train_taxation_id" id="train_taxation_id" title="Tax" onchange="generic_tax_reflect(this.id, 'train_service_tax', 'calculate_total_train_expense');">
-                <?php 
-                if($sq_booking_info['train_taxation_id']!='0'){
-                    $sq_taxation = mysql_fetch_assoc(mysql_query("select * from taxation_master where taxation_id='$sq_booking_info[train_taxation_id]'"));
-                    $sq_tax_type = mysql_fetch_assoc(mysql_query("select * from tax_type_master where tax_type_id='$sq_taxation[tax_type_id]'"));
-                    ?>
-                    <option value="<?= $sq_taxation['taxation_id'] ?>"><?= $sq_tax_type['tax_type'].'-'.$sq_taxation['tax_in_percentage'] ?></option>
-                <?php } ?>
-                <?php get_taxation_dropdown(); ?>
+                
             </select>
             <input type="hidden" id="train_service_tax" name="train_service_tax" value="<?= $sq_booking_info['train_service_tax'] ?>">            
         </div>

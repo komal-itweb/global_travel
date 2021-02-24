@@ -55,7 +55,7 @@
                   <div class="col-md-3 col-sm-6 col-xs-12 hidden">
                     <select name="taxation_type" id="taxation_type" title="Taxation Type">
                       <option value="<?= $tourwise_details['taxation_type'] ?>"><?= $tourwise_details['taxation_type'] ?></option>
-                      <?php get_taxation_type_dropdown($setup_country_id) ?>
+                     
                     </select>
                   </div>    
                   

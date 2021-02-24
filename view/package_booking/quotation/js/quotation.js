@@ -77,6 +77,7 @@ function total_passangers_calculate(offset = '') {
 	if (children_without_bed == '') children_without_bed = 0;
 	if (total_infant == '') total_infant = 0;
 
+
 	var total_passangers = parseFloat(total_adult) + parseFloat(total_infant) + parseFloat(children_with_bed) + parseFloat(children_without_bed);
 	$('#total_passangers' + offset).val(total_passangers);
 }
@@ -206,13 +207,16 @@ function get_enquiry_details(offset = '') {
 			$('#total_passangers' + offset).val(total_pax);
 			$('#from_date' + offset).val(result.travel_from_date);
 			$('#to_date' + offset).val(result.travel_to_date);
-			$('#train_departure_date').val(result.travel_from_date + ' 00:00:00');
-			$('#txt_dapart1').val(result.travel_from_date + ' 00:00:00');
-			$('#cruise_departure_date').val(result.travel_from_date + ' 00:00:00');
 
-			$('#train_dept_date_hidde').val(result.travel_from_date + ' 00:00:00');
-			$('#cruise_dept_date_hidde').val(result.travel_from_date + ' 00:00:00');
-			$('#plane_dept_date_hidde').val(result.travel_from_date + ' 00:00:00');
+			if (enquiry_id != '0') {
+				$('#train_departure_date').val(result.travel_from_date + ' 00:00:00');
+				$('#txt_dapart1').val(result.travel_from_date + ' 00:00:00');
+				$('#cruise_departure_date').val(result.travel_from_date + ' 00:00:00');
+				$('#train_dept_date_hidde').val(result.travel_from_date + ' 00:00:00');
+				$('#cruise_dept_date_hidde').val(result.travel_from_date + ' 00:00:00');
+				$('#plane_dept_date_hidde').val(result.travel_from_date + ' 00:00:00');
+			}
+
 			total_days_reflect(offset);
 		},
 		error: function (result) {

@@ -109,7 +109,7 @@ $role_id = $_SESSION['role_id'];
 
 		<div class="col-md-3 col-sm-6 col-xs-12 mg_bt_10">
 
-	     <input type="text" class="form-control" id="children_with_bed2" name="children_with_bed2" title="Child With Bed" onchange="total_passangers_calculate('1');validate_balance(this.id);cost_reflect()" placeholder="Child With Bed" value="<?= $sq_quotation['children_with_bed'] ?>">   
+	     <input type="text" class="form-control" id="children_with_bed1" name="children_with_bed1" title="Child With Bed" onchange="total_passangers_calculate('1');validate_balance(this.id);cost_reflect()" placeholder="Child With Bed" value="<?= $sq_quotation['children_with_bed'] ?>">   
 
 	    </div>
 		<div class="col-md-3 col-sm-6 col-xs-12 mg_bt_10">

@@ -1007,10 +1007,10 @@ public function traveler_personal_information_save($tourwise_traveler_id,$branch
       //Bank and Cash Book Save
 
 
-
+      if($payment_mode[$i] != 'Credit Note'){
       $booking_save_transaction->bank_cash_book_save($tourwise_traveler_id, $max_payment_id, $payment_date[$i], $payment_mode[$i], $payment_amount[$i], $transaction_id[$i], $bank_name[$i], $bank_id_arr[$i], $branch_admin_id);
 
-
+      }
 
     }  
  }

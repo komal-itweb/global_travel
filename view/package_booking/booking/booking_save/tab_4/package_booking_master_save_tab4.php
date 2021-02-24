@@ -110,7 +110,6 @@
                             </div>
                             <div class="col-md-2 col-sm-4 col-xs-12 mg_bt_10">
                                 <select name="visa_taxation_id" id="visa_taxation_id" title="Tax" placeholder="Tax" onchange="generic_tax_reflect(this.id, 'visa_service_tax', 'calculate_total_tour_cost');">
-                                    <?php get_taxation_dropdown(); ?>
                                 </select>
                                 <input type="hidden" id="visa_service_tax" name="visa_service_tax" value="0">        
                             </div>
@@ -133,7 +132,6 @@
                             </div>
                             <div class="col-md-2 col-sm-4 col-xs-12 mg_bt_10_xs">
                                 <select name="insuarance_taxation_id" id="insuarance_taxation_id" title="Tax" placeholder="Tax" onchange="generic_tax_reflect(this.id, 'insuarance_service_tax', 'calculate_total_tour_cost');">
-                                    <?php get_taxation_dropdown(); ?>
                                 </select>
                                 <input type="hidden" id="insuarance_service_tax" name="insuarance_service_tax" value="0">        
                             </div>

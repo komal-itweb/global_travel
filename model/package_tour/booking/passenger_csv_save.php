@@ -45,17 +45,6 @@ public function passenger_csv_save1()
                 );
 
             array_push($pass_info_arr, $arr);
-                //$m_birth_date = date('Y-m-d',strtotime($m_birth_date1));
-                //$m_passport_issue_date = date('Y-m-d',strtotime($m_passport_issue_date1));
-                //$m_passport_expiry_date = date('Y-m-d',strtotime($m_passport_expiry_date1));
-
-				/*$sq = mysql_query("insert into package_travelers_details (traveler_id, booking_id, m_honorific, first_name, middle_name, last_name, gender, birth_date, age, adolescence, passport_no, passport_issue_date, passport_expiry_date, status) values ('$max_traveler_id', '$max_booking_id', '$m_honorific', '$m_first_name', '$m_middle_name', '$m_last_name', '$m_gender', '$m_birth_date', '$m_age', '$m_adolescence', '$m_passport_no', '$m_passport_issue_date', '$m_passport_expiry_date', 'Active')");   
-
-                if(!$sq)
-                {
-                  $GLOBALS['flag'] = false;
-                  echo "Error at row".($i+1)." for traveler members.";
-                }  */
 			        
             }  
             

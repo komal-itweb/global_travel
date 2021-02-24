@@ -64,6 +64,11 @@ $branch_status = $_POST['branch_status'];
                     <div class="col-md-3 col-sm-6 mg_bt_10">
                         <input type="text" class="form-control" id="location" name="location" placeholder="Location" title="Location">
                     </div>
+                    <div class="col-md-3 col-sm-6 mg_bt_10">
+                      <select name="enq_state" id="enq_state" title="Select State" style="width : 100%" >
+                        <?php get_states_dropdown() ?>
+                      </select>
+                    </div>
                 </div>
                 <div class="panel panel-default panel-body app_panel_style feildset-panel mg_tp_20">
                   <legend>Service Information</legend>
@@ -182,6 +187,7 @@ $(function(){
     rules:{
            
             txt_name : { required :true },
+            enq_state : { required :true },
             assigned_emp_id : { required : true },
             txt_enquiry_date : { required :true },
             txt_followup_date : { required :true },
@@ -203,6 +209,7 @@ $(function(){
        var country_code = $('#country_code').val();
        var email_id = $("#txt_email_id").val();
        var location = $("#location").val();
+       var enq_state = $("#enq_state").val();
        var assigned_emp_id  = $('#assigned_emp_id').val();
        var enquiry_specification = $("#txt_enquiry_specification").val(); 
        var enquiry_date = $("#txt_enquiry_date").val(); 
@@ -261,7 +268,7 @@ $(function(){
        }
        
        $('#btn_enq_save').button('loading');
-       var obj = { login_id : login_id, enquiry_type : enquiry_type, name : name, mobile_no : mobile_no, email_id : email_id,location : location, assigned_emp_id : assigned_emp_id , enquiry_specification : enquiry_specification, enquiry_date : enquiry_date, followup_date : followup_date, reference_id : reference_id, enquiry_content : enquiry_content, landline_no : landline_no,enquiry : enquiry , branch_admin_id : branch_admin_id,financial_year_id : financial_year_id, country_code : country_code};
+       var obj = { login_id : login_id, enquiry_type : enquiry_type, name : name, mobile_no : mobile_no, email_id : email_id,location : location, enq_state:enq_state, assigned_emp_id : assigned_emp_id , enquiry_specification : enquiry_specification, enquiry_date : enquiry_date, followup_date : followup_date, reference_id : reference_id, enquiry_content : enquiry_content, landline_no : landline_no,enquiry : enquiry , branch_admin_id : branch_admin_id,financial_year_id : financial_year_id, country_code : country_code};
        $.post(
             base_url+"controller/attractions_offers_enquiry/enquiry_master_save_v.php",
             {  mobile_no : mobile_no, email_id : email_id },

@@ -1,4 +1,4 @@
-<?php 
+<?php
 include "../../../model/model.php";
 
 include_once('../../layouts/fullwidth_app_header.php');
@@ -60,6 +60,7 @@ $unique_timestapmp = $employee_name."".$unique_timestapmp;
 
 </div>
 
+<?php include "guideline_modal.php"; ?>
 <script>
 
 function copy_details(){

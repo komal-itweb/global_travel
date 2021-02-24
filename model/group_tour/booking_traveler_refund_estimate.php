@@ -58,7 +58,7 @@ public function finance_save($row_spec)
     $customer_id = $sq_booking['customer_id'];
     $taxation_type = $sq_booking['taxation_type'];
     $total_discount = $sq_booking['repeater_discount'] + $sq_booking['adjustment_discount'];
-    $total_sale_amount = $sq_booking['total_travel_expense']+$sq_booking['total_tour_fee']+$total_discount;
+    $total_sale_amount = $sq_booking['net_total']+$total_discount;
     $service_tax = $sq_booking['service_tax'];
     $reflections = json_decode($sq_booking['reflections']);
 
@@ -78,29 +78,19 @@ public function finance_save($row_spec)
 
    global $transaction_master;
 
-    //////////Sales/////////////
-
-    $module_name = "Group Booking";
-    $module_entry_id = $tourwise_id;
-    $transaction_id = "";
-    $payment_amount = $total_sale_amount;
-    $payment_date = $created_at;
-    $payment_particular = $particular;
-    $ledger_particular = '';
-    $gl_id = 60;
-    $payment_side = "Debit";
-    $clearance_status = "";
-    $transaction_master->transaction_save($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular, $gl_id,'', $payment_side, $clearance_status, $row_spec,'',$ledger_particular,'REFUND');
+    
 
     /////////Service Charge Tax Amount////////
     // Eg. CGST:(9%):24.77, SGST:(9%):24.77
     // $customer_amount = $sub_total+$service_charge+$markup+$tds-$discount;
     $service_tax_subtotal = explode(',',$service_tax);
     $tax_ledgers = explode(',',$reflections[0]->hotel_taxes);
+    $total_tax = 0;
     for($i=0;$i<sizeof($service_tax_subtotal);$i++){
 
       $service_tax = explode(':',$service_tax_subtotal[$i]);
       $tax_amount = $service_tax[2];
+      $total_tax += $tax_amount;
       $ledger = $tax_ledgers[$i];
 
       $module_name = "Group Booking";
@@ -115,7 +105,19 @@ public function finance_save($row_spec)
       $clearance_status = "";
       $transaction_master->transaction_save($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular, $gl_id,'', $payment_side, $clearance_status, $row_spec,'',$ledger_particular,'REFUND');
     }
+    //////////Sales/////////////
 
+    $module_name = "Group Booking";
+    $module_entry_id = $tourwise_id;
+    $transaction_id = "";
+    $payment_amount = $total_sale_amount - $total_tax;
+    $payment_date = $created_at;
+    $payment_particular = $particular;
+    $ledger_particular = '';
+    $gl_id = 60;
+    $payment_side = "Debit";
+    $clearance_status = "";
+    $transaction_master->transaction_save($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular, $gl_id,'', $payment_side, $clearance_status, $row_spec,'',$ledger_particular,'REFUND');
     // Discount 
     $module_name = "Group Booking";
     $module_entry_id = $tourwise_id;
@@ -133,7 +135,7 @@ public function finance_save($row_spec)
     $module_name = "Group Booking";
     $module_entry_id = $tourwise_id;
     $transaction_id = "";
-    $payment_amount = $sq_booking['total_tour_fee']+$sq_booking['total_travel_expense'];
+    $payment_amount = $sq_booking['net_total'];
     $payment_date = $created_at;
     $payment_particular = $particular;
     $ledger_particular = '';

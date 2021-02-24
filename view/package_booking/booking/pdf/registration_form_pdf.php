@@ -445,15 +445,13 @@ $y_pos1+=8;
 $pdf->SetXY(28,$y_pos1);
 $pdf->Cell(100, 5, 'PAYMENT DETAILS');
 
-$sq_taxation = mysql_fetch_assoc(mysql_query("select * from taxation_master where taxation_id='$package_booking_info[tour_taxation_id]'"));
-
 $total_hotel_expense = ($package_booking_info['total_hotel_expense']!="") ? $package_booking_info['total_hotel_expense']: 0;
 $total_tour_expense = ($package_booking_info['total_tour_expense']!="") ? $package_booking_info['total_tour_expense']: 0;
 $total_travel_expense = ($package_booking_info['total_travel_expense']!="") ? $package_booking_info['total_travel_expense']: 0;
 
 $subtotal = ($package_booking_info['subtotal']!="") ? $package_booking_info['subtotal']: 0;
 $tour_fee = ($package_booking_info['tour_fee']!="") ? $package_booking_info['tour_fee']: 0;
-$gst = ($sq_taxation['tax_in_percentage']!="") ? $sq_taxation['tax_in_percentage']: 0;
+$gst = '';
 $gst_amt = ($subtotal * $gst)/100;
 
 //Adding new page if end of page is found

@@ -255,7 +255,7 @@ function get_vendor_type_id(vendor_id, offset='')
     var cruise_id = $('#cruise_id'+offset).val();
     return cruise_id;
   }
-  else if(vendor_type=="Visa Vendor" || vendor_type=="Passport Vendor" || vendor_type=="Ticket Vendor" || vendor_type=="Train Ticket Vendor" || vendor_type=="Activity Vendor" || vendor_type=="Insurance Vendor" || vendor_type=="Other Vendor"){
+  else if(vendor_type=="Visa Vendor" || vendor_type=="Passport Vendor" || vendor_type=="Ticket Vendor" || vendor_type=="Train Ticket Vendor" || vendor_type=="Excursion Vendor" || vendor_type=="Insurance Vendor" || vendor_type=="Other Vendor"){
     var vendor_id = $('#vendor_id'+offset).val();
     return vendor_id;
   }  

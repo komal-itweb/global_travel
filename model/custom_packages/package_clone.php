@@ -7,8 +7,8 @@ public function package_clone_save(){
 	$cols=array();
 
 	$result = mysql_query("SHOW COLUMNS FROM custom_package_master"); 
-	 while ($r=mysql_fetch_assoc($result)) {
-	   $cols[]= $r["Field"];
+	while ($r=mysql_fetch_assoc($result)) {
+		$cols[]= $r["Field"];
 	}
 
 	$result = mysql_query("SELECT * FROM custom_package_master WHERE package_id='$package_id'");
@@ -35,47 +35,47 @@ public function package_clone_save(){
 			}
 			$insertSQL .= ")";
 			mysql_query($insertSQL);
-			$sq_update  = mysql_query("update custom_package_master set clone='yes' where package_id='$package_max'");
+			$sq_update  = mysql_query("update custom_package_master set clone='yes',update_flag='0' where package_id='$package_max'");
 	}
 
-  $this->clone_program_entries($package_id, $package_max);
-  $this->clone_hotel_entries($package_id, $package_max);
-  $this->clone_transport_entries($package_id, $package_max);
-  $this->clone_images_entries($package_id, $package_max);
+	$this->clone_program_entries($package_id, $package_max);
+	$this->clone_hotel_entries($package_id, $package_max);
+	$this->clone_transport_entries($package_id, $package_max);
+	$this->clone_images_entries($package_id, $package_max);
 
-  echo "Package Tour has been successfully copied.";
-	}
+	echo "Package Tour has been successfully copied.";
+}
 
 public function clone_program_entries($package_id, $package_max){
 	$cols=array();
 	$result = mysql_query("SHOW COLUMNS FROM custom_package_program"); 
 	while ($r=mysql_fetch_assoc($result)) {
-	   $cols[]= $r["Field"];
+		$cols[]= $r["Field"];
 	}
 
-	  $result = mysql_query("SELECT * FROM custom_package_program WHERE package_id='$package_id'");
-	  while($r=mysql_fetch_array($result)) {
-		    $insertSQL = "INSERT INTO custom_package_program (".implode(", ",$cols).") VALUES (";
-		    $count=count($cols);
+	$result = mysql_query("SELECT * FROM custom_package_program WHERE package_id='$package_id'");
+	while($r=mysql_fetch_array($result)) {
+		$insertSQL = "INSERT INTO custom_package_program (".implode(", ",$cols).") VALUES (";
+		$count=count($cols);
 
-		    foreach($cols as $counter=>$col) {
-		      if($col=='entry_id'){
-		      	$sq_max = mysql_fetch_assoc(mysql_query("select max(entry_id) as max from custom_package_program"));
-						$id = $sq_max['max']+1;
-						$insertSQL .= "'".$id."'";	
-  	      }
-		      elseif($col=='package_id'){
-	 			  	$insertSQL .= "'".$package_max."'";
- 			  	}
-		      else{
-		      	$insertSQL .= "'".$r[$col]."'";	
-		      }
-  			  if ($counter<$count-1) {$insertSQL .= ", ";}
-			 }
+		foreach($cols as $counter=>$col) {
+			if($col=='entry_id'){
+			$sq_max = mysql_fetch_assoc(mysql_query("select max(entry_id) as max from custom_package_program"));
+					$id = $sq_max['max']+1;
+					$insertSQL .= "'".$id."'";	
+			}
+			elseif($col=='package_id'){
+				$insertSQL .= "'".$package_max."'";
+			}
+			else{
+			$insertSQL .= "'".$r[$col]."'";	
+			}
+			if ($counter<$count-1) {$insertSQL .= ", ";}
+			}
 
-			  $insertSQL .= ")";
-			  mysql_query($insertSQL);
-	  }
+			$insertSQL .= ")";
+			mysql_query($insertSQL);
+	}
 }
 
 public function clone_hotel_entries($package_id, $package_max){

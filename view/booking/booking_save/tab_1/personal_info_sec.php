@@ -9,6 +9,20 @@
                     <option value="">Select Customer</option>
                 <?php 
 
+            if($branch_status=='yes' && $role!='Admin'){
+               $sq_query = mysql_query("select * from customer_master where active_flag!='Inactive' and branch_admin_id='$branch_admin_id' order by customer_id desc");
+                while($row_cust = mysql_fetch_assoc($sq_query))
+                {
+                    if($row_cust['type']=='Corporate'){ ?>
+                     <option value="<?php  echo $row_cust['customer_id']; ?>"><?php  echo $row_cust['company_name']; ?></option>      
+                     <?php }
+                    else{ ?>
+                        <option value="<?php  echo $row_cust['customer_id']; ?>"><?php  echo $row_cust['first_name'].' '.$row_cust['last_name']; ?></option>      
+                    <?php 
+                    }
+                }
+            }
+            else{
                 $sq_query = mysql_query("select * from customer_master where active_flag!='Inactive' order by customer_id desc");
                 while($row_cust = mysql_fetch_assoc($sq_query))
                 { 
@@ -20,7 +34,7 @@
                       <option value="<?php  echo $row_cust['customer_id']; ?>"><?php  echo $row_cust['first_name'].' '.$row_cust['last_name']; ?></option>      
                     <?php }
                 }
-            
+            }
                 ?>
             </select>
         </div>

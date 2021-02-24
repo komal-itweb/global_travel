@@ -92,7 +92,7 @@ public function finance_save($row_spec)
     $gl_id = 60;
     $payment_side = "Debit";
     $clearance_status = "";
-    $transaction_master->transaction_save($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular, $gl_id,'', $payment_side, $clearance_status, $row_spec,'',$ledger_particular);
+    $transaction_master->transaction_save($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular, $gl_id,'', $payment_side, $clearance_status, $row_spec,'',$ledger_particular,'REFUND');
 
     /////////Service Charge Tax Amount////////
     // Eg. CGST:(9%):24.77, SGST:(9%):24.77
@@ -106,16 +106,16 @@ public function finance_save($row_spec)
       $ledger = $tax_ledgers[$i];
 
       $module_name = "Group Booking";
-      $module_entry_id = $tourwise_traveler_id;
+      $module_entry_id = $tourwise_id;
       $transaction_id = "";
       $payment_amount = $tax_amount;
       $payment_date = $created_at;
-      $payment_particular = get_cancel_sales_particular(get_group_booking_id($tourwise_traveler_id,$yr1),$customer_id);
+      $payment_particular = $particular;
       $ledger_particular = '';
       $gl_id = $ledger;
       $payment_side = "Debit";
       $clearance_status = "";
-      $transaction_master->transaction_save($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular, $gl_id,'', $payment_side, $clearance_status, $row_spec,'',$ledger_particular);
+      $transaction_master->transaction_save($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular, $gl_id,'', $payment_side, $clearance_status, $row_spec,'',$ledger_particular,'REFUND');
     }
 
     // Discount 
@@ -130,20 +130,20 @@ public function finance_save($row_spec)
     $gl_id = 36;
     $payment_side = "Credit";
     $clearance_status = "";
-    $transaction_master->transaction_save($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular, $gl_id,'', $payment_side, $clearance_status, $row_spec,$branch_admin_id,$ledger_particular,'REFUND');
+    $transaction_master->transaction_save($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular, $gl_id,'', $payment_side, $clearance_status, $row_spec,'',$ledger_particular,'REFUND');
 
     ////////Customer Sale Amount//////
     $module_name = "Group Booking";
     $module_entry_id = $tourwise_id;
     $transaction_id = "";
-    $payment_amount = $sq_booking['total_tour_fee']+$sq_booking['total_travel_expense'];
+    $payment_amount = $sq_booking['net_total'];
     $payment_date = $created_at;
     $payment_particular = $particular;
     $ledger_particular = '';
     $gl_id = $cust_gl;
     $payment_side = "Credit";
     $clearance_status = "";
-    $transaction_master->transaction_save($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular, $gl_id,'', $payment_side, $clearance_status, $row_spec,'',$ledger_particular,'REFUND');    
+    $transaction_master->transaction_save($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular, $gl_id,'', $payment_side, $clearance_status, $row_spec,'',$ledger_particular,'REFUND');   
 
     ////////Cancel Amount//////
     $module_name = "Group Booking";
@@ -156,7 +156,7 @@ public function finance_save($row_spec)
     $gl_id = 161;
     $payment_side = "Credit";
     $clearance_status = "";
-    $transaction_master->transaction_save($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular, $gl_id,'', $payment_side, $clearance_status, $row_spec,'',$ledger_particular,'REFUND');    
+    $transaction_master->transaction_save($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular, $gl_id,'', $payment_side, $clearance_status, $row_spec,'',$ledger_particular,'REFUND');  
 
     ////////Customer Cancel Amount//////
     $module_name = "Group Booking";

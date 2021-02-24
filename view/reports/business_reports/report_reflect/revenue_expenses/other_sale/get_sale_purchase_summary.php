@@ -992,10 +992,10 @@ if($sale_type == 'Bus'){
 		$credit_charges = $sq_paid_amount['sumc'];
 
 		//Purchase 
-		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal from vendor_estimate where estimate_type='Bus Booking' and estimate_type_id ='$row_passport[booking_id]' and status!='Cancel'"));
+		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal , vendor_type from vendor_estimate where estimate_type='Bus Booking' and estimate_type_id ='$row_passport[booking_id]' and status!='Cancel'"));
 		$vendor_name = get_vendor_name_report($sq_pquery['vendor_type'],$sq_pquery['vendor_type_id']);
 
-		$total_sale = $row_passport['net_total'] - $service_tax_amount - $markupservice_tax_amount + $credit_charges;
+		$total_sale = $row_passport['net_total'] - $service_tax_amount - $markupservice_tax_amount + $credit_charges ;
 		$total_purchase = $sq_pquery['net_total']-$sq_pquery['service_tax_subtotal'];
 		$profit_amount = $total_sale - $total_purchase;
 		$profit_loss_per = ($profit_amount / $total_sale) * 100;

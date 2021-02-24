@@ -1,5 +1,6 @@
-<?php include_once('tour_info_sec.php') ?>
+
 <form id="frm_tab_1">
+<?php include_once('tour_info_sec.php') ?>
  <div class="">
  <div class="container">
       <h5 class="booking-section-heading main_block">Tour Details</h5>
@@ -27,7 +28,7 @@
 
               <!-- <div class="col-sm-4 mg_bt_10_sm_xs">
                 <select name="taxation_type" id="taxation_type" title="Taxation Type">
-                  <?php get_taxation_type_dropdown($setup_country_id) ?>
+                  
                 </select>
               </div> -->
               <div class="col-sm-4 mg_bt_10_sm_xs hidden">
@@ -61,10 +62,9 @@
     <button id="proceed_btn" class="btn btn-sm btn-info ico_right">Next&nbsp;&nbsp;<i class="fa fa-arrow-right"></i></button>
 </div>
 
-</form>
 
+</form>
 <?= end_panel() ?>
-<?php include "guideline_modal.php"; ?>
 <script src="../js/tab_1.js"></script>
 <script src="../js/tab_1_tour_info_sec.js"></script>
 

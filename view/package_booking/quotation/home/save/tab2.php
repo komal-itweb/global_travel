@@ -13,13 +13,6 @@
                 </a>
             </button>
           </div>
-          <div class="pull-right header_btn">
-            <button data-target="#myModalHint" data-toggle="modal">
-              <a title="Help">
-                <i class="fa fa-question" aria-hidden="true"></i>
-              </a>
-            </button>
-          </div>
       </div>
     </div> 
 <!--=======Header panel end======-->
@@ -248,11 +241,11 @@ e.preventDefault();
 				row.cells[2].childNodes[0].value = transport_arr[i]['bus_id'];
 
 				row.cells[3].childNodes[0].value = $from_date;
-				$(row.cells[4].childNodes[0]).prepend('<optgroup value='+transport_arr[i]['pickup_type']+' label="'+(transport_arr[i]['pickup_type']).charAt(0).toUpperCase()+(transport_arr[i]['pickup_type']).slice(1)+ ' Name"><option value="'+transport_arr[i]['pickup_id']+'">'+transport_arr[i]['pickup']+'</option></optgroup>');
-				document.getElementById(row.cells[4].childNodes[0].id).value = transport_arr[i]['pickup_id'];
+				$(row.cells[4].childNodes[0]).prepend('<optgroup value='+transport_arr[i]['pickup_type']+' label="'+(transport_arr[i]['pickup_type']).charAt(0).toUpperCase()+(transport_arr[i]['pickup_type']).slice(1)+ ' Name"><option value="'+transport_arr[i]['pickup_type']+'-'+transport_arr[i]['pickup_id']+'">'+transport_arr[i]['pickup']+'</option></optgroup>');
+				document.getElementById(row.cells[4].childNodes[0].id).value = transport_arr[i]['pickup_type']+'-'+transport_arr[i]['pickup_id'];
 
-				$(row.cells[5].childNodes[0]).prepend('<optgroup value='+transport_arr[i]['drop_type']+' label="'+(transport_arr[i]['drop_type']).charAt(0).toUpperCase()+(transport_arr[i]['drop_type']).slice(1)+' Name"><option value="'+transport_arr[i]['drop_id']+'">'+transport_arr[i]['drop']+'</option></optgroup>');
-				document.getElementById(row.cells[5].childNodes[0].id).value = transport_arr[i]['drop_id'];
+				$(row.cells[5].childNodes[0]).prepend('<optgroup value='+transport_arr[i]['drop_type']+' label="'+(transport_arr[i]['drop_type']).charAt(0).toUpperCase()+(transport_arr[i]['drop_type']).slice(1)+' Name"><option value="'+transport_arr[i]['drop_type']+'-'+transport_arr[i]['drop_id']+'">'+transport_arr[i]['drop']+'</option></optgroup>');
+				document.getElementById(row.cells[5].childNodes[0].id).value = transport_arr[i]['drop_type']+'-'+transport_arr[i]['drop_id'];
 
 				row.cells[7].childNodes[0].value = transport_arr[i]['total_cost'];
 				row.cells[8].childNodes[0].value = transport_arr[i]['package_name'];
@@ -263,7 +256,8 @@ e.preventDefault();
 				$('#' + row.cells[2].childNodes[0].id).select2().trigger("change");
 				$('#' + row.cells[4].childNodes[0].id).select2().trigger("change");
 				$('#' + row.cells[5].childNodes[0].id).select2().trigger("change");
-				
+				destinationLoading($(row.cells[4].childNodes[0]), 'Pickup Location');
+				destinationLoading($(row.cells[5].childNodes[0]), 'Drop-off Location');	
 
 			}
 		}
@@ -345,7 +339,7 @@ e.preventDefault();
 	
 	get_hotel_cost();
 	get_excursion_amount();
-	// get_transport_cost();
+	get_transport_cost();
 	$('#tab2_head').addClass('done');
 	$('#tab_daywise_head').addClass('active');
 	$('.bk_tab').removeClass('active');

@@ -96,7 +96,7 @@ $role_id = $_SESSION['role_id'];
 	    </div>
 		<div class="col-md-3 col-sm-6 col-xs-12 mg_bt_10">
 
-		<input type="text" class="form-control" id="children_with_bed" name="children_with_bed" onchange="validate_balance(this.id);cost_reflect();total_passangers_calculate();" placeholder="Child With Bed" title="Child With Bed"> 
+		<input type="text" class="form-control" id="children_with_bed" name="children_with_bed" onchange="validate_balance(this.id);total_passangers_calculate();cost_reflect();" placeholder="Child With Bed" title="Child With Bed"> 
 
 		</div>
 

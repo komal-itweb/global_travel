@@ -834,6 +834,8 @@ function foo(tableID, quot_table_id) {
 
 		row.cells[12].childNodes[0].setAttribute('id', 'txt_m_passport_expiry_date' + foo.counter);
 		dynamic_date(row.cells[12].childNodes[0].id);
+		row.cells[11].childNodes[0].setAttribute('onchange', 'validate_futuredate(id)');
+		row.cells[12].childNodes[0].setAttribute('onchange', 'validate_pastDate(id)');
 		$("[name='txt_train_total_seat1']").val(rowCount);
 		$("[name='txt_plane_seats-1']").val(rowCount);
 		$("[name='txt_cruise_total_seat1']").val(rowCount);
@@ -2355,6 +2357,9 @@ function addRow(tableID, quot_table = '') {
 		var val_data = table.rows[0].cells[i].childNodes[0].value;
 
 		newcell.innerHTML = table.rows[0].cells[i].innerHTML;
+		newcell.setAttribute('title', table.rows[0].cells[i].childNodes[0].getAttribute('title') != "" ? table.rows[0].cells[i].childNodes[0].getAttribute('title') :table.rows[0].cells[i].childNodes[0].getAttribute('data-original-title'));
+		$(newcell.childNodes[0]).tooltip({placement: 'bottom'});
+		$(newcell.childNodes[0]).click(function(){$('.tooltip').remove()})
 		switch (newcell.childNodes[0].type) {
 			case 'text':
 				if (quot_table == '' || quot_table == '2') {

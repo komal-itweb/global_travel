@@ -5,8 +5,8 @@ $(function () {
 
 $(function () {
 	$('.feature_editor').wysiwyg({
-		controls       : 'bold,italic,|,undo,redo,image|h1,h2,h3,decreaseFontSize,highlight',
-		initialContent : ' '
+		controls: 'bold,italic,|,undo,redo,image|h1,h2,h3,decreaseFontSize,highlight',
+		initialContent: ' '
 	});
 });
 
@@ -32,14 +32,14 @@ $(function () {
 
 //* round off values function *//
 
-function round_off_value (amount) {
+function round_off_value(amount) {
 	var amount1 = parseFloat(amount).toFixed(2);
 	return amount1;
 }
 
 //**Message alert
 
-function msg_alert (message) {
+function msg_alert(message) {
 	var msg = message.split('--');
 	if (msg[0] == 'error') {
 		error_msg_alert(msg[1]);
@@ -49,7 +49,7 @@ function msg_alert (message) {
 	}
 }
 //branch reflect
-function emp_branch_reflect () {
+function emp_branch_reflect() {
 	var base_url = $('#base_url').val();
 	var emp_id = $('#booker_id_filter').val();
 
@@ -59,7 +59,7 @@ function emp_branch_reflect () {
 }
 
 //Customer branch reflect
-function cust_branch_reflect () {
+function cust_branch_reflect() {
 	var base_url = $('#base_url').val();
 	var cust_id = $('#customer_filter').val();
 
@@ -69,20 +69,20 @@ function cust_branch_reflect () {
 }
 //**Error Message Alert
 
-function error_msg_alert (message, delay = '6000') {
+function error_msg_alert(message, delay = '6000') {
 	$('#site_alert').empty(); // to only display one error message
 	$('#site_alert').vialert({ type: 'error', title: 'Error', message: message, delay: delay });
 }
 
 //**Success Message Alert
 
-function success_msg_alert (message) {
+function success_msg_alert(message) {
 	$('#site_alert').empty(); // to only display one success message
 	$('#site_alert').vialert({ message: message });
 }
 
 //**Message popup reload
-function msg_popup_reload (message) {
+function msg_popup_reload(message) {
 	var msg = message.split('--');
 
 	if (msg[0] == 'error') {
@@ -90,10 +90,10 @@ function msg_popup_reload (message) {
 	}
 	else {
 		$('#vi_confirm_box').vi_confirm_box({
-			false_btn     : false,
-			message       : message,
-			true_btn_text : 'Ok',
-			callback      : function (data1) {
+			false_btn: false,
+			message: message,
+			true_btn_text: 'Ok',
+			callback: function (data1) {
 				if (data1 == 'yes') {
 					document.location.reload();
 				}
@@ -103,7 +103,7 @@ function msg_popup_reload (message) {
 }
 
 //**Reset Form
-function reset_form (form_id) {
+function reset_form(form_id) {
 	$('#' + form_id).find('input[type="text"]').each(function () {
 		$(this).val('');
 	});
@@ -118,22 +118,22 @@ function reset_form (form_id) {
 		});
 	});
 	document.getElementById(form_id).reset();
-	$("select").closest("form").on("reset",function(ev){ // for resetting Select2
+	$("select").closest("form").on("reset", function (ev) { // for resetting Select2
 		var targetJQForm = $(ev.target);
-		setTimeout((function(){
+		setTimeout((function () {
 			this.find("select").trigger("change");
-		}).bind(targetJQForm),0);
+		}).bind(targetJQForm), 0);
 	});
 	document.getElementById(form_id).reset();
-	$('#basic_show').html('&nbsp;');$('#basic_show1').html('&nbsp;');
-	$('#service_show').html('&nbsp;');$('#service_show1').html('&nbsp;');
-	$('#markup_show').html('&nbsp;');$('#markup_show1').html('&nbsp;');
-	$('#discount_show').html('&nbsp;');$('#discount_show1').html('&nbsp;');
+	$('#basic_show').html('&nbsp;'); $('#basic_show1').html('&nbsp;');
+	$('#service_show').html('&nbsp;'); $('#service_show1').html('&nbsp;');
+	$('#markup_show').html('&nbsp;'); $('#markup_show1').html('&nbsp;');
+	$('#discount_show').html('&nbsp;'); $('#discount_show1').html('&nbsp;');
 }
 
 //**Element count in array
 
-function isInArray (value, array1) {
+function isInArray(value, array1) {
 	for (var arr_count = 0; arr_count < array1.length; arr_count++) {
 		if (array1[arr_count] == value) {
 			return false;
@@ -144,7 +144,7 @@ function isInArray (value, array1) {
 
 //**Generic Tooltip
 /*$(function() {
-    $('input, select, textarea, span, a').tooltip({placement: 'bottom'});
+	$('input, select, textarea, span, a').tooltip({placement: 'bottom'});
 });*/
 $(function () {
 	$('input,textarea,span, a').tooltip({ placement: 'bottom' });
@@ -211,14 +211,14 @@ $(function () {
 });
 
 //**First letter capital event end**//
-function toTitleCase (str) {
+function toTitleCase(str) {
 	return str.replace(/\w\S*/g, function (txt) {
 		return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
 	});
 }
 
 //**App Base URL start**//
-function base_url () {
+function base_url() {
 	var base_url = $('#base_url').val();
 	return base_url;
 }
@@ -228,7 +228,7 @@ $.validator.addMethod('regex', function (value, element, param) {
 });
 
 //**Bank List reflect autocomplete start**//
-function bank_list_reflect () {
+function bank_list_reflect() {
 	var base_url = $('#base_url').val();
 
 	$.post(base_url + 'view/load_data/bank_list_json_response.php', {}, function (data) {
@@ -237,7 +237,7 @@ function bank_list_reflect () {
 	});
 }
 bank_list_reflect();
-function bank_name_autocomplete (data) {
+function bank_name_autocomplete(data) {
 	$('.bank_suggest').each(function () {
 		$(this).autocomplete({ source: data });
 	});
@@ -245,7 +245,7 @@ function bank_name_autocomplete (data) {
 //**Bank List reflect autocomplete end**//
 
 //**Route List reflect autocomplete start**//
-function route_list_reflect () {
+function route_list_reflect() {
 	var base_url = $('#base_url').val();
 
 	$.post(base_url + 'view/load_data/route_list_json_response.php', {}, function (data) {
@@ -254,7 +254,7 @@ function route_list_reflect () {
 	});
 }
 route_list_reflect();
-function route_name_autocomplete (data) {
+function route_name_autocomplete(data) {
 	$('.route_suggest').each(function () {
 		$(this).autocomplete({ source: data });
 	});
@@ -262,7 +262,7 @@ function route_name_autocomplete (data) {
 //**Route List reflect autocomplete end**//
 
 
-function today_date (id) {
+function today_date(id) {
 	var today = new Date();
 	var todaydate =
 		String(today.getDate()).padStart(2, '0') +
@@ -274,7 +274,7 @@ function today_date (id) {
 }
 today_date('as_of_date');
 //**Calculate age generic start**//
-function calculate_age_generic (from, to) {
+function calculate_age_generic(from, to) {
 	var dateString1 = $('#' + from).val();
 	var get_new = dateString1.split('-');
 
@@ -317,7 +317,7 @@ function calculate_age_generic (from, to) {
 
 //**Generic Customer save start**//
 
-function customer_save_modal (client_modal_type = 'other') {
+function customer_save_modal(client_modal_type = 'other') {
 	var base_url = $('#base_url').val();
 
 	$.post(base_url + 'view/customer_master/save_modal.php', { client_modal_type: client_modal_type }, function (data) {
@@ -325,7 +325,7 @@ function customer_save_modal (client_modal_type = 'other') {
 	});
 }
 
-function customer_dropdown_reload (cust_id = '') {
+function customer_dropdown_reload(cust_id = '') {
 	var base_url = $('#base_url').val();
 
 	$('.customer_dropdown').each(function () {
@@ -351,13 +351,13 @@ function customer_dropdown_reload (cust_id = '') {
 
 //**Generic Hotel save start**//
 
-function hotel_save_modal () {
+function hotel_save_modal() {
 	var base_url = $('#base_url').val();
 	var target = '_blank';
 	window.open(base_url + 'view/hotels/master/index.php', target);
 }
 
-function hotel_dropdown_reload (hotel_id = '') {
+function hotel_dropdown_reload(hotel_id = '') {
 	var base_url = $('#base_url').val();
 
 	$('.hotel_dropdown').each(function () {
@@ -381,7 +381,7 @@ function hotel_dropdown_reload (hotel_id = '') {
 
 //**Generic Hotel save end**//
 
-function corporate_fields_reflect () {
+function corporate_fields_reflect() {
 	var base_url = $('#base_url').val();
 
 	var cust_type = $('#cust_type').val();
@@ -399,7 +399,7 @@ function corporate_fields_reflect () {
 
 //**Generic City save modal start**//
 
-function generic_city_save_modal (modal_type = '') {
+function generic_city_save_modal(modal_type = '') {
 	$('#btn_city_save_modal').button('loading');
 
 	var base_url = $('#base_url').val();
@@ -411,7 +411,7 @@ function generic_city_save_modal (modal_type = '') {
 	});
 }
 
-function city_master_dropdown_reload () {
+function city_master_dropdown_reload() {
 	var city_master_dropdown = 'city_master_dropdown';
 
 	var base_url = $('#base_url').val();
@@ -433,19 +433,19 @@ function city_master_dropdown_reload () {
 	});
 }
 //City Dropdown Lazy Loading
-function city_lzloading(element, placeholder = "City Name"){
+function city_lzloading(element, placeholder = "City Name", valueasText = false) {
 	var base_url = $("#base_url").val();
-	url = base_url+'/view/load_data/generic_city_loading.php';
-	
+	url = base_url + '/view/load_data/generic_city_loading.php';
+	$(element).append($("<option></option>").attr("value", "").text(placeholder)); 
 	$(element).select2({
 		placeholder: placeholder,
 		ajax: {
 			url: url,
 			dataType: 'json',
 			type: 'GET',
-			data: function(params) { return { term: params.term , page: params.page || 0 }},
+			data: function (params) { return { term: params.term, page: params.page || 0, valueasText: valueasText } },
 			processResults: function (data) {
-			let more = data.pagination;
+				let more = data.pagination;
 				return {
 					results: data.results,
 					pagination: {
@@ -454,24 +454,37 @@ function city_lzloading(element, placeholder = "City Name"){
 				};
 			}
 		}
-	  });
+	});
+
 }
-// function generic_city_multi_loading(rowlen, clicks,...fields){
-// 	fields.forEach(element => {
-// 		for(i=1; i<= clicks+rowlen; i++){
-// 			city_loading(element+i, false);
-// 			//console.log(rowlen);
-// 			$("#"+element+i).next().next().css('display','none');
-// 		}
-// 	});
+function destinationLoading(element, placeholder = "Destination", valueasText = false) {
+	var base_url = $("#base_url").val();
+	url = base_url + '/view/load_data/generic_destination_loading.php';
 
-// }
-
+	$(element).select2({
+		placeholder: placeholder,
+		ajax: {
+			url: url,
+			dataType: 'json',
+			type: 'GET',
+			data: function (params) { return { term: params.term, page: params.page || 0, valueasText: valueasText } },
+			processResults: function (data) {
+				let more = data.pagination;
+				return {
+					results: data.results,
+					pagination: {
+						more: more.more,
+					}
+				};
+			}
+		}
+	});
+}
 //**Generic City save modal end**//
 
 //**Generic PAyment fields toggle function start**//
 
-function payment_master_toggles (payment_mode_id, bank_name_id, transaction_id_id, bank_id_id) {
+function payment_master_toggles(payment_mode_id, bank_name_id, transaction_id_id, bank_id_id) {
 
 	var payment_mode = $('#' + payment_mode_id).val();
 
@@ -493,7 +506,7 @@ function payment_master_toggles (payment_mode_id, bank_name_id, transaction_id_i
 
 //If payment amount 0 disable payment mode
 
-function payment_amount_validate (payment_amount_id, payment_mode_id, transaction_id_id, bank_name_name, bank_id_id) {
+function payment_amount_validate(payment_amount_id, payment_mode_id, transaction_id_id, bank_name_name, bank_id_id) {
 	var payment_amt = $('#' + payment_amount_id).val();
 
 	if (payment_amt == 0) {
@@ -510,82 +523,82 @@ function payment_amount_validate (payment_amount_id, payment_mode_id, transactio
 	}
 }
 
-function event_airport(id,fromSectornum = 2, toSectornum = 3){ //driver function
+function event_airport(id, fromSectornum = 2, toSectornum = 3) { //driver function
 	var table1 = document.getElementById(id);
 	var rows = table1.rows;
-	for(var i=0; i < parseInt(rows.length); i++){
+	for (var i = 0; i < parseInt(rows.length); i++) {
 		var id1 = rows[i].cells[fromSectornum].childNodes[0].getAttribute('id');
 		var id2 = rows[i].cells[toSectornum].childNodes[0].getAttribute('id');
-		
-		var ids = [{"dep" : id1}, {"arr" : id2}];
-		try{
-			airport_load_main(ids);	
+
+		var ids = [{ "dep": id1 }, { "arr": id2 }];
+		try {
+			airport_load_main(ids);
 		}
-		catch(e){
+		catch (e) {
 			continue;
 		}
 	}
 }
-function airport_load_main(ids){
-	ids.forEach(function (id){
+function airport_load_main(ids) {
+	ids.forEach(function (id) {
 		var object_id = Object.values(id)[0];
 		var base_url = $('#base_url').val();
-		$("#"+object_id).autocomplete({
-			source: function(request, response){
+		$("#" + object_id).autocomplete({
+			source: function (request, response) {
 				$.ajax({
-					method:'get',
-					url : base_url+'/view/visa_passport_ticket/ticket/home/airport_list.php',
-					dataType : 'json',
-					data : {request : request.term},
-					success : function(data){
+					method: 'get',
+					url: base_url + '/view/visa_passport_ticket/ticket/home/airport_list.php',
+					dataType: 'json',
+					data: { request: request.term },
+					success: function (data) {
 						response(data);
 					}
 				});
 			},
 			select: function (event, ui) {
 				// var substr_id =  object_id.substr(6);
-				var substr_id =  object_id.split('-')[1];
-				if(Object.keys(id)[0] == 'dep'){
-					$('#from_city-'+substr_id).val(ui.item.city_id);
+				var substr_id = object_id.split('-')[1];
+				if (Object.keys(id)[0] == 'dep') {
+					$('#from_city-' + substr_id).val(ui.item.city_id);
 				}
-				else{
-					$('#to_city-'+substr_id).val(ui.item.city_id);
+				else {
+					$('#to_city-' + substr_id).val(ui.item.city_id);
 				}
 			},
-			open: function(event, ui) {
+			open: function (event, ui) {
 				$(this).autocomplete("widget").css({
 					"width": document.getElementById(object_id).offsetWidth
 				});
 			},
-			minLength : 3,
-			change: function(event,ui){
-				var substr_id =  object_id.substr(6);
-				if(!ui.item) {
+			minLength: 3,
+			change: function (event, ui) {
+				var substr_id = object_id.substr(6);
+				if (!ui.item) {
 					$(this).val('');
-					$('#from_city-'+substr_id).val("");
-					$('#to_city-'+substr_id).val("");
+					$('#from_city-' + substr_id).val("");
+					$('#to_city-' + substr_id).val("");
 					error_msg_alert('Please select Airport from the list!!');
-					$(this).css('border','1px solid red;');
+					$(this).css('border', '1px solid red;');
 					return;
 				}
-				if(($('#'+ids[0].dep).val() == $("#"+ids[1].arr).val()) && $('#'+ids[0].dep).val() != '' && $('#'+ids[1].arr).val() != ''){
+				if (($('#' + ids[0].dep).val() == $("#" + ids[1].arr).val()) && $('#' + ids[0].dep).val() != '' && $('#' + ids[1].arr).val() != '') {
 					$(this).val('');
-					$('#from_city-'+substr_id).val("");
-					$('#to_city-'+substr_id).val("");
-					$(this).css('border','1px solid red;');
+					$('#from_city-' + substr_id).val("");
+					$('#to_city-' + substr_id).val("");
+					$(this).css('border', '1px solid red;');
 					error_msg_alert('Same Arrival and Boarding Airport Not Allowed!!');
 				}
 
 			}
-		}).data("ui-autocomplete")._renderItem = function(ul, item) {
-				return $("<li disabled>")
+		}).data("ui-autocomplete")._renderItem = function (ul, item) {
+			return $("<li disabled>")
 				.append("<a>" + item.value.split(" -")[1] + "<br><b>" + item.value.split(" -")[0] + "<b></a>")
 				.appendTo(ul);
-			}
+		}
 	});
 }
 
-function generic_tax_reflect_temp (src_id, desc_id, funct_call) {
+function generic_tax_reflect_temp(src_id, desc_id, funct_call) {
 	var offset = src_id.split('-');
 
 	desc_id = desc_id + '' + offset[1];
@@ -595,7 +608,7 @@ function generic_tax_reflect_temp (src_id, desc_id, funct_call) {
 
 //**Generic service tax reflect start**//
 
-function generic_tax_reflect (src_id, desc_id, funct_call, offset = '', temp_data = '') {
+function generic_tax_reflect(src_id, desc_id, funct_call, offset = '', temp_data = '') {
 	var taxation_id = $('#' + src_id).val();
 
 	$.post(base_url() + 'view/load_data/generic_tax_reflect.php', { taxation_id: taxation_id }, function (data) {
@@ -619,7 +632,7 @@ function generic_tax_reflect (src_id, desc_id, funct_call, offset = '', temp_dat
 
 //**Generic service tax reflect end**//
 //**PHP to Javascript date converter**//
-function php_to_js_date_converter (dateString1) {
+function php_to_js_date_converter(dateString1) {
 	var get_new = dateString1.split('-');
 
 	var day = get_new[0];
@@ -651,7 +664,7 @@ String.prototype.trimChars = function (chars) {
 	return this.substring(l, r + 1);
 };
 
-function printdiv (printpage, tbl_id) {
+function printdiv(printpage, tbl_id) {
 	$('#' + tbl_id).dataTable().fnDestroy();
 
 	var headstr = '<html><head><title></title></head><body>';
@@ -673,7 +686,7 @@ function printdiv (printpage, tbl_id) {
 	return false;
 }
 
-function check_pdf_size (pdf_size, url, url1) {
+function check_pdf_size(pdf_size, url, url1) {
 	var pdf_size = $('#' + pdf_size).val();
 
 	if (pdf_size == 'A4 Full Size') {
@@ -684,40 +697,40 @@ function check_pdf_size (pdf_size, url, url1) {
 	}
 }
 //Print
-function loadOtherPage (url) {
+function loadOtherPage(url) {
 	$('<iframe>').hide().attr('src', url).appendTo('body');
 	// window.location.href= url;
 }
 
-function check_package_type (setup_package, module_name) {
+function check_package_type(setup_package, module_name) {
 	var base_url = $('#base_url').val();
 	if (module_name == 'user') {
 		$.ajax({
-			type    : 'POST',
-			url     : base_url + 'view/package_permission/user_permission.php',
-			data    : {},
-			async   : false,
-			success : function (data1) {
+			type: 'POST',
+			url: base_url + 'view/package_permission/user_permission.php',
+			data: {},
+			async: false,
+			success: function (data1) {
 				$('#user_count').val(data1);
 			}
 		});
 	}
 	if (module_name == 'branch') {
 		$.ajax({
-			type    : 'POST',
-			url     : base_url + 'view/package_permission/branch_permission.php',
-			data    : {},
-			async   : false,
-			success : function (data1) {
+			type: 'POST',
+			url: base_url + 'view/package_permission/branch_permission.php',
+			data: {},
+			async: false,
+			success: function (data1) {
 				$('#branch_count').val(data1);
 			}
 		});
 	}
 }
-function remove_hidden_class () {
+function remove_hidden_class() {
 	$('#package_permission').addClass('hidden');
 }
-function display_description (type, entry_id) {
+function display_description(type, entry_id) {
 	var base_url = $('#base_url').val();
 	$.post(base_url + 'view/load_data/module_description_modal.php', { entry_id: entry_id, type: type }, function (
 		data
@@ -726,7 +739,7 @@ function display_description (type, entry_id) {
 	});
 }
 
-function select_all_check (id, custom_package) {
+function select_all_check(id, custom_package) {
 	var checked = $('#' + id).is(':checked');
 	// Select all
 	if (checked) {
@@ -742,7 +755,7 @@ function select_all_check (id, custom_package) {
 	}
 }
 
-function show_password (password) {
+function show_password(password) {
 	var x = document.getElementById(password);
 	if (x.type === 'password') {
 		x.type = 'text';
@@ -752,7 +765,7 @@ function show_password (password) {
 	}
 }
 
-function pagination_load (
+function pagination_load(
 	dataset,
 	columns,
 	bg_stat = false,
@@ -797,23 +810,23 @@ function pagination_load (
 		$('#' + table_id).DataTable().clear().destroy(); // for managin error
 	}
 	var table = $('#' + table_id).DataTable({
-		data         : table_data,
-		pageLength   : pg_length,
-		columns      : columns,
-		searching    : true,
+		data: table_data,
+		pageLength: pg_length,
+		columns: columns,
+		searching: true,
 		// "scrollX": true,
-		createdRow   : function (row, data, dataIndex) {
+		createdRow: function (row, data, dataIndex) {
 			// adds bg color for every invalid point
 			if (bg_stat) $(row).addClass(bg[dataIndex]);
 			$(row.cells[1].childNodes[0]).labelauty({ label: false, maximum_width: '20px' });
 		},
-		initComplete : function (settings, json) {
+		initComplete: function (settings, json) {
 			$("[data-toggle='tooltip']").tooltip({ placement: 'bottom' });
 			$("[data-toggle='tooltip']").click(function () {
 				$('.tooltip').remove();
 			});
 		},
-		lengthMenu   : [
+		lengthMenu: [
 			[
 				10,
 				20,
@@ -827,20 +840,20 @@ function pagination_load (
 				'Show all'
 			]
 		],
-		buttons      : [
+		buttons: [
 			'pageLength'
 		]
 	});
 	$('#' + table_id).append(html);
 	return table;
 }
-function convert_date_to_db (date) {
+function convert_date_to_db(date) {
 	var parts = date.split('-');
 	date = parts[2] + '-' + parts[1] + '-' + parts[0];
 	return Date.parse(date);
 }
 
-function get_other_rules (travel_type, booking_date) {
+function get_other_rules(travel_type, booking_date) {
 	var cache_rules = JSON.parse($('#cache_data').val());
 
 	var invoice_date = $('#' + booking_date).val();
@@ -913,21 +926,21 @@ function get_other_rules (travel_type, booking_date) {
 	var result = service_charge_result.concat(markup_result, commission_result, taxes, tax_rules);
 	return result;
 }
-function update_cache(){
+function update_cache() {
 	var base_url = $('#base_url').val();
-	$.post(base_url+'model/update_cache.php', {}, function(data){
+	$.post(base_url + 'model/update_cache.php', {}, function (data) {
 		$('#cache_data').val(data);
 	});
 }
 
-function get_identifier_block(identifier,payment_mode,credit_card_details,credit_charges){
+function get_identifier_block(identifier, payment_mode, credit_card_details, credit_charges) {
 
-	var payment_mode = $('#'+payment_mode).val();
-	if(payment_mode === 'Credit Card'){
+	var payment_mode = $('#' + payment_mode).val();
+	if (payment_mode === 'Credit Card') {
 		document.getElementById(identifier).classList.remove("hidden");
 		document.getElementById("identifier").innerHTML = '';
 		var select = document.getElementById("identifier");
-		select.options[select.options.length] = new Option('Select Identifier','');
+		select.options[select.options.length] = new Option('Select Identifier', '');
 
 		var cache_rules = JSON.parse($('#cache_data').val());
 		var credit_card_company = cache_rules[0]['credit_card_data'];
@@ -946,7 +959,7 @@ function get_identifier_block(identifier,payment_mode,credit_card_details,credit
 			});
 		});
 	}
-	else{
+	else {
 		document.getElementById(identifier).classList.add("hidden");
 		document.getElementById(credit_card_details).classList.add("hidden");
 		document.getElementById(credit_charges).classList.add("hidden");
@@ -955,10 +968,10 @@ function get_identifier_block(identifier,payment_mode,credit_card_details,credit
 	document.getElementById(credit_card_details).value = '';
 	document.getElementById(credit_charges).value = '';
 }
-function get_credit_card_data (identifier,payment_mode,credit_card_details) {
-	
-	var identifier = $('#'+identifier).val();
-	var payment_mode = $('#'+payment_mode).val();
+function get_credit_card_data(identifier, payment_mode, credit_card_details) {
+
+	var identifier = $('#' + identifier).val();
+	var payment_mode = $('#' + payment_mode).val();
 	var cache_rules = JSON.parse($('#cache_data').val());
 	var credit_card_company = cache_rules[0]['credit_card_data'];
 
@@ -972,37 +985,37 @@ function get_credit_card_data (identifier,payment_mode,credit_card_details) {
 			var identifiers = membership_no['nos'];
 			identifiers && identifiers.map((i) => {
 				let i1 = i.substring(0, 4);
-				if(identifier === i1)
-					identifiers1 = data['entry_id']+'-'+data['company_name']+':'+membership_no['membership_no']+':'+i;
+				if (identifier === i1)
+					identifiers1 = data['entry_id'] + '-' + data['company_name'] + ':' + membership_no['membership_no'] + ':' + i;
 			});
 		});
 	});
-	if(payment_mode === 'Credit Card'){
+	if (payment_mode === 'Credit Card') {
 
-		if(identifiers1!==''){
+		if (identifiers1 !== '') {
 			document.getElementById(credit_card_details).classList.remove("hidden");
 			document.getElementById('credit_card_details').value = identifiers1;
-		}else{
+		} else {
 			document.getElementById(credit_card_details).value = '';
 			document.getElementById(credit_card_details).classList.add("hidden");
 		}
-	}else{
+	} else {
 		document.getElementById(credit_card_details).value = '';
 		document.getElementById(credit_card_details).classList.add("hidden");
 	}
 }
 
-function get_credit_card_charges(identifier,payment_mode,payment_amount,credit_card_details,credit_charges){
+function get_credit_card_charges(identifier, payment_mode, payment_amount, credit_card_details, credit_charges) {
 
 	var credit_card_charges = $('#credit_card_charges').val();
-	var payment_mode = $('#'+payment_mode).val();
-	var payment_amount = $('#'+payment_amount).val();
-	if(payment_mode === 'Credit Card'){
-		var result = payment_amount * (credit_card_charges/100);
+	var payment_mode = $('#' + payment_mode).val();
+	var payment_amount = $('#' + payment_amount).val();
+	if (payment_mode === 'Credit Card') {
+		var result = payment_amount * (credit_card_charges / 100);
 		document.getElementById(credit_charges).classList.remove("hidden");
 		result = parseFloat(result).toFixed(2);
 		document.getElementById(credit_charges).value = result;
-	}else{
+	} else {
 		document.getElementById(credit_charges).value = '';
 		document.getElementById(credit_charges).classList.add("hidden");
 		document.getElementById(credit_card_details).value = '';
@@ -1012,12 +1025,12 @@ function get_credit_card_charges(identifier,payment_mode,payment_amount,credit_c
 	}
 }
 
-function check_updated_amount(payment_old_value,payment_amount){
-	
-    if(parseFloat(payment_old_value) !== parseFloat(payment_amount)){
-		if(payment_amount != 0) return false;
+function check_updated_amount(payment_old_value, payment_amount) {
+
+	if (parseFloat(payment_old_value) !== parseFloat(payment_amount)) {
+		if (payment_amount != 0) return false;
 		else return true;
-	}else{
+	} else {
 		return true;
 	}
 }

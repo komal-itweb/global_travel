@@ -13,6 +13,10 @@ function enquiry_master_save(){
   $country_code = $_POST['country_code'];
   $email_id = $_POST["email_id"];
   $location = $_POST["location"];
+  $cust_last_name = $_POST["cust_last_name"];
+  $cust_birth_date = $_POST["cust_birth_date"];
+  $cust_anni_date = $_POST["cust_anni_date"];
+  $cust_type = $_POST["cust_type"];
   $enq_state = $_POST["enq_state"];
   $assigned_emp_id = $_POST['assigned_emp_id'];
   $enquiry_specification = $_POST["enquiry_specification"]; 
@@ -45,8 +49,27 @@ function enquiry_master_save(){
 
     $name = addslashes($name);
     $enquiry_specification = addslashes($enquiry_specification);
-    $sq_enquiry = mysql_query("insert into enquiry_master (enquiry_id, login_id,branch_admin_id,financial_year_id, enquiry_type,enquiry, name, mobile_no, landline_no, country_code,email_id,location, assigned_emp_id, enquiry_specification, enquiry_date, followup_date, reference_id, enquiry_content ,enq_state) values ('$enquiry_id', '$login_id', '$branch_admin_id','$financial_year_id', '$enquiry_type','$enquiry', '$name', '$mobile_no', '$landline_no', '$country_code','$email_id','$location', '$assigned_emp_id', '$enquiry_specification', '$enquiry_date', '$followup_date', '$reference_id', '$enquiry_content','$enq_state')");
+    $sq_enquiry = mysql_query("insert into enquiry_master (enquiry_id, login_id,branch_admin_id,financial_year_id, enquiry_type,enquiry, name, mobile_no, landline_no, country_code,email_id,location, assigned_emp_id, enquiry_specification, enquiry_date, followup_date, reference_id, enquiry_content ,enq_state,cust_last_name,cust_birth_date,cust_anni_date,cust_type) values ('$enquiry_id', '$login_id', '$branch_admin_id','$financial_year_id', '$enquiry_type','$enquiry', '$name', '$mobile_no', '$landline_no', '$country_code','$email_id','$location', '$assigned_emp_id', '$enquiry_specification', '$enquiry_date', '$followup_date', '$reference_id', '$enquiry_content','$enq_state','$cust_last_name','$cust_birth_date','$cust_anni_date','$cust_type')");
 
+    global $encrypt_decrypt, $secret_key;
+    $contact_no = $encrypt_decrypt->fnEncrypt($mobile_no, $secret_key);
+    $email_id = $encrypt_decrypt->fnEncrypt($email_id, $secret_key);
+    $row_count=mysql_num_rows(mysql_query("select * from customer_master where contact_no='$contact_no' and email_id='$email_id'"));
+    //echo $row_count;
+  if($row_count==0){
+      $sq_max = mysql_fetch_assoc(mysql_query("select max(customer_id) as max from customer_master"));
+      $customer_id = $sq_max['max'] + 1;
+      $str="insert into customer_master (customer_id,first_name,last_name,birth_date,anni_date,type, country_code,contact_no,email_id, address, active_flag, created_at,branch_admin_id , state_id) values ('$customer_id', '$name','$cust_last_name','$cust_birth_date','$cust_anni_date','$cust_type', '$country_code','$contact_no', '$email_id', '$location', 'Active', '$created_at','$branch_admin_id', '$enq_state')";
+        $sq_visa = mysql_query($str);
+      $sq_max = mysql_fetch_assoc(mysql_query("select max(ledger_id) as max from ledger_master"));
+      $ledger_id = $sq_max['max'] + 1;
+        $ledger_name = $customer_id.'_'.$sq_enq['name'];
+    
+      $sq_ledger = mysql_query("insert into ledger_master (ledger_id, ledger_name, alias, group_sub_id, balance, dr_cr,customer_id,user_type,status) values ('$ledger_id', '$ledger_name', '', '20', '0','Dr','$customer_id','customer','Active')");
+    }
+    else{
+      echo "Customer Already exist.";
+    }
     $sq_max = mysql_fetch_assoc(mysql_query("select max(entry_id) as max from enquiry_master_entries"));
     $entry_id = $sq_max['max'] + 1;
 
@@ -216,6 +239,11 @@ function enquiry_master_update()
   $email_id = $_POST["email_id"];
   $location = $_POST["location"];
   $enq_state = $_POST["enq_state"];
+  
+  $cust_last_name = $_POST["cust_last_name"];
+  $cust_birth_date = $_POST["cust_birth_date"];
+  $cust_anni_date = $_POST["cust_anni_date"];
+  $cust_type = $_POST["cust_type"];
   $landline_no = $_POST["landline_no"];
   $country_code = $_POST['country_code'];
   $enquiry_date = $_POST['enquiry_date'];
@@ -234,7 +262,7 @@ function enquiry_master_update()
   $name = addslashes($name);
   $enquiry_specification = addslashes($enquiry_specification);
 
-  $sq_enquiry = mysql_query("update enquiry_master set name='$name', country_code = '$country_code', mobile_no='$mobile_no',landline_no = '$landline_no',email_id='$email_id',location='$location', enquiry = '$enquiry', enquiry_date='$enquiry_date', followup_date='$followup_date', reference_id='$reference_id', enquiry_content='$enquiry_content', enquiry_specification='$enquiry_specification', assigned_emp_id ='$assigned_emp_id' , enq_state='$enq_state' where enquiry_id='$enquiry_id'");
+  $sq_enquiry = mysql_query("update enquiry_master set name='$name', country_code = '$country_code', mobile_no='$mobile_no',landline_no = '$landline_no',email_id='$email_id',location='$location', enquiry = '$enquiry', enquiry_date='$enquiry_date', followup_date='$followup_date', reference_id='$reference_id', enquiry_content='$enquiry_content', enquiry_specification='$enquiry_specification', assigned_emp_id ='$assigned_emp_id' , enq_state='$enq_state' , cust_last_name='$cust_last_name' , cust_birth_date='$cust_birth_date' , cust_anni_date='$cust_anni_date' , cust_type='$cust_type' where enquiry_id='$enquiry_id'");
 
   if(!$sq_enquiry){
     echo "error--Enquiry Information Not Updated.";
@@ -328,21 +356,6 @@ public function followup_reply_save()
        $this->send_enquiry_coverted_mail($enquiry_id);
        $sq_enq = mysql_fetch_assoc(mysql_query("select * from enquiry_master where enquiry_id='$enquiry_id'"));
         ////Customer generate
-        $sq_max = mysql_fetch_assoc(mysql_query("select max(customer_id) as max from customer_master"));
-        $customer_id = $sq_max['max'] + 1;
-        global $encrypt_decrypt, $secret_key;
-        $contact_no = $encrypt_decrypt->fnEncrypt($sq_enq['mobile_no'], $secret_key);
-        $email_id = $encrypt_decrypt->fnEncrypt($sq_enq['email_id'], $secret_key);
-      
-         $str="insert into customer_master (customer_id,first_name, country_code,contact_no,email_id, address, active_flag, created_at,branch_admin_id , state_id) values ('$customer_id', '$sq_enq[name]', '$sq_enq[country_code]','$contact_no', '$email_id', '$sq_enq[location]', 'Active', '$created_at','$branch_admin_id', '$sq_enq[enq_state]')";
-           $sq_visa = mysql_query($str);
-         
-      
-        $sq_max = mysql_fetch_assoc(mysql_query("select max(ledger_id) as max from ledger_master"));
-        $ledger_id = $sq_max['max'] + 1;
-          $ledger_name = $customer_id.'_'.$sq_enq['name'];
-      
-        $sq_ledger = mysql_query("insert into ledger_master (ledger_id, ledger_name, alias, group_sub_id, balance, dr_cr,customer_id,user_type,status) values ('$ledger_id', '$ledger_name', '', '20', '0','Dr','$customer_id','customer','Active')");
          
        $name = $sq_enq['name'];
       $this->enquiry_converted_sms_send($enquiry_id,$name);

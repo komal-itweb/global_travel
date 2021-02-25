@@ -44,6 +44,9 @@ $enq_details = mysql_fetch_assoc(mysql_query("Select * from enquiry_master where
                     <div class="col-md-3 col-sm-6 mg_bt_10">
                         <input type="text" class="form-control" id="txt_name_u" name="txt_name_u" onchange="fname_validate(this.id)" placeholder="*Customer Name" title="Customer Name" value="<?= $enq_details[name] ?>">
                     </div>
+                    <div class="col-sm-3 col-xs-12">
+                  <input type="text" id="cust_last_name" name="cust_last_name" onchange="fname_validate(this.id);" placeholder="Last Name" title="Last Name">
+                </div>
                     <div class="col-md-3 col-sm-6 mg_bt_10">
                         <input type="text" class="form-control" id="txt_mobile_no_u" onchange="mobile_validate(this.id);" name="txt_mobile_no_u" placeholder="*Mobile No" title="Mobile No" value="<?= $enq_details[mobile_no] ?>"> 
                     </div>
@@ -62,6 +65,20 @@ $enq_details = mysql_fetch_assoc(mysql_query("Select * from enquiry_master where
                     </div>        
                     <div class="col-md-3 col-sm-6 mg_bt_10">
                         <input type="text" class="form-control" id="txt_email_id_u" name="txt_email_id_u" placeholder="Email ID" title="Email ID" value="<?= $enq_details[email_id] ?>">
+                    </div>
+                    <div class="col-sm-3 col-xs-12">
+                      <input type="text" id="cust_birth_date" name="cust_birth_date" placeholder="Birth Date" title="Birth Date" onchange="calculate_age_generic('cust_birth_date', 'cust_age') ; " value="<?= $enq_details[cust_birth_date] ?>" >
+
+                    </div>
+                    <div class="col-sm-3 col-xs-12">
+                      <input type="text" id="cust_anni_date" name="cust_anni_date" placeholder="Anniversary Date" title="Anniversary Date" value="<?= $enq_details[cust_anni_date] ?>" >
+
+                    </div>
+                    <div class="col-md-3">
+                      <select name="cust_type" id="cust_type" class="form-control" data-toggle="tooltip" onchange="corporate_fields_reflect();" title="Customer Type">
+                      <option value="<?= $enq_details[cust_type] ?>"> <?= $enq_details[cust_type] ?> </option>
+                      <?php get_customer_type_dropdown(); ?>
+                      </select>
                     </div>   
                 </div>
                 <div class="row">
@@ -300,6 +317,11 @@ $(function(){
       var enquiry = $('#enquiry_u').val(); 
       var mobile_no = $("#txt_mobile_no_u").val(); 
       var email_id = $("#txt_email_id_u").val();
+      var cust_last_name = $("#cust_last_name").val();
+       var cust_birth_date = $("#cust_birth_date").val();
+       var cust_anni_date = $("#cust_anni_date").val();
+       var cust_type = $("#cust_type").val();
+      
       var location = $("#location_u").val();
       var enq_state = $("#enq_state1").val();
       var landline_no = $("#txt_landline_no_u").val(); 
@@ -334,7 +356,7 @@ $(function(){
       $('#btn_enq_edit').button('loading');
       $.post( 
         base_url+"controller/attractions_offers_enquiry/enquiry_master_update_c.php",
-        { enquiry_id : enquiry_id, mobile_no : mobile_no, email_id : email_id,location :location, landline_no : landline_no ,enquiry : enquiry, enquiry_date : enquiry_date , followup_date : followup_date, reference : reference,enquiry_content : enquiry_content, enquiry_specification : enquiry_specification,assigned_emp_id : assigned_emp_id, name : name, country_code : country_code , enq_state:enq_state},
+        { enquiry_id : enquiry_id, mobile_no : mobile_no, email_id : email_id,location :location, landline_no : landline_no ,enquiry : enquiry, enquiry_date : enquiry_date , followup_date : followup_date, reference : reference,enquiry_content : enquiry_content, enquiry_specification : enquiry_specification,assigned_emp_id : assigned_emp_id, name : name, country_code : country_code , enq_state:enq_state,cust_last_name:cust_last_name,cust_birth_date:cust_birth_date,cust_anni_date:cust_anni_date,cust_type:cust_type},
         function(data){
               $('#enquiry_edit_modal').modal('hide');
                 $('#btn_enq_edit').button('reset');

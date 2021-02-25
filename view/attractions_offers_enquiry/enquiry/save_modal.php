@@ -38,15 +38,19 @@ $branch_status = $_POST['branch_status'];
                 </div>
                 <div class="row mg_tp_10">
                     <div class="col-md-3 col-sm-6 mg_bt_10">
-                        <input type="text" class="form-control" id="txt_name" name="txt_name" onchange="fname_validate(this.id)" placeholder="*Customer Name" title="Customer Name">
+                        <input type="text" class="form-control" id="txt_name" name="txt_name" onchange="fname_validate(this.id)" placeholder="*Customer First Name" title="Customer First Name">
                         <input type="hidden" id="cust_data" name="cust_data" value='<?= get_customer_hint() ?>'>
                     </div>
+                    <div class="col-sm-3 col-xs-12">
+                  <input type="text" id="cust_last_name" name="cust_last_name" onchange="fname_validate(this.id);" placeholder="Last Name" title="Last Name">
+                </div>
                     <div class="col-md-3 col-sm-6 mg_bt_10">
                         <input type="text" class="form-control" id="txt_mobile_no" onchange="mobile_validate(this.id);" name="txt_mobile_no" placeholder="*Mobile No" title="Mobile No"> 
                     </div>
+                    
                     <div class="col-md-3 col-sm-6 mg_bt_10">
                       <div class="row">
-                        <div class="col-md-4" style="padding-right:0px;">
+                        <div class="col-md-3" style="padding-right:0px;">
                           <select name="country_code" id="country_code" style="width:100px;">
                               <?= get_country_code(); ?>
                           </select>
@@ -57,8 +61,21 @@ $branch_status = $_POST['branch_status'];
                       </div>      
                     </div>        
                     <div class="col-md-3 col-sm-6 mg_bt_10">
-                        <input type="text" class="form-control" id="txt_email_id" name="txt_email_id" placeholder="Email ID" title="Email ID">
+                        <input type="text" class="form-control" id="txt_email_id" name="txt_email_id" placeholder="*Email ID" title="Email ID">
                     </div>   
+                    <div class="col-sm-3 col-xs-12">
+                      <input type="text" id="cust_birth_date" name="cust_birth_date" placeholder="Birth Date" title="Birth Date" onchange="calculate_age_generic('cust_birth_date', 'cust_age') ; " >
+
+                    </div>
+                    <div class="col-sm-3 col-xs-12">
+                      <input type="text" id="cust_anni_date" name="cust_anni_date" placeholder="Anniversary Date" title="Anniversary Date" >
+
+                    </div>
+                    <div class="col-md-3">
+                      <select name="cust_type" id="cust_type" class="form-control" data-toggle="tooltip" onchange="corporate_fields_reflect();" title="Customer Type">
+                      <?php get_customer_type_dropdown(); ?>
+                      </select>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3 col-sm-6 mg_bt_10">
@@ -169,7 +186,7 @@ $branch_status = $_POST['branch_status'];
 <script>
 $('#enquiry_save_modal').modal('show');
 $('#reference_id,#assigned_emp_id,#country_code').select2();
-$("#txt_enquiry_date").datetimepicker({ timepicker:false, format:'d-m-Y' });
+$("#txt_enquiry_date,#cust_birth_date,#cust_anni_date").datetimepicker({ timepicker:false, format:'d-m-Y' });
 $("#txt_followup_date" ).datetimepicker({ format:'d-m-Y H:i' });
 
 function enquiry_fields_reflect()
@@ -187,6 +204,9 @@ $(function(){
     rules:{
            
             txt_name : { required :true },
+            mobile_no : { required :true },
+            email_id : { required :true },
+            cust_type : { required :true },
             enq_state : { required :true },
             assigned_emp_id : { required : true },
             txt_enquiry_date : { required :true },
@@ -208,6 +228,10 @@ $(function(){
        var landline_no = $("#txt_landline_no").val();
        var country_code = $('#country_code').val();
        var email_id = $("#txt_email_id").val();
+       var cust_last_name = $("#cust_last_name").val();
+       var cust_birth_date = $("#cust_birth_date").val();
+       var cust_anni_date = $("#cust_anni_date").val();
+       var cust_type = $("#cust_type").val();
        var location = $("#location").val();
        var enq_state = $("#enq_state").val();
        var assigned_emp_id  = $('#assigned_emp_id').val();
@@ -268,7 +292,7 @@ $(function(){
        }
        
        $('#btn_enq_save').button('loading');
-       var obj = { login_id : login_id, enquiry_type : enquiry_type, name : name, mobile_no : mobile_no, email_id : email_id,location : location, enq_state:enq_state, assigned_emp_id : assigned_emp_id , enquiry_specification : enquiry_specification, enquiry_date : enquiry_date, followup_date : followup_date, reference_id : reference_id, enquiry_content : enquiry_content, landline_no : landline_no,enquiry : enquiry , branch_admin_id : branch_admin_id,financial_year_id : financial_year_id, country_code : country_code};
+       var obj = { login_id : login_id, enquiry_type : enquiry_type, name : name, mobile_no : mobile_no, email_id : email_id,location : location, enq_state:enq_state, assigned_emp_id : assigned_emp_id , enquiry_specification : enquiry_specification, enquiry_date : enquiry_date, followup_date : followup_date, reference_id : reference_id, enquiry_content : enquiry_content, landline_no : landline_no,enquiry : enquiry , branch_admin_id : branch_admin_id,financial_year_id : financial_year_id, country_code : country_code , cust_last_name:cust_last_name,cust_birth_date:cust_birth_date,cust_anni_date:cust_anni_date,cust_type:cust_type};
        $.post(
             base_url+"controller/attractions_offers_enquiry/enquiry_master_save_v.php",
             {  mobile_no : mobile_no, email_id : email_id },

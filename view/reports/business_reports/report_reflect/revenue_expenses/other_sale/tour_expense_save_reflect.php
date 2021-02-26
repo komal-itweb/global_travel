@@ -2,8 +2,10 @@
 include "../../../../../../model/model.php"; 
 include_once('sale_type_generic_function.php');
 $sale_type = $_POST['sale_type'];
+$from_date = $_POST['from_date'];
+$to_date = $_POST['to_date'];
 
-$sale_purchase_data = get_sale_purchase($sale_type);
+$sale_purchase_data = get_sale_purchase($sale_type,$from_date,$to_date);
 $total_sale = $sale_purchase_data['total_sale'];
 $total_purchase = $sale_purchase_data['total_purchase'];
 $total_expense = $sale_purchase_data['total_expense'];

@@ -209,13 +209,19 @@ while($row_followup = mysql_fetch_assoc($sq_enquiries)){
     $enquiry_date = $sq_enq['enquiry_date'];
     $yr = explode("-", $enquiry_date);
     $year =$yr[0];
-    $sq_emp = mysql_fetch_assoc(mysql_query("select * from emp_master where emp_id='$assigned_emp_id'"));
-    
+    if($assigned_emp_id==0){
+        $user_name='Admin';
+        }
+        else{
+       $sq_emp = mysql_fetch_assoc(mysql_query("select * from emp_master where emp_id LIKE '%$assigned_emp_id%'"));
+        $user_name =$sq_emp['first_name'].' '.$sq_emp['last_name'];
+        
+        }
     $count++;
     $row_count++;
     $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A'.$row_count, $count)
-            ->setCellValue('B'.$row_count, $sq_emp['first_name'].' '.$sq_emp['last_name'])
+            ->setCellValue('B'.$row_count, $user_name)
             ->setCellValue('C'.$row_count, get_enquiry_id($row_followup['enquiry_id'],$year))
             ->setCellValue('D'.$row_count, $sq_enq['name'])
             ->setCellValue('E'.$row_count, $sq_enq['enquiry_type'])

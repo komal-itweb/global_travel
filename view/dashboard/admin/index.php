@@ -1296,7 +1296,7 @@
 												
 												<td><?= get_date_user($row_query['birth_date']) ?></td>
 												
-												<td class="text-center"><button class="btn btn-info btn-sm" onclick="whatsapp_wishes('<?= $sq_cust[contact_no] ?>','<?= $sq_cust['first_name']?>')" title="" data-toggle="tooltip" data-original-title="What'sApp wishes to customer"><i class="fa fa-whatsapp"></i></button></td>
+												<td class="text-center"><button class="btn btn-info btn-sm" onclick="whatsapp_birthdaywishes('<?= $row_query[contact_no] ?>','<?= $row_query['first_name']?>')" title="" data-toggle="tooltip" data-original-title="What'sApp wishes to customer"><i class="fa fa-whatsapp"></i></button></td>
 											</tr>
 											<?php } ?>
 									    </tbody>
@@ -1311,7 +1311,7 @@
 				        <!-- Upcoming Birthdays End -->
 
 	<!-- Upcoming Anniversary -->
-	<div role="tabpanel" class="tab-pane" id="upcoming_birthday">
+	<div role="tabpanel" class="tab-pane" id="upcoming_anniversary">
 				          <?php 
 				         	$count = 1;
 				         	$today = date('Y-m-d-h-i-s');
@@ -1351,7 +1351,7 @@
 												
 												<td><?= get_date_user($row_query['anni_date']) ?></td>
 												
-												<td class="text-center"><button class="btn btn-info btn-sm" onclick="whatsapp_wishes('<?= $sq_cust[contact_no] ?>','<?= $sq_cust['first_name']?>')" title="" data-toggle="tooltip" data-original-title="What'sApp wishes to customer"><i class="fa fa-whatsapp"></i></button></td>
+												<td class="text-center"><button class="btn btn-info btn-sm" onclick="whatsapp_anni_wishes('<?= $row_query[contact_no] ?>','<?= $row_query['first_name']?>')" title="" data-toggle="tooltip" data-original-title="What'sApp wishes to customer"><i class="fa fa-whatsapp"></i></button></td>
 											</tr>
 											<?php } ?>
 									    </tbody>
@@ -1418,6 +1418,14 @@ function send_sms(id,tour_type,emp_id,contact_no, name){
 }
 function whatsapp_wishes(number,name){
 	var msg = encodeURI("Hello Dear "+ name +",\nMay this trip turns out to be a wonderful treat for you and may you create beautiful memories throughout this trip to cherish forever. Wish you a very happy and safe journey!!\nThank you.");
+	window.open('https://web.whatsapp.com/send?phone='+number+'&text='+msg);
+}
+function whatsapp_birthdaywishes(number,name){
+	var msg = encodeURI("Hello Dear "+ name +",\n Wishing you a happy birthday, a wonderful year, and success in all you do.Regard ".$app_name."\nThank you.");
+	window.open('https://web.whatsapp.com/send?phone='+number+'&text='+msg);
+}
+function whatsapp_anni_wishes(number,name){
+	var msg = encodeURI("Hello Dear "+ name +",\nMay the love you feel for each other on your wedding anniversary grow ever stronger and more fulfilling as the years go by.!!Regard ".$app_name."\nThank you.");
 	window.open('https://web.whatsapp.com/send?phone='+number+'&text='+msg);
 }
 function checklist_update(booking_id,tour_type){

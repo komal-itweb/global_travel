@@ -44,6 +44,8 @@ function enquiry_master_save(){
     $sq_max_id = mysql_fetch_assoc(mysql_query("select max(enquiry_id) as max from enquiry_master"));
     $enquiry_id = $sq_max_id['max']+1;
 
+    $cust_anni_date = date("Y-m-d", strtotime($cust_anni_date));
+    $cust_birth_date = date("Y-m-d", strtotime($cust_birth_date));
     $enquiry_date = date("Y-m-d", strtotime($enquiry_date));
     $followup_date = date("Y-m-d H:i", strtotime($followup_date));
 

@@ -189,7 +189,7 @@ else{
 }
 if($emp_id_filter!=""){
 
-    $sq_emp = mysql_fetch_assoc(mysql_query("select * from emp_master where emp_id='$emp_id_filter'"));
+    $sq_emp = mysql_fetch_assoc(mysql_query("select * from emp_master where emp_id like '%$emp_id_filter%'"));
 
     $employee_name = $sq_emp['first_name'].' '.$sq_emp['last_name'];
 
@@ -395,7 +395,15 @@ while($row = mysql_fetch_assoc($sq_enquiries)){
     $enquiry_id = $row['enquiry_id'];
 
 	$assigned_emp_id = $row['assigned_emp_id'];
-	$sq_emp = mysql_fetch_assoc(mysql_query("select first_name,last_name from emp_master where emp_id='$assigned_emp_id'"));
+    if($assigned_emp_id==0){
+        $user_name='Admin';
+    }
+    else{
+        $sq_emp = mysql_fetch_assoc(mysql_query("select first_name,last_name from emp_master where emp_id like '%$assigned_emp_id%'"));
+        $user_name =$sq_emp['first_name'].' '.$sq_emp['last_name'];
+        
+    }
+        
 
 	$enquiry_content = $row['enquiry_content'];
 	$enquiry_content_arr1 = json_decode($enquiry_content, true);
@@ -435,7 +443,7 @@ while($row = mysql_fetch_assoc($sq_enquiries)){
 
                 ->setCellValue('L'.$row_count, $row['enquiry']  )
 
-                ->setCellValue('M'.$row_count, $sq_emp['first_name'].' '.$sq_emp['last_name'] );
+                ->setCellValue('M'.$row_count, $user_name );
 
     $objPHPExcel->getActiveSheet()->getStyle('B'.$row_count.':M'.$row_count)->applyFromArray($content_style_Array);
 

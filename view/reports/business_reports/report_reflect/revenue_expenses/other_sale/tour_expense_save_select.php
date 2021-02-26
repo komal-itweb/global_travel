@@ -15,6 +15,14 @@
 		    	<option value="Miscellaneous">Miscellaneous</option>
 		    </select>
 		</div>
+		<div class="col-md-3 col-sm-6">
+		<input type="text" class="form-control" id="from_date" name="from_date" placeholder="From Date" title="From Date" onchange="tour_expense_save_reflect();get_widget();">
+		
+		</div>
+		<div class="col-md-3 col-sm-6">
+		<input type="text" class="form-control" id="to_date" name="to_date" placeholder="To Date" title="To Date" onchange="tour_expense_save_reflect();get_widget();" >
+
+		</div>
 		<div class="col-md-9 col-sm-12 text-right">
 			<button class="btn btn-excel btn-sm mg_bt_10_sm_xs" onclick="excel_report()" data-toggle="tooltip" title="Generate Excel"><i class="fa fa-file-excel-o"></i></button>
 		</div>
@@ -28,6 +36,8 @@
 </div></div></div>
 </div>
 <script>
+$("#from_date,#to_date").datetimepicker({ timepicker:false, format:'d-m-Y' });
+
 $('#sale_type').select2();
 	function excel_report(){
 		var sale_type = $('#sale_type').val();
@@ -51,6 +61,8 @@ $('#sale_type').select2();
 ];
 
 	function tour_expense_save_reflect(){
+		var from_date = $('#from_date').val();
+		var to_date = $('#to_date').val();
 		var sale_type = $('#sale_type').val();
 		var base_url = $('#base_url').val();
 
@@ -59,25 +71,27 @@ $('#sale_type').select2();
 			return false;
 		}
 
-		$.post(base_url+'view/reports/business_reports/report_reflect/revenue_expenses/other_sale/get_sale_purchase_summary.php', { sale_type : sale_type }, function(data){
+		$.post(base_url+'view/reports/business_reports/report_reflect/revenue_expenses/other_sale/get_sale_purchase_summary.php', { sale_type : sale_type , from_date : from_date , to_date:to_date }, function(data){
 			pagination_load(data, column, true, false, 20, 'other_report');
 		});
 	}
-	tour_expense_save_reflect('Visa');
+	tour_expense_save_reflect('All');
 	
 	function get_widget(){
 		var sale_type = $('#sale_type').val();
 		var base_url = $('#base_url').val();
-
+		var from_date = $('#from_date').val();
+		var to_date = $('#to_date').val();
+		
 		if(sale_type==""){
 			error_msg_alert("Select Sale");
 			return false;
 		}
 
-		$.post(base_url+'view/reports/business_reports/report_reflect/revenue_expenses/other_sale/tour_expense_save_reflect.php', { sale_type : sale_type }, function(data){
+		$.post(base_url+'view/reports/business_reports/report_reflect/revenue_expenses/other_sale/tour_expense_save_reflect.php', { sale_type : sale_type , from_date : from_date , to_date:to_date}, function(data){
 			$('#div_other_tour_reflect').html(data);
 		});
 	}
-	get_widget('Visa');
+	get_widget('All');
 </script>
 

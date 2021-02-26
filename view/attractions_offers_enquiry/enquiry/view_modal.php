@@ -13,10 +13,16 @@ $sq_enq_info = mysql_fetch_assoc(mysql_query("select * from enquiry_master where
 
 
 $sq_ref = mysql_fetch_assoc(mysql_query("select * from references_master where reference_id='$sq_enq_info[reference_id]'"));
+if($sq_enq_info[assigned_emp_id]==0){
+$user_name='Admin';
+}
+else{
 
-$sq_emp = mysql_fetch_assoc(mysql_query("select * from emp_master where emp_id='$sq_enq_info[assigned_emp_id]'"));
 
+$sq_emp = mysql_fetch_assoc(mysql_query("select * from emp_master where emp_id LIKE '%$sq_enq_info[assigned_emp_id]%'"));
+$user_name =$sq_emp['first_name'].' '.$sq_emp['last_name'];
 
+}
 
 $enquiry_content = $sq_enq_info['enquiry_content'];
 $enquiry_content_arr1 = json_decode($enquiry_content, true);	
@@ -164,7 +170,7 @@ $enquiry_content_arr1 = json_decode($enquiry_content, true);
 
 								                  <i class="fa fa-angle-double-right cost_arrow" aria-hidden="true"></i>
 
-								                  <?php echo "<label>User <em>:</em></label> ".$sq_emp['first_name'].' '.$sq_emp['last_name']; ?>
+								                  <?php echo "<label>User <em>:</em></label> ".$user_name; ?>
 
 								                </span>						                
 

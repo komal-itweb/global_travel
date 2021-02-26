@@ -45,7 +45,7 @@ $enq_details = mysql_fetch_assoc(mysql_query("Select * from enquiry_master where
                         <input type="text" class="form-control" id="txt_name_u" name="txt_name_u" onchange="fname_validate(this.id)" placeholder="*Customer Name" title="Customer Name" value="<?= $enq_details[name] ?>">
                     </div>
                     <div class="col-sm-3 col-xs-12">
-                  <input type="text" id="cust_last_name" name="cust_last_name" onchange="fname_validate(this.id);" placeholder="Last Name" title="Last Name">
+                  <input type="text" id="cust_last_name" name="cust_last_name" onchange="fname_validate(this.id);" placeholder="Last Name" title="Last Name" value="<?= $enq_details['cust_last_name']; ?>">
                 </div>
                     <div class="col-md-3 col-sm-6 mg_bt_10">
                         <input type="text" class="form-control" id="txt_mobile_no_u" onchange="mobile_validate(this.id);" name="txt_mobile_no_u" placeholder="*Mobile No" title="Mobile No" value="<?= $enq_details[mobile_no] ?>"> 
@@ -67,16 +67,16 @@ $enq_details = mysql_fetch_assoc(mysql_query("Select * from enquiry_master where
                         <input type="text" class="form-control" id="txt_email_id_u" name="txt_email_id_u" placeholder="Email ID" title="Email ID" value="<?= $enq_details[email_id] ?>">
                     </div>
                     <div class="col-sm-3 col-xs-12">
-                      <input type="text" id="cust_birth_date" name="cust_birth_date" placeholder="Birth Date" title="Birth Date" onchange="calculate_age_generic('cust_birth_date', 'cust_age') ; " value="<?= $enq_details[cust_birth_date] ?>" >
+                      <input type="text" id="cust_birth_date" name="cust_birth_date" placeholder="Birth Date" title="Birth Date"  value="<?= date("d-m-Y", strtotime($enq_details['cust_birth_date']) ); ?>" >
 
                     </div>
                     <div class="col-sm-3 col-xs-12">
-                      <input type="text" id="cust_anni_date" name="cust_anni_date" placeholder="Anniversary Date" title="Anniversary Date" value="<?= $enq_details[cust_anni_date] ?>" >
+                      <input type="text" id="cust_anni_date" name="cust_anni_date" placeholder="Anniversary Date" title="Anniversary Date" value="<?= date("d-m-Y", strtotime($enq_details['cust_anni_date'])); ?>" >
 
                     </div>
                     <div class="col-md-3">
                       <select name="cust_type" id="cust_type" class="form-control" data-toggle="tooltip" onchange="corporate_fields_reflect();" title="Customer Type">
-                      <option value="<?= $enq_details[cust_type] ?>"> <?= $enq_details[cust_type] ?> </option>
+                      <option value="<?= $enq_details['cust_type'] ?>"> <?= $enq_details['cust_type'] ?> </option>
                       <?php get_customer_type_dropdown(); ?>
                       </select>
                     </div>   
@@ -88,7 +88,7 @@ $enq_details = mysql_fetch_assoc(mysql_query("Select * from enquiry_master where
                     <div class="col-sm-3 col-xs-12 mg_bt_10_sm_xs">
                       <select name="enq_state1" id="enq_state1" title="Select State" style="width : 100%" required>
                         <?php if($enq_details['enq_state']!=''){
-                        $sq_state = mysql_fetch_assoc(mysql_query("select * from state_master where id='$sq_customer[state_id]'"));
+                        $sq_state = mysql_fetch_assoc(mysql_query("select * from state_master where id='$enq_details[enq_state]'"));
                         ?>
                         <option value="<?= $sq_state['id'] ?>"><?= $sq_state['state_name'] ?></option>
                       <?php } ?>

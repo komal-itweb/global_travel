@@ -2,8 +2,11 @@
 include "../../../../../../model/model.php"; 
 include_once('sale_type_generic_function.php');
 $sale_type = $_POST['sale_type'];
-
-$sale_purchase_data = get_sale_purchase($sale_type);
+$from_date = $_POST['from_date'];
+$to_date = $_POST['to_date'];
+if($from_date=='undefined'){$from_date='';}
+if($to_date=='undefined'){$to_date='';}
+$sale_purchase_data = get_sale_purchase($sale_type , $from_date ,$to_date);
 $total_sale = $sale_purchase_data['total_sale'];
 $total_purchase = $sale_purchase_data['total_purchase'];
 $total_expense = $sale_purchase_data['total_expense'];
@@ -26,7 +29,13 @@ if($sale_type == 'All')
 /////////// group start //////////////////
 //Sale
 $purchase_amt=0;
-$q1 = mysql_query("select *  from tourwise_traveler_details where 1 ");
+$str_q="select *  from tourwise_traveler_details where 1 ";
+if($from_date !== '' && $to_date !=='')
+{
+	$str_q .= "and form_date BETWEEN '$from_date' AND '$to_date'";
+}
+$q1 = mysql_query($str_q);
+$tot_sale=0;
 while($tourwise_details = mysql_fetch_assoc($q1)){
 	$sq_sum = mysql_fetch_assoc(mysql_query("select sum(basic_amount) as incentive_amount from booker_incentive_group_tour where tourwise_traveler_id='$tourwise_details[id]'"));
 	$incentive_amount = $sq_sum['incentive_amount'];
@@ -50,7 +59,7 @@ while($tourwise_details = mysql_fetch_assoc($q1)){
 $total_sale += $credit_charges;
 
 // Purchase
-$sq_purchase = mysql_query("select * from vendor_estimate where estimate_type='Group Tour' and estimate_type_id ='$tour_group_id' and status!='Cancel'");
+$sq_purchase = mysql_query("select * from vendor_estimate where estimate_type='Group Tour' and estimate_type_id ='$tourwise_details[tour_group_id]' and status!='Cancel'");
 $vendor_name='';
 while($row_purchase = mysql_fetch_assoc($sq_purchase)){
 	$total_purchase += $row_purchase['net_total'] ;
@@ -90,7 +99,12 @@ array_push($array_s,$temp_arr);
 /////////// group end ///////////////////
 ///////	/// *************package booking ***********//////////
 //Sale
-$package_query=mysql_query("select * from package_tour_booking_master where 1");
+$str_p="select * from package_tour_booking_master where 1 ";
+if($from_date != '' && $to_date !='')
+{
+	$str_p .= "and booking_date BETWEEN '$from_date' AND '$to_date'";
+}
+$package_query=mysql_query($str_p);
 while($tourwise_details = mysql_fetch_assoc($package_query)){
 $sq_sum = mysql_fetch_assoc(mysql_query("select sum(basic_amount) as incentive_amount from booker_incentive_package_tour where booking_id='$tourwise_details[booking_id]'"));
 $incentive_amount = $sq_sum['incentive_amount'];
@@ -120,6 +134,8 @@ $vendor_name='';
 while($row_purchase = mysql_fetch_assoc($sq_purchase)){
 	$total_purchase += $row_purchase['net_total'];
 	$total_purchase -= $row_purchase['service_tax_subtotal'];
+	$tot_purchase += $row_purchase['net_total'];
+	$tot_purchase -= $row_purchase['service_tax_subtotal'];
 
 $vendor_name = get_vendor_name_report($row_purchase['vendor_type'],$row_purchase['vendor_type_id']);
 }
@@ -127,6 +143,7 @@ $vendor_name = get_vendor_name_report($row_purchase['vendor_type'],$row_purchase
 //Other Expense
 $sq_other_purchase = mysql_fetch_assoc(mysql_query("select sum(amount) as amount_total from package_tour_estimate_expense where booking_id=$tourwise_details[booking_id] "));
 $total_purchase += $sq_other_purchase['amount_total'];
+$tot_purchase += $sq_other_purchase['amount_total'];
 
 //Revenue & Expenses
 $result = $total_sale - $total_purchase;
@@ -151,14 +168,20 @@ if($sq_tr_refund == ''){
 		number_format($total_sale,2),
 		($sq_purchase['vendor_type'] !='')?$sq_purchase['vendor_type']:'NA',
 		($vendor_name !='')?$vendor_name:'NA',
-		number_format($total_purchase,2),
+		number_format($tot_purchase,2),
 		$profit_loss_per.'%('.$var.')'
 		), "bg" =>$bg);
 	array_push($array_s,$temp_arr);
 } 
+$tot_purchase=0;
 }
 /////// ************ package end **************///////////
-	$sq_query = mysql_query("select * from visa_master order by visa_id desc");
+$str_v="select * from visa_master where 1 ";
+if($from_date != '' && $to_date !='')
+{
+	$str_v .= "and created_at BETWEEN '$from_date' AND '$to_date' order by visa_id desc";
+}
+	$sq_query = mysql_query($str_v);
 	while ($row_visa = mysql_fetch_assoc($sq_query)) {
 
 	$date = $row_visa['created_at'];
@@ -192,7 +215,7 @@ if($sq_tr_refund == ''){
 		}
 	}
 	//Purchase 
-	$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal from vendor_estimate where estimate_type='Visa Booking' and estimate_type_id ='$row_visa[visa_id]' and status!='Cancel'"));
+	$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal ,vendor_type from vendor_estimate where estimate_type='Visa Booking' and estimate_type_id ='$row_visa[visa_id]' and status!='Cancel'"));
 	$vendor_name = get_vendor_name_report($sq_pquery['vendor_type'],$sq_pquery['vendor_type_id']);
 
 	$total_sale = $row_visa['visa_total_cost'] - $service_tax_amount - $markupservice_tax_amount + $credit_charges;
@@ -218,8 +241,12 @@ if($sq_tr_refund == ''){
 			array_push($array_s,$temp_arr);
 		} 
 	}
-
-	$sq_passport = mysql_query("select * from passport_master order by passport_id desc");
+	$str_pass="select * from passport_master where 1 ";
+	if($from_date != '' && $to_date !='')
+	{
+		$str_pass .= "and created_at BETWEEN '$from_date' AND '$to_date' order by passport_id desc";
+	}
+	$sq_passport = mysql_query($str_pass);
 	while ($row_passport = mysql_fetch_assoc($sq_passport)) {
 
 		$date = $row_passport['created_at'];
@@ -244,7 +271,7 @@ if($sq_tr_refund == ''){
 			}
 		}
 		//Purchase 
-		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal from vendor_estimate where estimate_type='Passport Booking' and estimate_type_id ='$row_passport[passport_id]' and status!='Cancel'"));
+		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal,vendor_type from vendor_estimate where estimate_type='Passport Booking' and estimate_type_id ='$row_passport[passport_id]' and status!='Cancel'"));
 		$vendor_name = get_vendor_name_report($sq_pquery['vendor_type'],$sq_pquery['vendor_type_id']);
 
 		$total_sale = $row_passport['passport_total_cost'] - $service_tax_amount + $credit_charges;
@@ -270,7 +297,13 @@ if($sq_tr_refund == ''){
 			array_push($array_s,$temp_arr);
 			} 
 	} 
-	$sq_exc = mysql_query("select * from excursion_master order by exc_id desc");
+
+	$str_e="select * from excursion_master where 1 ";
+	if($from_date != '' && $to_date !='')
+	{
+		$str_e .= "and created_at BETWEEN '$from_date' AND '$to_date' order by exc_id desc";
+	}
+	$sq_exc = mysql_query($str_e);
 	while ($row_exc = mysql_fetch_assoc($sq_exc)) {
 
 		$date = $row_exc['created_at'];
@@ -304,7 +337,7 @@ if($sq_tr_refund == ''){
 		}
 		}
 		//Purchase 
-		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal from vendor_estimate where estimate_type='Excursion Booking' and estimate_type_id ='$row_exc[exc_id]' and status!='Cancel'"));
+		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal ,vendor_type from vendor_estimate where estimate_type='Excursion Booking' and estimate_type_id ='$row_exc[exc_id]' and status!='Cancel'"));
 		$vendor_name = get_vendor_name_report($sq_pquery['vendor_type'],$sq_pquery['vendor_type_id']);
 
 		$total_sale = $row_exc['exc_total_cost'] - $service_tax_amount - $markupservice_tax_amount + $credit_charges;
@@ -330,7 +363,13 @@ if($sq_tr_refund == ''){
 			array_push($array_s,$temp_arr);
 			} 
 	}
-	$sq_forex = mysql_query("select * from forex_booking_master order by booking_id desc");
+
+	$str_f="select * from forex_booking_master order by booking_id desc where 1 ";
+	if($from_date != '' && $to_date !='')
+	{
+		$str_f .= "and created_at BETWEEN '$from_date' AND '$to_date'";
+	}
+	$sq_forex = mysql_query($str_f);
 	while ($row_forex = mysql_fetch_assoc($sq_forex)) {
 		$date = $row_forex['created_at'];
 		$yr = explode("-", $date);
@@ -343,7 +382,7 @@ if($sq_tr_refund == ''){
 		$credit_charges = $sq_paid_amount['sumc'];
 
 		//Purchase 
-		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal from vendor_estimate where estimate_type='Forex Booking' and estimate_type_id ='$row_forex[booking_id]' and status!='Cancel'"));
+		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal,vendor_type from vendor_estimate where estimate_type='Forex Booking' and estimate_type_id ='$row_forex[booking_id]' and status!='Cancel'"));
 		$vendor_name = get_vendor_name_report($sq_pquery['vendor_type'],$sq_pquery['vendor_type_id']);
 
 		//Service Tax and Markup Tax
@@ -378,7 +417,12 @@ if($sq_tr_refund == ''){
 		
 		}
 
-		$sq_bus = mysql_query("select * from bus_booking_master order by booking_id desc");
+	$str_b="select * from bus_booking_master where 1 ";
+	if($from_date != '' && $to_date !='')
+	{
+		$str_b .= "and created_at BETWEEN '$from_date' AND '$to_date' order by booking_id desc";
+	}
+		$sq_bus = mysql_query($str_b);
 	while ($row_bus = mysql_fetch_assoc($sq_bus)) {
 		$date = $row_bus['created_at'];
 		$yr = explode("-", $date);
@@ -412,7 +456,7 @@ if($sq_tr_refund == ''){
 		$credit_charges = $sq_paid_amount['sumc'];
 
 		//Purchase 
-		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal from vendor_estimate where estimate_type='Bus Booking' and estimate_type_id ='$row_bus[booking_id]' and status!='Cancel'"));
+		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal,vendor_type from vendor_estimate where estimate_type='Bus Booking' and estimate_type_id ='$row_bus[booking_id]' and status!='Cancel'"));
 		$vendor_name = get_vendor_name_report($sq_pquery['vendor_type'],$sq_pquery['vendor_type_id']);
 
 		$total_sale = $row_bus['net_total'] - $service_tax_amount - $markupservice_tax_amount + $credit_charges;
@@ -437,7 +481,13 @@ if($sq_tr_refund == ''){
 			array_push($array_s,$temp_arr);
 			}
 	} 
-	$sq_hotel = mysql_query("select * from hotel_booking_master order by booking_id desc");
+
+	$str_h="select * from hotel_booking_master where 1 ";
+	if($from_date != '' && $to_date !='')
+	{
+		$str_h .= "and created_at BETWEEN '$from_date' AND '$to_date' order by booking_id desc";
+	}
+	$sq_hotel = mysql_query($str_h);
 	while ($row_hotel = mysql_fetch_assoc($sq_hotel)) {
 
 		$date = $row_hotel['created_at'];
@@ -499,7 +549,13 @@ if($sq_tr_refund == ''){
 		
 			} 
 	} 
-	$sq_car = mysql_query("select * from car_rental_booking where status != 'Cancel' order by booking_id desc");
+
+	$str_c="select * from car_rental_booking where status != 'Cancel' where 1 ";
+	if($from_date != '' && $to_date !='')
+	{
+		$str_c .= "and created_at BETWEEN '$from_date' AND '$to_date' order by booking_id desc ";
+	}
+	$sq_car = mysql_query($str_c);
 	while ($row_car = mysql_fetch_assoc($sq_car)) {
 
 		$date = $row_car['created_at'];
@@ -529,7 +585,7 @@ if($sq_tr_refund == ''){
               }
           }
 		//Purchase 
-		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal from vendor_estimate where estimate_type='Car Rental' and estimate_type_id ='$row_car[booking_id]' and status!='Cancel'"));
+		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal,vendor_type from vendor_estimate where estimate_type='Car Rental' and estimate_type_id ='$row_car[booking_id]' and status!='Cancel'"));
 		$vendor_name = get_vendor_name_report($sq_pquery['vendor_type'],$sq_pquery['vendor_type_id']);
 
 		$total_sale = $row_car['total_fees'] - $service_tax_amount - $markupservice_tax_amount + $credit_charges;
@@ -553,7 +609,13 @@ if($sq_tr_refund == ''){
 		array_push($array_s,$temp_arr);
 		
 	}
-	$sq_ticket = mysql_query("select * from ticket_master order by ticket_id desc");
+
+	$str_t="select * from ticket_master where 1 ";
+	if($from_date != '' && $to_date !='')
+	{
+		$str_t .= "and created_at BETWEEN '$from_date' AND '$to_date' order by ticket_id desc";
+	}
+	$sq_ticket = mysql_query($str_t);
 	while ($row_ticket = mysql_fetch_assoc($sq_ticket)) {
 
 		$date = $row_ticket['created_at'];
@@ -585,7 +647,7 @@ if($sq_tr_refund == ''){
 		$credit_card_charges = $sq_paid_amount['sumc'];
 
 		//Purchase 
-		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal from vendor_estimate where estimate_type='Ticket Booking' and estimate_type_id ='$row_ticket[ticket_id]' and status!='Cancel'"));
+		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal,vendor_type from vendor_estimate where estimate_type='Ticket Booking' and estimate_type_id ='$row_ticket[ticket_id]' and status!='Cancel'"));
 		$vendor_name = get_vendor_name_report($sq_pquery['vendor_type'],$sq_pquery['vendor_type_id']);
 
 		$total_sale = $row_ticket['ticket_total_cost'] - $service_tax_amount - $markupservice_tax_amount + $credit_card_charges;
@@ -614,7 +676,13 @@ if($sq_tr_refund == ''){
 			array_push($array_s,$temp_arr);
 			} 
 	}
-	$sq_train = mysql_query("select * from train_ticket_master order by train_ticket_id desc");
+
+	$str_tm="select * from train_ticket_master where 1 ";
+	if($from_date != '' && $to_date !='')
+	{
+		$str_tm .= "and created_at BETWEEN '$from_date' AND '$to_date' order by train_ticket_id desc";
+	}
+	$sq_train = mysql_query($str_tm);
 	while ($row_train = mysql_fetch_assoc($sq_train)) {
 
 		$sq_paid_amount = mysql_fetch_assoc(mysql_query("SELECT sum(payment_amount) as sum,sum(credit_charges) as sumc from train_ticket_payment_master where train_ticket_id='$row_train[train_ticket_id]' and clearance_status!='Pending' and clearance_status!='Cancelled'"));
@@ -636,7 +704,7 @@ if($sq_tr_refund == ''){
 			}
 		}
 		//Purchase 
-		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal from vendor_estimate where estimate_type='Train Ticket Booking' and estimate_type_id ='$row_train[train_ticket_id]' and status!='Cancel'"));
+		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal,vendor_type from vendor_estimate where estimate_type='Train Ticket Booking' and estimate_type_id ='$row_train[train_ticket_id]' and status!='Cancel'"));
 		$vendor_name = get_vendor_name_report($sq_pquery['vendor_type'],$sq_pquery['vendor_type_id']);
 
 		$total_sale = $row_train['net_total'] - $service_tax_amount + $credit_card_charges;
@@ -665,7 +733,13 @@ if($sq_tr_refund == ''){
 			array_push($array_s,$temp_arr);
 			} 
 	}
-	$sq_misc = mysql_query("select * from miscellaneous_master order by misc_id desc");
+
+	$str_m="select * from miscellaneous_master where 1 ";
+	if($from_date != '' && $to_date !='')
+	{
+		$str_m .= "and created_at BETWEEN '$from_date' AND '$to_date' order by misc_id desc";
+	}
+	$sq_misc = mysql_query($str_m);
 	while ($row_misc = mysql_fetch_assoc($sq_misc)){
 
 		$sq_paid_amount1 = mysql_fetch_assoc(mysql_query("SELECT sum(credit_charges) as sumc from miscellaneous_payment_master where misc_id='$row_misc[misc_id]' and clearance_status!='Pending' and clearance_status!='Cancelled'"));
@@ -697,7 +771,7 @@ if($sq_tr_refund == ''){
 			}
 		}
 		//Purchase 
-		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal from vendor_estimate where estimate_type='Miscellaneous Booking' and estimate_type_id ='$row_misc[misc_id]' and status!='Cancel'"));
+		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal,vendor_type from vendor_estimate where estimate_type='Miscellaneous Booking' and estimate_type_id ='$row_misc[misc_id]' and status!='Cancel'"));
 		$vendor_name = get_vendor_name_report($sq_pquery['vendor_type'],$sq_pquery['vendor_type_id']);
 
 		$total_sale = $row_misc['misc_total_cost'] - $service_tax_amount - $markupservice_tax_amount + $credit_card_charges;
@@ -725,7 +799,12 @@ if($sq_tr_refund == ''){
 }
 if($sale_type == 'Visa'){ 
 	$count = 1;
-	$sq_query = mysql_query("select * from visa_master order by visa_id desc");
+		$str_v="select * from visa_master where 1 ";
+	if($from_date != '' && $to_date !='')
+	{
+		$str_v .= "and created_at BETWEEN '$from_date' AND '$to_date' order by visa_id desc";
+	}
+	$sq_query = mysql_query($str_v);
 	while ($row_visa = mysql_fetch_assoc($sq_query)) {
 
 	$date = $row_visa['created_at'];
@@ -759,7 +838,7 @@ if($sale_type == 'Visa'){
 		}
 	}
 	//Purchase 
-	$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal from vendor_estimate where estimate_type='Visa Booking' and estimate_type_id ='$row_visa[visa_id]' and status!='Cancel'"));
+	$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal,vendor_type from vendor_estimate where estimate_type='Visa Booking' and estimate_type_id ='$row_visa[visa_id]' and status!='Cancel'"));
 	$vendor_name = get_vendor_name_report($sq_pquery['vendor_type'],$sq_pquery['vendor_type_id']);
 
 	$total_sale = $row_visa['visa_total_cost'] - $service_tax_amount - $markupservice_tax_amount + $credit_charges;
@@ -788,8 +867,13 @@ if($sale_type == 'Visa'){
 } 
 if($sale_type == 'Passport'){ 		
 	$count = 1;
-	$sq_passport = mysql_query("select * from passport_master order by passport_id desc");
-	while ($row_passport = mysql_fetch_assoc($sq_passport)) {
+	$str_pass="select * from passport_master where 1 ";
+	if($from_date != '' && $to_date !='')
+	{
+		$str_pass .= "and created_at BETWEEN '$from_date' AND '$to_date' order by passport_id desc";
+	}
+	$sq_passport = mysql_query($str_pass);
+		while ($row_passport = mysql_fetch_assoc($sq_passport)) {
 
 		$date = $row_passport['created_at'];
 		$yr = explode("-", $date);
@@ -813,7 +897,7 @@ if($sale_type == 'Passport'){
 			}
 		}
 		//Purchase 
-		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal from vendor_estimate where estimate_type='Passport Booking' and estimate_type_id ='$row_passport[passport_id]' and status!='Cancel'"));
+		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal,vendor_type from vendor_estimate where estimate_type='Passport Booking' and estimate_type_id ='$row_passport[passport_id]' and status!='Cancel'"));
 		$vendor_name = get_vendor_name_report($sq_pquery['vendor_type'],$sq_pquery['vendor_type_id']);
 
 		$total_sale = $row_passport['passport_total_cost'] - $service_tax_amount + $credit_charges;
@@ -843,8 +927,13 @@ if($sale_type == 'Passport'){
 			
 if($sale_type == 'Excursion'){ 
 	$count = 1;
-	$sq_passport = mysql_query("select * from excursion_master order by exc_id desc");
-	while ($row_passport = mysql_fetch_assoc($sq_passport)) {
+	$str_e="select * from excursion_master where 1 ";
+	if($from_date != '' && $to_date !='')
+	{
+		$str_e .= "and created_at BETWEEN '$from_date' AND '$to_date' order by exc_id desc";
+	}
+	$sq_exc = mysql_query($str_e);
+		while ($row_passport = mysql_fetch_assoc($sq_exc)) {
 
 		$date = $row_passport['created_at'];
 		$yr = explode("-", $date);
@@ -877,7 +966,7 @@ if($sale_type == 'Excursion'){
 		}
 		}
 		//Purchase 
-		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal from vendor_estimate where estimate_type='Excursion Booking' and estimate_type_id ='$row_passport[exc_id]' and status!='Cancel'"));
+		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal,vendor_type from vendor_estimate where estimate_type='Excursion Booking' and estimate_type_id ='$row_passport[exc_id]' and status!='Cancel'"));
 		$vendor_name = get_vendor_name_report($sq_pquery['vendor_type'],$sq_pquery['vendor_type_id']);
 
 		$total_sale = $row_passport['exc_total_cost'] - $service_tax_amount - $markupservice_tax_amount + $credit_charges;
@@ -907,8 +996,13 @@ if($sale_type == 'Excursion'){
 if($sale_type == 'Forex'){ 
 
 	$count = 1;
-	$sq_passport = mysql_query("select * from forex_booking_master order by booking_id desc");
-	while ($row_passport = mysql_fetch_assoc($sq_passport)) {
+	$str_f="select * from forex_booking_master where 1 ";
+	if($from_date != '' && $to_date !='')
+	{
+		$str_f .= "and created_at BETWEEN '$from_date' AND '$to_date' order by booking_id desc";
+	}
+	$sq_forex = mysql_query($str_f);
+		while ($row_passport = mysql_fetch_assoc($sq_forex)) {
 		$date = $row_passport['created_at'];
 		$yr = explode("-", $date);
 		$year =$yr[0];
@@ -920,7 +1014,7 @@ if($sale_type == 'Forex'){
 		$credit_charges = $sq_paid_amount['sumc'];
 
 		//Purchase 
-		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal from vendor_estimate where estimate_type='Forex Booking' and estimate_type_id ='$row_passport[booking_id]' and status!='Cancel'"));
+		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal,vendor_type from vendor_estimate where estimate_type='Forex Booking' and estimate_type_id ='$row_passport[booking_id]' and status!='Cancel'"));
 		$vendor_name = get_vendor_name_report($sq_pquery['vendor_type'],$sq_pquery['vendor_type_id']);
 
 		//Service Tax and Markup Tax
@@ -958,8 +1052,13 @@ if($sale_type == 'Forex'){
 if($sale_type == 'Bus'){
 
 	$count = 1;
-	$sq_passport = mysql_query("select * from bus_booking_master order by booking_id desc");
-	while ($row_passport = mysql_fetch_assoc($sq_passport)) {
+	$str_b="select * from bus_booking_master where 1 ";
+	if($from_date != '' && $to_date !='')
+	{
+		$str_b .= "and created_at BETWEEN '$from_date' AND '$to_date' order by booking_id desc";
+	}
+		$sq_bus = mysql_query($str_b);
+		while ($row_passport = mysql_fetch_assoc($sq_bus)) {
 		$date = $row_passport['created_at'];
 		$yr = explode("-", $date);
 		$year =$yr[0];
@@ -1021,8 +1120,13 @@ if($sale_type == 'Bus'){
 if($sale_type == 'Hotel'){
 
 	$count = 1;
-	$sq_passport = mysql_query("select * from hotel_booking_master order by booking_id desc");
-	while ($row_passport = mysql_fetch_assoc($sq_passport)) {
+	$str_h="select * from hotel_booking_master where 1 ";
+	if($from_date != '' && $to_date !='')
+	{
+		$str_h .= "and created_at BETWEEN '$from_date' AND '$to_date' order by booking_id desc";
+	}
+	$sq_hotel = mysql_query($str_h);
+		while ($row_passport = mysql_fetch_assoc($sq_hotel)) {
 
 		$date = $row_passport['created_at'];
 		$yr = explode("-", $date);
@@ -1087,8 +1191,14 @@ if($sale_type == 'Hotel'){
 if($sale_type == 'Car Rental'){ 
 
 	$count = 1;
-	$sq_passport = mysql_query("select * from car_rental_booking where status != 'Cancel' order by booking_id desc");
-	while ($row_passport = mysql_fetch_assoc($sq_passport)) {
+	$str_c="select * from car_rental_booking where status != 'Cancel' where 1 ";
+	if($from_date != '' && $to_date !='')
+	{
+		$str_c .= "and created_at BETWEEN '$from_date' AND '$to_date' order by booking_id desc";
+	}
+	$sq_car = mysql_query($str_c);
+	
+	while ($row_passport = mysql_fetch_assoc($sq_car)) {
 
 		$date = $row_passport['created_at'];
 		$yr = explode("-", $date);
@@ -1117,7 +1227,7 @@ if($sale_type == 'Car Rental'){
               }
           }
 		//Purchase 
-		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal from vendor_estimate where estimate_type='Car Rental' and estimate_type_id ='$row_passport[booking_id]' and status!='Cancel'"));
+		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal,vendor_type from vendor_estimate where estimate_type='Car Rental' and estimate_type_id ='$row_passport[booking_id]' and status!='Cancel'"));
 		$vendor_name = get_vendor_name_report($sq_pquery['vendor_type'],$sq_pquery['vendor_type_id']);
 
 		$total_sale = $row_passport['total_fees'] - $service_tax_amount - $markupservice_tax_amount + $credit_charges;
@@ -1146,8 +1256,13 @@ if($sale_type == 'Car Rental'){
 if($sale_type == 'Flight Ticket'){ 
 
 	$count = 1;
-	$sq_passport = mysql_query("select * from ticket_master order by ticket_id desc");
-	while ($row_passport = mysql_fetch_assoc($sq_passport)) {
+	$str_t="select * from ticket_master where 1 ";
+	if($from_date != '' && $to_date !='')
+	{
+		$str_t .= "and created_at BETWEEN '$from_date' AND '$to_date' order by ticket_id desc";
+	}
+	$sq_ticket = mysql_query($str_t);
+		while ($row_passport = mysql_fetch_assoc($sq_ticket)) {
 
 		$date = $row_passport['created_at'];
 		$yr = explode("-", $date);
@@ -1178,7 +1293,7 @@ if($sale_type == 'Flight Ticket'){
 		$credit_card_charges = $sq_paid_amount['sumc'];
 
 		//Purchase 
-		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal from vendor_estimate where estimate_type='Ticket Booking' and estimate_type_id ='$row_passport[ticket_id]' and status!='Cancel'"));
+		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal,vendor_type from vendor_estimate where estimate_type='Ticket Booking' and estimate_type_id ='$row_passport[ticket_id]' and status!='Cancel'"));
 		$vendor_name = get_vendor_name_report($sq_pquery['vendor_type'],$sq_pquery['vendor_type_id']);
 
 		$total_sale = $row_passport['ticket_total_cost'] - $service_tax_amount - $markupservice_tax_amount + $credit_card_charges;
@@ -1211,8 +1326,13 @@ if($sale_type == 'Flight Ticket'){
 if($sale_type == 'Train Ticket'){ 
 
 	$count = 1;
-	$sq_passport = mysql_query("select * from train_ticket_master order by train_ticket_id desc");
-	while ($row_passport = mysql_fetch_assoc($sq_passport)) {
+	$str_tm="select * from train_ticket_master where 1 ";
+	if($from_date != '' && $to_date !='')
+	{
+		$str_tm .= "and created_at BETWEEN '$from_date' AND '$to_date' order by train_ticket_id desc";
+	}
+	$sq_train = mysql_query($str_tm);
+		while ($row_passport = mysql_fetch_assoc($sq_train)) {
 
 		$sq_paid_amount = mysql_fetch_assoc(mysql_query("SELECT sum(payment_amount) as sum,sum(credit_charges) as sumc from train_ticket_payment_master where train_ticket_id='$row_passport[train_ticket_id]' and clearance_status!='Pending' and clearance_status!='Cancelled'"));
 		$credit_card_charges = $sq_paid_amount['sumc'];
@@ -1233,7 +1353,7 @@ if($sale_type == 'Train Ticket'){
 			}
 		}
 		//Purchase 
-		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal from vendor_estimate where estimate_type='Train Ticket Booking' and estimate_type_id ='$row_passport[train_ticket_id]' and status!='Cancel'"));
+		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal,vendor_type from vendor_estimate where estimate_type='Train Ticket Booking' and estimate_type_id ='$row_passport[train_ticket_id]' and status!='Cancel'"));
 		$vendor_name = get_vendor_name_report($sq_pquery['vendor_type'],$sq_pquery['vendor_type_id']);
 
 		$total_sale = $row_passport['net_total'] - $service_tax_amount + $credit_card_charges;
@@ -1266,8 +1386,13 @@ if($sale_type == 'Train Ticket'){
 if($sale_type == 'Miscellaneous'){ 
 
 	$count = 1;
-	$sq_query = mysql_query("select * from miscellaneous_master order by misc_id desc");
-	while ($row_visa = mysql_fetch_assoc($sq_query)){
+	$str_m="select * from miscellaneous_master where 1 ";
+	if($from_date != '' && $to_date !='')
+	{
+		$str_m .= "and created_at BETWEEN '$from_date' AND '$to_date' order by misc_id desc";
+	}
+	$sq_misc = mysql_query($str_m);
+		while ($row_visa = mysql_fetch_assoc($sq_misc)){
 
 		$sq_paid_amount1 = mysql_fetch_assoc(mysql_query("SELECT sum(credit_charges) as sumc from miscellaneous_payment_master where misc_id='$row_visa[misc_id]' and clearance_status!='Pending' and clearance_status!='Cancelled'"));
 		$credit_card_charges = $sq_paid_amount1['sumc'];
@@ -1298,7 +1423,7 @@ if($sale_type == 'Miscellaneous'){
 			}
 		}
 		//Purchase 
-		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal from vendor_estimate where estimate_type='Miscellaneous Booking' and estimate_type_id ='$row_visa[misc_id]' and status!='Cancel'"));
+		$sq_pquery = mysql_fetch_assoc(mysql_query("select sum(net_total) as net_total,sum(service_tax_subtotal) as service_tax_subtotal,vendor_type from vendor_estimate where estimate_type='Miscellaneous Booking' and estimate_type_id ='$row_visa[misc_id]' and status!='Cancel'"));
 		$vendor_name = get_vendor_name_report($sq_pquery['vendor_type'],$sq_pquery['vendor_type_id']);
 
 		$total_sale = $row_visa['misc_total_cost'] - $service_tax_amount - $markupservice_tax_amount + $credit_card_charges;

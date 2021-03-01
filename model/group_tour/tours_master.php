@@ -324,8 +324,8 @@ function tour_master_update($tour_id,$tour_type, $tour_name, $adult_cost, $child
 
   $adult_cost = mysql_real_escape_string($adult_cost);  
 
-  $child_with_cost = mysql_real_escape_string($child_without_cost);  
-  $child_without_cost = mysql_real_escape_string($child_with_cost);
+  $child_with_cost = mysql_real_escape_string($child_with_cost);  
+  $child_without_cost = mysql_real_escape_string($child_without_cost);
 
   $infant_cost = mysql_real_escape_string($infant_cost);  
 

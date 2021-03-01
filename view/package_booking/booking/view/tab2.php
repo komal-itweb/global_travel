@@ -50,13 +50,7 @@
 	                       		$sq_entry = mysql_query("select * from package_train_master where booking_id='$booking_id'");
 
 	                       		while($row_entry = mysql_fetch_assoc($sq_entry)){
-									$q=mysql_fetch_assoc(mysql_query("select * from city_master where city_id=$row_entry[from_location]"));
-									$from_location=$q['city_name'];
-									$q1=mysql_fetch_assoc(mysql_query("select * from city_master where city_id=$row_entry[to_location]"));
-									$to_location=$q1['city_name'];
-	                       			$count++;
-
-	                       			$count++;
+									   $count ++;
 
 	                       	?>
 
@@ -66,9 +60,9 @@
 
 							    <td><?php echo get_datetime_user($row_entry['date']) ?></td>
 
-							    <td><?php echo $from_location; ?></td>
+							    <td><?php echo $row_entry['from_location']; ?></td>
 
-								<td><?php echo $to_location; ?></td>
+								<td><?php echo $row_entry['to_location']; ?></td>
 
 							    <td><?php echo $row_entry['train_no']; ?></td>
 

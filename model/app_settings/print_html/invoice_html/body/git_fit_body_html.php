@@ -86,7 +86,7 @@ if($bsmValues[0]->service != ''){   //inclusive service charge
   $newSC = $service_tax_amount + $service_charge;
 }
 else{
-   $tax_show =  rtrim($name, ', ').' : ' . ($service_tax_amount);
+   $tax_show =  rtrim($name. $percent. ' ').' : ' . ($service_tax_amount);
   $newSC = $service_charge;
   
 }
@@ -182,7 +182,7 @@ if($app_invoice_format == "Advance"){include "../headers/advance_header_html.php
         <div class="col-md-6"><p class="border_lt"><span class="font_5">DISCOUNT </span><span class="float_r"><?= $currency_code." ".$total_discount ?></span></p></div>
         <?php } ?>
         <div class="col-md-6"><p class="border_lt"><span class="font_5">CREDIT CARD CHARGE </span><span class="float_r"><?= $currency_code." ".number_format($charge,2)?></span></p></div>
-        <div class="col-md-6"><p class="border_lt"><span class="font_5">TAX</span><span class="float_r"><?= $tax_show ?></span></p></div>
+        <div class="col-md-6"><p class="border_lt"><span class="font_5">TAX</span><span class="float_r"><?=  $currency_code." ".$tax_show ?></span></p></div>
         <div class="col-md-6"><p class="border_lt"><span class="font_5">ADVANCED PAID </span><span class="font_5 float_r"><?= $currency_code." ".number_format($total_paid,2) ?></span></p></div> 
         <div class="col-md-6"><p class="border_lt"><span class="font_5">RoundOff</span><span class="float_r"><?= $currency_code." ".$roundoff ?></span></p></div>
         <div class="col-md-6"><p class="border_lt"><span class="font_5">CURRENT DUE </span><span class="font_5 float_r"><?= $currency_code." ".number_format($total_balance,2) ?></span></p></div>

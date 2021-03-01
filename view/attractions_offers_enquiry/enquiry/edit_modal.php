@@ -66,12 +66,22 @@ $enq_details = mysql_fetch_assoc(mysql_query("Select * from enquiry_master where
                     <div class="col-md-3 col-sm-6 mg_bt_10">
                         <input type="text" class="form-control" id="txt_email_id_u" name="txt_email_id_u" placeholder="Email ID" title="Email ID" value="<?= $enq_details[email_id] ?>">
                     </div>
+                    <?php 
+                    $dob=date("d-m-Y", strtotime($enq_details['cust_birth_date']) );
+                    $doanni=date("d-m-Y", strtotime($enq_details['cust_anni_date']) );
+                    if($dob=='01-01-1970'){
+                      $dob='';
+                    }
+                    if($doanni=='01-01-1970'){
+                      $doanni='';
+                    }
+                    ?>
                     <div class="col-sm-3 col-xs-12">
-                      <input type="text" id="cust_birth_date" name="cust_birth_date" placeholder="Birth Date" title="Birth Date"  value="<?= date("d-m-Y", strtotime($enq_details['cust_birth_date']) ); ?>" >
+                      <input type="text" id="cust_birth_date" name="cust_birth_date" placeholder="Birth Date" title="Birth Date"  value="<?= $dob; ?>" >
 
                     </div>
                     <div class="col-sm-3 col-xs-12">
-                      <input type="text" id="cust_anni_date" name="cust_anni_date" placeholder="Anniversary Date" title="Anniversary Date" value="<?= date("d-m-Y", strtotime($enq_details['cust_anni_date'])); ?>" >
+                      <input type="text" id="cust_anni_date" name="cust_anni_date" placeholder="Anniversary Date" title="Anniversary Date" value="<?= $doanni; ?>" >
 
                     </div>
                     <div class="col-md-3">

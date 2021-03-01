@@ -452,7 +452,8 @@ if($bsmValues[0]->basic != ''){ //inclusive basic
             <tbody>  
             <?php $sq_train_details = mysql_query("select * from package_train_master where booking_id='$booking_id'");
                   while($row_train_details = mysql_fetch_assoc($sq_train_details))
-                  {?> 
+                  {
+                    ?> 
                   <tr>
                     <td><?php echo $row_train_details['from_location']; ?></td>
                     <td><?php echo $row_train_details['to_location']; ?></td>

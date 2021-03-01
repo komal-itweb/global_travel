@@ -334,7 +334,7 @@ $result = $total_sale - $total_purchase;
 		}
 		$sq_exc_entry = mysql_num_rows(mysql_query("select * from hotel_booking_entries where booking_id='$row_hotel[booking_id]'"));
 		$sq_exc_cancel = mysql_num_rows(mysql_query("select * from hotel_booking_entries where booking_id='$row_hotel[booking_id]' and status = 'Cancel'"));
-		if($sq_exc_entry != $sq_exc_cancel){ 		
+		if($sq_exc_entry != $sq_exc_cancel){
 			$total_sale += $row_hotel['total_fee'] - $service_tax_amount - $markupservice_tax_amount + $credit_charges;
 		}	
 	}

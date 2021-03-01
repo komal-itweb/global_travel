@@ -129,7 +129,13 @@ function get_tax_charges(new_taxes_rules,taxes_result,basic_amount,basic_amounti
                 var rate_in_text = '';
                 var tax_amount = parseFloat(rate);
             }
-            tax_amount = (tax_amount !== '' || typeof tax_amount !== NaN || tax_amount !== undefined)? parseFloat(tax_amount).toFixed(2) : parseFloat(0).toFixed(2);
+          if(  tax_amount = (tax_amount !== '' ||  tax_amount !== undefined)){
+              if(isNaN(tax_amount)){
+                    parseFloat(0).toFixed(2);
+                }
+                else{ parseFloat(tax_amount).toFixed(2);}
+                } 
+                else{ parseFloat(0).toFixed(2);}
             
             var new_service_charge = parseFloat(charge_amount) - parseFloat(total_tax);
             new_service_charge = (new_service_charge !== '' || typeof new_service_charge !== NaN || new_service_charge !== undefined)? parseFloat(new_service_charge).toFixed(2) : parseFloat(0).toFixed(2);

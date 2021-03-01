@@ -23,7 +23,7 @@
 		<input type="text" class="form-control" id="to_date" name="to_date" placeholder="To Date" title="To Date" onchange="tour_expense_save_reflect();get_widget();" >
 
 		</div>
-		<div class="col-md-9 col-sm-12 text-right">
+		<div class="col-md-3 col-sm-12 text-right">
 			<button class="btn btn-excel btn-sm mg_bt_10_sm_xs" onclick="excel_report()" data-toggle="tooltip" title="Generate Excel"><i class="fa fa-file-excel-o"></i></button>
 		</div>
 	</div>

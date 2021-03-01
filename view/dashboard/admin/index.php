@@ -300,6 +300,7 @@
 				                        </thead>
 				                        <tbody>
 									 <?php
+									 global $secret_key , $encrypt_decrypt;
 										$query1 = "select * from package_tour_booking_master where tour_status!='Disabled' and financial_year_id='$financial_year_id' and tour_from_date <= '$today' and tour_to_date >= '$today'";
 				          				$sq_query = mysql_query($query1);
 				          				while($row_query=mysql_fetch_assoc($sq_query)){
@@ -307,6 +308,8 @@
 											$sq_count = mysql_num_rows(mysql_query("select * from package_travelers_details where booking_id='$row_query[booking_id]'"));
 											if($sq_cancel_count != $sq_count){
 				          					$sq_cust = mysql_fetch_assoc(mysql_query("select * from customer_master where customer_id = '$row_query[customer_id]'"));
+											  $contact_no = $encrypt_decrypt->fnDecrypt($row_query['contact_no'], $secret_key);
+
 											  $sq_emp = mysql_fetch_assoc(mysql_query("select * from emp_master where emp_id = '$row_query[emp_id]'"));
 											  $name = ($row_query['emp_id']=='0') ? "Admin" : $sq_emp['first_name'].' '.$sq_emp['last_name'];
 										    ?>
@@ -316,7 +319,7 @@
 				                              <td><?php echo $row_query['tour_name']; ?></td>
 				                              <td><?= get_date_user($row_query['tour_from_date']).' To '.get_date_user($row_query['tour_to_date']); ?></td>
 				                              <td><?php echo $sq_cust['first_name'].' '.$sq_cust['last_name']; ?></td>
-				                              <td><?php echo $row_query['mobile_no']; ?></td>
+				                              <td><?php echo $contact_no; ?></td>
 				                              <td><?= ($row_query['emp_id']=='0') ? "Admin" : $sq_emp['first_name'].' '.$sq_emp['last_name'] ?></td>
 											  <td><button class="btn btn-info btn-sm" onclick="send_sms(<?= $row_query['booking_id'] ?>,'Package Booking',<?= $row_query['emp_id']?>,'<?= $sq_cust['contact_no']?>','<?= $sq_cust['first_name'] ?>')" title="Send SMS"><i class="fa fa-paper-plane-o"></i></button></td>
 				                            </tr>
@@ -354,6 +357,8 @@
 											
 											$sq_hotel = mysql_fetch_assoc(mysql_query("select * from ticket_master where ticket_id = '$row_query1[ticket_id]'"));
 											$sq_cust = mysql_fetch_assoc(mysql_query("select * from customer_master where customer_id = '$sq_hotel[customer_id]'"));
+											$contact_no = $encrypt_decrypt->fnDecrypt($sq_cust['contact_no'], $secret_key);
+
 											$sq_emp = mysql_fetch_assoc(mysql_query("select * from emp_master where emp_id = '$sq_hotel[emp_id]'"));
 											?>
 												<tr class="<?= $bg ?>">
@@ -362,7 +367,7 @@
 												<td><?= ($row_query1['tour_name']=='')?'NA':$row_query1['tour_name'] ?></td>
 												<td><?= get_date_user($row_query1['departure_datetime']) ?></td>
 												<td><?php echo $sq_cust['first_name'].' '.$sq_cust['last_name']; ?></td>
-												<td><?php echo $sq_cust['contact_no']; ?></td>
+												<td><?php echo $contact_no; ?></td>
 												<td><?= ($sq_hotel['emp_id']=='0') ? "Admin" : $sq_emp['first_name'].' '.$sq_emp['last_name'] ?></td>
 												<td><button class="btn btn-info btn-sm" onclick="send_sms(<?= $sq_hotel['ticket_id'] ?>,'Flight Booking',<?= $sq_hotel['emp_id']?>,'<?= $sq_cust['contact_no']?>', '<?= $sq_cust['first_name'] ?>')" title="Send SMS"><i class="fa fa-paper-plane-o"></i></button></td>
 												</tr>
@@ -425,6 +430,8 @@
 											
 											$sq_hotel = mysql_fetch_assoc(mysql_query("select * from 	excursion_master where exc_id = '$row_query1[exc_id]'"));
 											$sq_cust = mysql_fetch_assoc(mysql_query("select * from customer_master where customer_id = '$sq_hotel[customer_id]'"));
+											$contact_no = $encrypt_decrypt->fnDecrypt($sq_cust['contact_no'], $secret_key);
+
 											$sq_emp = mysql_fetch_assoc(mysql_query("select * from emp_master where emp_id = '$sq_hotel[emp_id]'"));
 											?>
 												<tr class="<?= $bg ?>">
@@ -433,7 +440,7 @@
 												<td><?= ($row_query1['tour_name']=='')?'NA':$row_query1['tour_name'] ?></td>
 												<td><?= get_date_user($row_query1['exc_date']) ?></td>
 												<td><?php echo $sq_cust['first_name'].' '.$sq_cust['last_name']; ?></td>
-												<td><?php echo $sq_cust['contact_no']; ?></td>
+												<td><?php echo $contact_no; ?></td>
 												<td><?= ($sq_hotel['emp_id']=='0') ? "Admin" : $sq_emp['first_name'].' '.$sq_emp['last_name'] ?></td>
 												<td><button class="btn btn-info btn-sm" onclick="send_sms(<?= $sq_hotel['exc_id'] ?>,'Excursion Booking',<?= $sq_hotel['emp_id']?>,'<?= $sq_cust['contact_no']?>','<?= $sq_cust['first_name'] ?>')" title="Send SMS"><i class="fa fa-paper-plane-o"></i></button></td>
 												</tr>
@@ -446,6 +453,8 @@
 				          				while($row_query1=mysql_fetch_assoc($sq_query_car)){
 											
 											$sq_cust = mysql_fetch_assoc(mysql_query("select * from customer_master where customer_id = '$row_query1[customer_id]'"));
+											$contact_no = $encrypt_decrypt->fnDecrypt($sq_cust['contact_no'], $secret_key);
+
 											$sq_emp = mysql_fetch_assoc(mysql_query("select * from emp_master where emp_id = '$row_query1[emp_id]'"));
 											?>
 												<tr class="<?= $bg ?>">
@@ -454,7 +463,7 @@
 												<td><?= ($row_query1['tour_name']=='')?'NA':$row_query1['tour_name'] ?></td>
 												<td><?= get_date_user($row_query1['from_date']).' To '.get_date_user($row_query1['to_date']) ?></td>
 												<td><?php echo $sq_cust['first_name'].' '.$sq_cust['last_name']; ?></td>
-												<td><?php echo $sq_cust['contact_no']; ?></td>
+												<td><?php echo $contact_no; ?></td>
 												<td><?= ($row_query1['emp_id']=='0') ? "Admin" : $sq_emp['first_name'].' '.$sq_emp['last_name'] ?></td>
 												<td><button class="btn btn-info btn-sm" onclick="send_sms(<?= $row_query1['booking_id'] ?>,'Car Rental Booking',<?= $row_query1['emp_id']?>,'<?= $sq_cust['contact_no']?>','<?= $sq_cust['first_name'] ?>')" title="Send SMS"><i class="fa fa-paper-plane-o"></i></button></td>
 												</tr>
@@ -467,6 +476,8 @@
 				          				while($row_query1=mysql_fetch_assoc($sq_query_car)){
 											
 											$sq_cust = mysql_fetch_assoc(mysql_query("select * from customer_master where customer_id = '$row_query1[customer_id]'"));
+											$contact_no = $encrypt_decrypt->fnDecrypt($sq_cust['contact_no'], $secret_key);
+
 											$sq_emp = mysql_fetch_assoc(mysql_query("select * from emp_master where emp_id = '$row_query1[emp_id]'"));
 											?>
 												<tr class="<?= $bg ?>">
@@ -475,7 +486,7 @@
 												<td><?= ($row_query1['tour_name']=='')?'NA':$row_query1['tour_name'] ?></td>
 												<td><?= get_date_user($row_query1['traveling_date']) ?></td>
 												<td><?php echo $sq_cust['first_name'].' '.$sq_cust['last_name']; ?></td>
-												<td><?php echo $sq_cust['contact_no']; ?></td>
+												<td><?php echo $contact_no; ?></td>
 												<td><?= ($row_query1['emp_id']=='0') ? "Admin" : $sq_emp['first_name'].' '.$sq_emp['last_name'] ?></td>
 												<td><button class="btn btn-info btn-sm" onclick="send_sms(<?= $row_query1['booking_id'] ?>,'Car Rental Booking',<?= $row_query1['emp_id']?>,'<?= $sq_cust['contact_no']?>','<?= $sq_cust['first_name'] ?>')" title="Send SMS"><i class="fa fa-paper-plane-o"></i></button></td>
 												</tr>
@@ -494,6 +505,8 @@
 											$sq_booking = mysql_fetch_assoc(mysql_query("select * from tour_groups where tour_id = '$row_query[tour_id]'"));
 											$sq_booking1 = mysql_fetch_assoc(mysql_query("select * from tour_master where tour_id = '$row_query[tour_id]'"));
 											$sq_cust = mysql_fetch_assoc(mysql_query("select * from customer_master where customer_id = '$row_query[customer_id]'"));
+											$contact_no = $encrypt_decrypt->fnDecrypt($sq_cust['contact_no'], $secret_key);
+
 											$sq_emp = mysql_fetch_assoc(mysql_query("select * from emp_master where emp_id = '$row_query[emp_id]'"));
 											?>
 												<tr class="<?= $bg ?>">
@@ -502,7 +515,7 @@
 												<td><?php echo $sq_booking1['tour_name']; ?></td>
 												<td><?= get_date_user($sq_booking['from_date']).' To '.get_date_user($sq_booking['to_date']) ?></td>
 												<td><?php echo $sq_cust['first_name'].' '.$sq_cust['last_name']; ?></td>
-												<td><?php echo $sq_cust['contact_no']; ?></td>
+												<td><?php echo $contact_no; ?></td>
 												<td><?= ($row_query1['emp_id']=='0') ? "Admin" : $sq_emp['first_name'].' '.$sq_emp['last_name'] ?></td>
 												<td><button class="btn btn-info btn-sm" onclick="send_sms(<?= $row_query1['id'] ?>,'Group Booking',<?= $row_query1['emp_id']?>,'<?= $sq_cust['contact_no']?>','<?= $sq_cust['first_name'] ?>')" title="Send SMS"><i class="fa fa-paper-plane-o"></i></button></td>
 												</tr>
@@ -515,6 +528,8 @@
 				          				while($row_query_visa=mysql_fetch_assoc($sq_query_visa)){
 											$sq_visa = mysql_fetch_assoc(mysql_query("select * from visa_master where visa_id = '$row_query_visa[visa_id]'"));
 											$sq_cust = mysql_fetch_assoc(mysql_query("select * from customer_master where customer_id = '$sq_visa[customer_id]'"));
+											$contact_no = $encrypt_decrypt->fnDecrypt($sq_cust['contact_no'], $secret_key);
+
 											$sq_emp = mysql_fetch_assoc(mysql_query("select * from emp_master where emp_id = '$sq_visa[emp_id]'"));
 											?>
 												<tr class="<?= $bg ?>">
@@ -523,7 +538,7 @@
 												<td><?php echo $row_query_visa['visa_country_name']; ?></td>
 												<td><?= get_date_user($row_query_visa['appointment_date']) ?></td>
 												<td><?php echo $sq_cust['first_name'].' '.$sq_cust['last_name']; ?></td>
-												<td><?php echo $sq_cust['contact_no']; ?></td>
+												<td><?php echo $contact_no; ?></td>
 												<td><?= ($sq_visa['emp_id']=='0') ? "Admin" : $sq_emp['first_name'].' '.$sq_emp['last_name'] ?></td>
 												<td><button class="btn btn-info btn-sm" onclick="send_sms(<?= $sq_visa['visa_id'] ?>,'Visa Booking',<?= $sq_visa['emp_id']?>,'<?= $sq_cust['contact_no']?>','<?= $sq_cust['first_name'] ?>')" title="Send SMS"><i class="fa fa-paper-plane-o"></i></button></td>
 												</tr>
@@ -537,6 +552,8 @@
 				          				while($row_query_visa=mysql_fetch_assoc($sq_query_pass)){
 											$sq_visa = mysql_fetch_assoc(mysql_query("select * from passport_master where passport_id = '$row_query_visa[passport_id]'"));
 											$sq_cust = mysql_fetch_assoc(mysql_query("select * from customer_master where customer_id = '$sq_visa[customer_id]'"));
+											$contact_no = $encrypt_decrypt->fnDecrypt($sq_cust['contact_no'], $secret_key);
+
 											$sq_emp = mysql_fetch_assoc(mysql_query("select * from emp_master where emp_id = '$sq_visa[emp_id]'"));
 											?>
 												<tr class="<?= $bg ?>">
@@ -545,7 +562,7 @@
 												<td><?= ($row_query1['tour_name']=='')?'NA':$row_query1['tour_name'] ?></td>
 												<td><?= get_date_user($row_query_visa['appointment_date']) ?></td>
 												<td><?php echo $sq_cust['first_name'].' '.$sq_cust['last_name']; ?></td>
-												<td><?php echo $sq_cust['contact_no']; ?></td>
+												<td><?php echo $contact_no; ?></td>
 												<td><?= ($sq_visa['emp_id']=='0') ? "Admin" : $sq_emp['first_name'].' '.$sq_emp['last_name'] ?></td>
 												<td><button class="btn btn-info btn-sm" onclick="send_sms(<?= $sq_visa['passport_id'] ?>,'Passport Booking',<?= $sq_visa['emp_id']?>,'<?= $sq_cust['contact_no']?>','<?= $sq_cust['first_name'] ?>')" title="Send SMS"><i class="fa fa-paper-plane-o"></i></button></td>
 												</tr>
@@ -1402,6 +1419,8 @@
 <script type="text/javascript">
 $('#group_booking_id,#package_booking_id').select2();
 $('#followup_from_date_filter, #followup_to_date_filter').datetimepicker({ format:'d-m-Y H:i' });
+//$('#from_date, #to_date').datetimepicker({ timepicker:false, format:'d-m-Y' });
+
 followup_reflect();
 function followup_reflect(){
 	var from_date = $('#followup_from_date_filter').val();

@@ -19,7 +19,7 @@ $sq_tours = mysql_query("select * from custom_package_program where package_id =
               <tbody>
               <?php while($row_tours = mysql_fetch_assoc($sq_tours)){?>
                 <tr>
-                <td width="27px;" style="padding-right: 10px !important;"><input class="css-checkbox mg_bt_10 labelauty" id="chk_program1" type="checkbox" checked style="display: none;"><label for="chk_program1"><span class="labelauty-unchecked-image"></span><span class="labelauty-checked-image"></span></label></td>
+                <td width="27px;" style="padding-right: 10px !important;"><input class="css-checkbox mg_bt_10 labelauty" id="chk_program1<?= $count?>" type="checkbox" checked style="display: none;"><label for="chk_program1"><span class="labelauty-unchecked-image"></span><span class="labelauty-checked-image"></span></label></td>
                 <td width="50px;"><input maxlength="15" value="<?= $count?>" type="text" name="username" placeholder="Sr. No." class="form-control mg_bt_10" disabled=""></td>
                 <td class="col-md-3 no-pad" style="padding-left: 5px !important;"><input type="text" id="special_attaraction<?= $count?>" onchange="validate_spaces(this.id);validate_spattration(this.id);" name="special_attaraction" class="form-control mg_bt_10" placeholder="Special Attraction" title="Special Attraction" value="<?= $row_tours['attraction']?>"></td>
                 <td class="col-md-5 no-pad" style="padding-left: 5px !important;"><textarea id="day_program<?= $count?>" name="day_program" class="form-control mg_bt_10" title="" rows="3" placeholder="*Day-wise Program" onchange="validate_spaces(this.id);validate_dayprogram(this.id);" title="Day-wise Program"><?= $row_tours['day_wise_program']?></textarea></td>

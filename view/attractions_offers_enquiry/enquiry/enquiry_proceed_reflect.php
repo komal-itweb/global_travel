@@ -172,6 +172,7 @@ while($row = mysql_fetch_assoc($sq_enquiries)){
 
 	$enquiry_status1 = mysql_fetch_assoc(mysql_query("select followup_date,followup_reply,followup_status from enquiry_master_entries where enquiry_id='$row[enquiry_id]' order by entry_id DESC"));
 	$followup_date1 = $enquiry_status1['followup_date'];
+	$followup_status='';
 	if($enquiry_status1['followup_status']=='Active'){
 		$followup_status='Active';
 	}

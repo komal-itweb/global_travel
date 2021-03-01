@@ -186,11 +186,12 @@ if($bsmValues[0]->basic != ''){ //inclusive basic
           <div class="print_info_block">
             <ul class="main_block noType">
               <li class="col-md-6 mg_tp_10 mg_bt_10"><span>TOUR DATE : </span><?php echo $from_date.' To '.$to_date; ?></li>
-              <li class="col-md-6 mg_tp_10 mg_bt_10"><span>INSURANCE : </span><?php echo $insuarance_name; ?></li>
+              <!-- <li class="col-md-6 mg_tp_10 mg_bt_10"><span>INSURANCE : </span><?php echo $insuarance_name; ?></li> -->
+              <li class="col-md-6 mg_tp_10 mg_bt_10"><span>TOTAL ROOMS : </span><?php echo $tourwise_details['s_double_bed_room']; ?></li>
             </ul>
             <ul class="main_block noType">
-              <li class="col-md-6 mg_tp_10 mg_bt_10"><span>VISA : </span><?php echo $visa_name; ?></li>
-              <li class="col-md-6 mg_tp_10 mg_bt_10"><span>TOTAL ROOMS : </span><?php echo $tourwise_details['s_double_bed_room']; ?></li>
+              <!-- <li class="col-md-6 mg_tp_10 mg_bt_10"><span>VISA : </span><?php echo $visa_name; ?></li> -->
+              
             </ul>
           </div>
         </div>
@@ -500,16 +501,17 @@ if($bsmValues[0]->basic != ''){ //inclusive basic
           <div class="print_amount_block">
             <ul class="main_block no-pad text-right noType">
               <li class="col-md-6 mg_tp_10 mg_bt_10"><span>TOUR AMOUNT : </span><?php echo number_format($tourwise_details['tour_fee_subtotal_1'],2); ?></li>
-              <li class="col-md-6 mg_tp_10 mg_bt_10"><span>BASIC AMOUNT : </span><?php echo number_format($newBasic,2); ?></li>
+              <li class="col-md-6 mg_tp_10 mg_bt_10"><span>DISCOUNT : </span><?php echo number_format($total_discount,2); ?></li>
             </ul>
             <ul class="main_block no-pad text-right noType">
               <li class="col-md-6 mg_tp_10 mg_bt_10"><span>TRAIN AMOUNT : </span><?php echo number_format($tourwise_details['total_train_expense'],2); ?></li>
-              <li class="col-md-6 mg_tp_10 mg_bt_10"><span>TAX AMOUNT : </span><?php echo $tax_show; ?></li>
-             
+              <li class="col-md-6 mg_tp_10 mg_bt_10"><span>BASIC AMOUNT : </span><?php echo number_format($newBasic,2); ?></li>
+              
             </ul>
             <ul class="main_block no-pad text-right noType">
               <li class="col-md-6 mg_tp_10 mg_bt_10"><span>CRUISE AMOUNT : </span><?php echo number_format($tourwise_details['total_cruise_expense'],2); ?></li>
-              <li class="col-md-6 mg_tp_10 mg_bt_10"><span>DISCOUNT : </span><?php echo number_format($total_discount,2); ?></li>
+              <li class="col-md-6 mg_tp_10 mg_bt_10"><span>TAX AMOUNT : </span><?php echo $tax_show; ?></li>
+            
             </ul>
             <ul class="main_block no-pad text-right noType">
             <li class="col-md-6 mg_tp_10 mg_bt_10"><span>FLIGHT AMOUNT : </span><?php echo number_format($tourwise_details['total_plane_expense'],2); ?></li>

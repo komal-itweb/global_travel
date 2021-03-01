@@ -154,7 +154,7 @@ $footer_data = array();
 $footer_data = array("footer_data" => array(
 	'total_footers' => 4,
 	'foot0' => "Total",
-	'col0' => 5,
+	'col0' => 6,
 	'class0' => "",
 	'foot1' => number_format($total_sale, 2),
 	'col1' => 1,

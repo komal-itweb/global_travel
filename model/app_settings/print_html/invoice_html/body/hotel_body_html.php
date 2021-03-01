@@ -149,7 +149,7 @@ if($app_invoice_format == "Advance"){include "../headers/advance_header_html.php
       <div class="col-md-6"><p class="border_lt"><span class="font_5">&nbsp;</span><span class="float_r"></span></p></div>
       <div class="col-md-6"><p class="border_lt"><span class="font_5">TDS</span><span class="float_r"><?= $currency_code." ".number_format($tds,2) ?></span></p></div>
       <div class="col-md-6"><p class="border_lt"><span class="font_5">&nbsp;</span><span class="float_r"></span></p></div>
-      <div class="col-md-6"><p class="border_lt"><span class="font_5">ROUNDOFF</span><span class="float_r"><?= $roundoff ?></span></p></div>
+     
     </div>
   </div>
 </div>

@@ -429,7 +429,7 @@ function quotation_info_load() {
 				$('#txt_package_package_id').val(response.package_id);
 				$('#txt_package_from_date').val(response.from_date);
 				$('#txt_package_to_date').val(response.to_date);
-				$('#tour_type').val(response.booking_type);
+				$('#booking_type').val(response.booking_type);
 				$('#txt_tour_total_days').val(response.total_days);
 				$('#txt_child_without_bed').val(response.children_without_bed);
 				$('#txt_child_with_bed').val(response.children_with_bed);

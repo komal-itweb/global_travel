@@ -29,11 +29,8 @@
             <td><input type="text" id="<?php echo 'txt_train_date'.$count_t.'t' ?>" name="<?php echo 'txt_train_date'.$count_t.'t' ?>" class="app_datetimepicker" onchange="validate_pastDate(this.id)" placeholder="Departure Date & Time" title="Departure Date & Time" value="<?php echo date("d-m-Y H:i:s", strtotime($row_train_details['date'])) ?>"/></td>
 
             <td><select id="txt_train_from_location<?= $count_t ?>t" onchange="validate_location('txt_train_from_location<?= $count_t ?>t' , 'txt_train_to_location<?= $count_t ?>t');" name="txt_train_from_location<?= $count_t ?>t" class="app_select2" style="width:120px">
-            <?php
-            $sq_fcity = mysql_fetch_assoc(mysql_query("select * from city_master where city_id=$row_train_details[from_location]"));
-
-            ?>
-                <option value="<?php echo $sq_fcity['city_id'] ?>"><?php echo $sq_fcity['city_name'] ?></option>                <?php 
+                <option value="<?php echo $row_train_details['from_location'] ?>"><?php echo $row_train_details['from_location'] ?></option>                
+                <?php 
                     $sq_city = mysql_query("select * from city_master");
                     while($row_city = mysql_fetch_assoc($sq_city))
                     {
@@ -44,17 +41,14 @@
                 ?>
             </select></td>
             <td><select id="txt_train_to_location<?= $count_t ?>t"  onchange="validate_location('txt_train_to_location<?= $count_t ?>t' , 'txt_train_from_location<?= $count_t ?>t');" name="txt_train_to_location<?= $count_t ?>t" class="app_select2" style="width:120px">
-            <?php
-            $sq_tcity = mysql_fetch_assoc(mysql_query("select * from city_master where city_id=$row_train_details[to_location]"));
-
-            ?>
-                <option value="<?php echo $sq_tcity['city_id'] ?>"><?php echo $sq_tcity['city_name'] ?></option>
+           
+                <option value="<?php echo $row_train_details['to_location'] ?>"><?php echo $row_train_details['to_location'] ?></option>
                 <?php 
-                    $sq_city = mysql_query("select name from travel_station_master order by name asc");
+                    $sq_city = mysql_query("select * from city_master");
                     while($row_city = mysql_fetch_assoc($sq_city))
                     {
                      ?>
-                        <option value="<?php echo $row_city['name'] ?>"><?php echo $row_city['name'] ?></option>
+                        <option value="<?php echo $row_city['city_name']; ?>"><?php echo $row_city['city_name']; ?></option>
                      <?php   
                     }    
                 ?>

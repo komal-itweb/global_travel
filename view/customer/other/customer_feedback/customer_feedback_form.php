@@ -251,6 +251,12 @@ $tour_name = $_GET['tour_name'];
 		       </div>
 		        </div>
 		    </div>
+			<div class="row mg_bt_20">
+		    <div class="answer_wrap">
+		        <div class="col-md-12 mg_tp_10">
+				Please visit us at <a href="https://www.google.com/search?gs_ssp=eJzj4tVP1zc0TDI3zTEpzMowYLRSNagwTjSySEmxtExKNLe0NDA1tTKoSEw1SbJItDSxTDNMTkqxTPQSTc_JT0rMUSgpSixLzSlWKErMLCgtAgBZ5xfh&q=global+travels+raipur&rlz=1C1CHBD_enIN789IN789&oq=global+&aqs=chrome.1.69i59j46i39i175i199j69i57j69i60j69i61l2j69i65l2.5838j0j7&sourceid=chrome&ie=UTF-8">Global Travel</a>
+		        </div>
+		    </div>
 		</div>
 		 
 	 

@@ -10,6 +10,9 @@ public function email_id_save()
 	$sq_max = mysql_fetch_assoc(mysql_query("select max(email_id_id) as max from sms_email_id"));
 	$email_id_id = $sq_max['max'] + 1;
 
+	global $encrypt_decrypt, $secret_key;
+	$email_id = $encrypt_decrypt->fnEncrypt($email_id, $secret_key);
+  
 	$sq_email_id_count = mysql_num_rows(mysql_query("select * from sms_email_id where email_id='$email_id'"));
 	if($sq_email_id_count>0){
 		echo "error--Sorry, This Email ID already exists!";
@@ -35,6 +38,9 @@ public function email_id_update()
 	$email_id_id = $_POST['email_id_id'];
 	$email_id = $_POST['email_id'];
 
+	global $encrypt_decrypt, $secret_key;
+	$email_id = $encrypt_decrypt->fnEncrypt($email_id, $secret_key);
+  
 	$sq_email_id_count = mysql_num_rows(mysql_query("select * from sms_email_id where email_id='$email_id' and email_id_id!='$email_id_id'"));
 	if($sq_email_id_count>0){
 		echo "error--Sorry, This Email ID already exists!";
@@ -206,6 +212,9 @@ public function email_id_from_csv_save()
 	        $sq_max = mysql_fetch_assoc(mysql_query("select max(email_id_id) as max from sms_email_id"));
 			$email_id_id = $sq_max['max'] + 1;
 			$email_id = $data[0];
+			global $encrypt_decrypt, $secret_key;
+			$email_id = $encrypt_decrypt->fnEncrypt($email_id, $secret_key);
+  
 			if(!empty($email_id))
 			{
 				$sq_mobile_no_count = mysql_num_rows(mysql_query("select * from sms_email_id where email_id='$data[0]'"));

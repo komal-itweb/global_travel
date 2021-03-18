@@ -77,6 +77,9 @@ $branch_status = $_POST['branch_status'];
                       </select>
                     </div>
                 </div>
+                <div class="row mg_bt_10">
+          <div id="corporate_fields"></div>
+        </div>
                 <div class="row">
                     <div class="col-md-3 col-sm-6 mg_bt_10">
                         <input type="text" class="form-control" id="location" name="location" placeholder="Location" title="Location">
@@ -241,6 +244,9 @@ $(function(){
        var reference_id = $('#reference_id').val();
        var branch_admin_id = $('#branch_admin_id').val();
        var financial_year_id = $('#financial_year_id').val();
+       var corpo_company_name = $('#corpo_company_name').val();
+       var cust_landline_no = $('#cust_landline_no').val();
+       var cust_alt_email_id = $('#cust_alt_email_id').val();
        
        if(enquiry_type == 'Flight Ticket'){
         var table = document.getElementById("tbl_enquiry_flight");
@@ -292,7 +298,7 @@ $(function(){
        }
        
        $('#btn_enq_save').button('loading');
-       var obj = { login_id : login_id, enquiry_type : enquiry_type, name : name, mobile_no : mobile_no, email_id : email_id,location : location, enq_state:enq_state, assigned_emp_id : assigned_emp_id , enquiry_specification : enquiry_specification, enquiry_date : enquiry_date, followup_date : followup_date, reference_id : reference_id, enquiry_content : enquiry_content, landline_no : landline_no,enquiry : enquiry , branch_admin_id : branch_admin_id,financial_year_id : financial_year_id, country_code : country_code , cust_last_name:cust_last_name,cust_birth_date:cust_birth_date,cust_anni_date:cust_anni_date,cust_type:cust_type};
+       var obj = { login_id : login_id, enquiry_type : enquiry_type, name : name, mobile_no : mobile_no, email_id : email_id,location : location, enq_state:enq_state, assigned_emp_id : assigned_emp_id , enquiry_specification : enquiry_specification, enquiry_date : enquiry_date, followup_date : followup_date, reference_id : reference_id, enquiry_content : enquiry_content, landline_no : landline_no,enquiry : enquiry , branch_admin_id : branch_admin_id,financial_year_id : financial_year_id, country_code : country_code , cust_last_name:cust_last_name,cust_birth_date:cust_birth_date,cust_anni_date:cust_anni_date,cust_type:cust_type , cust_alt_email_id:cust_alt_email_id,cust_landline_no:cust_landline_no,corpo_company_name:corpo_company_name};
        $.post(
             base_url+"controller/attractions_offers_enquiry/enquiry_master_save_v.php",
             {  mobile_no : mobile_no, email_id : email_id },
@@ -349,7 +355,7 @@ function actual_enq_save(obj){
               }
               else{
                 $('#enquiry_save_modal').modal('hide');
-                msg_alert(data);                               
+                msg_alert(data);
                 $('#btn_enq_save').button('reset');  
                 enquiry_proceed_reflect();
                 return false;
@@ -361,8 +367,13 @@ $("#txt_name").autocomplete({
     source: JSON.parse($('#cust_data').val()),
     select: function (event, ui) {
 	  $("#txt_name").val(ui.item.label);
+	  $("#cust_last_name").val(ui.item.label_last);
     $('#txt_mobile_no').val(ui.item.contact_no);
     $('#txt_email_id').val(ui.item.email_id);
+    $('#cust_birth_date').val(ui.item.birth_date);
+    $('#cust_anni_date').val(ui.item.anni_date);
+    $('#cust_type').append(ui.item.type);
+    $('#enq_state').append(ui.item.state);
     },
     open: function(event, ui) {
 		$(this).autocomplete("widget").css({

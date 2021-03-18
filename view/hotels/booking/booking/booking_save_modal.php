@@ -64,8 +64,9 @@ $branch_status = $sq['branch_status'];
               <div class="col-sm-3 col-xs-12 mg_bt_10_sm_xs mg_tp_10">
                <select name="booking_type" id="booking_type" class="customer_dropdown" style="width:100%" title="Booking Type" onchange="get_auto_values('booking_date','sub_total','payment_mode','service_charge','markup','save','true','service_charge','discount',true);">
                   <option value="">*Select Booking Type</option>
-                  <option value="Online">Online</option>
-                  <option value="Offline">Offline</option>
+                  <option value="Online">Online(18%)</option>
+                  <option value="Offline 18">Offline(18%)</option>
+                  <option value="Offline 12">Offline(12%)</option>
               </select>
 
               </div>

@@ -1,0 +1,1 @@
+[09-Feb-2021 12:48:03 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/itourscloud/public_html/global/view/other_masters/room_category/update_modal.php:1) in /home/itourscloud/public_html/global/model/model.php on line 11

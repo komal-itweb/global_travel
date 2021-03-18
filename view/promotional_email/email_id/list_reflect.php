@@ -16,7 +16,9 @@ $sq_email_no = mysql_query($query1);
 	
 while($row_email_no = mysql_fetch_assoc($sq_email_no)){
 	$count++;
-	
+	global $encrypt_decrypt, $secret_key;
+	$email_id = $encrypt_decrypt->fnDecrypt($row_email_no['email_id'], $secret_key);
+  
 	$group_name = "";
 	$sq_group_entries = mysql_query("select * from email_group_entries where email_id_id='$row_email_no[email_id_id]'");
 	while($row_group_entry = mysql_fetch_assoc($sq_group_entries)){
@@ -32,13 +34,14 @@ while($row_email_no = mysql_fetch_assoc($sq_email_no)){
 	$temp_arr = array( "data" => array(
 				'<input type="checkbox" id="chk_mobile_no_'.$count.'" name="chk_email_id" value="\''. $row_email_no['email_id_id'] .'\'">',
 				(int)($count),
-				$row_email_no['email_id'],
+				$email_id,
 				trim($group_name, ', '),
 				'<button class="btn btn-info btn-sm" onclick="email_id_edit_modal(\''. $row_email_no['email_id_id'] .'\')" data-toggle="tooltip" title="Edit Email ID"><i class="fa fa-pencil-square-o"></i></button>'	
 				), "bg" =>$bg);
 			array_push($array_s,$temp_arr);
 	
 }
+//print_r($array_s);
 echo json_encode($array_s);
 ?>
 

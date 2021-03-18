@@ -148,12 +148,12 @@ else{
               <table class="table table-bordered no-marg" id="tbl_emp_list">
                 <thead>
                   <tr class="table-heading-row">
-                    <th>From</th>
-                    <th>To</th>
-                    <th>Airline</th>
-                    <th>Class</th>
-                    <th>Departure</th>
-                    <th>Arrival</th>
+                    <th style="font-size:15px !important;">From</th>
+                    <th style="font-size:15px !important;">To</th>
+                    <th style="font-size:15px !important;">Airline</th>
+                    <th style="font-size:15px !important;">Class</th>
+                    <th style="font-size:15px !important;">Departure</th>
+                    <th style="font-size:15px !important;">Arrival</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -163,12 +163,12 @@ else{
                   $sq_airline = mysql_fetch_assoc(mysql_query("select * from airline_master where airline_id='$row_plane[airline_name]'"));
                 ?>   
                 <tr>
-                  <td><?= $row_plane['from_location'] ?></td>
-                  <td><?= $row_plane['to_location'] ?></td>
-                  <td><?= $sq_airline['airline_name'].' ('.$sq_airline['airline_code'].')' ?></td>
-                  <td><?= $row_plane['class'] ?></td>
-                  <td><?= date('d-m-Y H:i:s', strtotime($row_plane['dapart_time'])) ?></td>
-                  <td><?= date('d-m-Y H:i:s', strtotime($row_plane['arraval_time'])) ?></td>
+                  <td style="font-size:15px !important;"><?= $row_plane['from_location'] ?></td>
+                  <td style="font-size:15px !important;"><?= $row_plane['to_location'] ?></td>
+                  <td style="font-size:15px !important;"><?= $sq_airline['airline_name'].' ('.$sq_airline['airline_code'].')' ?></td>
+                  <td style="font-size:15px !important;"><?= $row_plane['class'] ?></td>
+                  <td style="font-size:15px !important;"><?= date('d-m-Y H:i:s', strtotime($row_plane['dapart_time'])) ?></td>
+                  <td style="font-size:15px !important;"><?= date('d-m-Y H:i:s', strtotime($row_plane['arraval_time'])) ?></td>
                 </tr>
                 <?php } ?>
                 </tbody>

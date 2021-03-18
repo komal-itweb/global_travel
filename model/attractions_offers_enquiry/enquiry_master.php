@@ -26,6 +26,9 @@ function enquiry_master_save(){
   $enquiry_content = $_POST['enquiry_content'];
   $branch_admin_id = $_POST['branch_admin_id'];
   $financial_year_id = $_POST['financial_year_id'];
+  $corpo_company_name = $_POST['corpo_company_name'];
+  $cust_landline_no = $_POST['cust_landline_no'];
+  $cust_alt_email_id = $_POST['cust_alt_email_id'];
   $by = $_POST['by']; //enquiries saved by customer 
   $enquiry_content = json_encode($enquiry_content);
   $customer_fill = (isset($_POST['customer_fill'])) ?  true : false;
@@ -51,7 +54,7 @@ function enquiry_master_save(){
 
     $name = addslashes($name);
     $enquiry_specification = addslashes($enquiry_specification);
-    $sq_enquiry = mysql_query("insert into enquiry_master (enquiry_id, login_id,branch_admin_id,financial_year_id, enquiry_type,enquiry, name, mobile_no, landline_no, country_code,email_id,location, assigned_emp_id, enquiry_specification, enquiry_date, followup_date, reference_id, enquiry_content ,enq_state,cust_last_name,cust_birth_date,cust_anni_date,cust_type) values ('$enquiry_id', '$login_id', '$branch_admin_id','$financial_year_id', '$enquiry_type','$enquiry', '$name', '$mobile_no', '$landline_no', '$country_code','$email_id','$location', '$assigned_emp_id', '$enquiry_specification', '$enquiry_date', '$followup_date', '$reference_id', '$enquiry_content','$enq_state','$cust_last_name','$cust_birth_date','$cust_anni_date','$cust_type')");
+    $sq_enquiry = mysql_query("insert into enquiry_master (enquiry_id, login_id,branch_admin_id,financial_year_id, enquiry_type,enquiry, name, mobile_no, landline_no, country_code,email_id,location, assigned_emp_id, enquiry_specification, enquiry_date, followup_date, reference_id, enquiry_content ,enq_state,cust_last_name,cust_birth_date,cust_anni_date,cust_type,corpo_company_name,cust_landline_no,cust_alt_email_id) values ('$enquiry_id', '$login_id', '$branch_admin_id','$financial_year_id', '$enquiry_type','$enquiry', '$name', '$mobile_no', '$landline_no', '$country_code','$email_id','$location', '$assigned_emp_id', '$enquiry_specification', '$enquiry_date', '$followup_date', '$reference_id', '$enquiry_content','$enq_state','$cust_last_name','$cust_birth_date','$cust_anni_date','$cust_type','$corpo_company_name','$cust_landline_no','$cust_alt_email_id')");
 
     global $encrypt_decrypt, $secret_key;
     $contact_no = $encrypt_decrypt->fnEncrypt($mobile_no, $secret_key);
@@ -61,11 +64,16 @@ function enquiry_master_save(){
   if($row_count==0){
       $sq_max = mysql_fetch_assoc(mysql_query("select max(customer_id) as max from customer_master"));
       $customer_id = $sq_max['max'] + 1;
-      $str="insert into customer_master (customer_id,first_name,last_name,birth_date,anni_date,type, country_code,contact_no,email_id, address, active_flag, created_at,branch_admin_id , state_id) values ('$customer_id', '$name','$cust_last_name','$cust_birth_date','$cust_anni_date','$cust_type', '$country_code','$contact_no', '$email_id', '$location', 'Active', '$created_at','$branch_admin_id', '$enq_state')";
+      $str="insert into customer_master (customer_id,first_name,last_name,birth_date,anni_date,type, country_code,contact_no,email_id, address, active_flag, created_at,branch_admin_id , state_id,landline_no,alt_email,company_name) values ('$customer_id', '$name','$cust_last_name','$cust_birth_date','$cust_anni_date','$cust_type', '$country_code','$contact_no', '$email_id', '$location', 'Active', '$created_at','$branch_admin_id', '$enq_state','$cust_landline_no','$cust_alt_email_id','$corpo_company_name')";
         $sq_visa = mysql_query($str);
       $sq_max = mysql_fetch_assoc(mysql_query("select max(ledger_id) as max from ledger_master"));
       $ledger_id = $sq_max['max'] + 1;
-        $ledger_name = $customer_id.'_'.$sq_enq['name'];
+        if($cust_type == 'Corporate' || $cust_type == 'B2B'){
+          $ledger_name = $corpo_company_name;
+        }
+        else{
+          $ledger_name = $customer_id.'_'.$name.' '.$cust_last_name;
+        }
     
       $sq_ledger = mysql_query("insert into ledger_master (ledger_id, ledger_name, alias, group_sub_id, balance, dr_cr,customer_id,user_type,status) values ('$ledger_id', '$ledger_name', '', '20', '0','Dr','$customer_id','customer','Active')");
     }
@@ -255,6 +263,9 @@ function enquiry_master_update()
   $enquiry_content = json_encode($enquiry_content);
   $enquiry_specification = $_POST['enquiry_specification'];
   $assigned_emp_id = $_POST['assigned_emp_id'];
+  $corpo_company_name = $_POST['corpo_company_name'];
+  $cust_landline_no = $_POST['cust_landline_no'];
+  $cust_alt_email_id = $_POST['cust_alt_email_id'];
   $name = $_POST['name'];
   
   $landline_no = $country_code.$landline_no;
@@ -264,7 +275,7 @@ function enquiry_master_update()
   $name = addslashes($name);
   $enquiry_specification = addslashes($enquiry_specification);
 
-  $sq_enquiry = mysql_query("update enquiry_master set name='$name', country_code = '$country_code', mobile_no='$mobile_no',landline_no = '$landline_no',email_id='$email_id',location='$location', enquiry = '$enquiry', enquiry_date='$enquiry_date', followup_date='$followup_date', reference_id='$reference_id', enquiry_content='$enquiry_content', enquiry_specification='$enquiry_specification', assigned_emp_id ='$assigned_emp_id' , enq_state='$enq_state' , cust_last_name='$cust_last_name' , cust_birth_date='$cust_birth_date' , cust_anni_date='$cust_anni_date' , cust_type='$cust_type' where enquiry_id='$enquiry_id'");
+  $sq_enquiry = mysql_query("update enquiry_master set name='$name', country_code = '$country_code', mobile_no='$mobile_no',landline_no = '$landline_no',email_id='$email_id',location='$location', enquiry = '$enquiry', enquiry_date='$enquiry_date', followup_date='$followup_date', reference_id='$reference_id', enquiry_content='$enquiry_content', enquiry_specification='$enquiry_specification', assigned_emp_id ='$assigned_emp_id' , enq_state='$enq_state' , cust_last_name='$cust_last_name' , cust_birth_date='$cust_birth_date' , cust_anni_date='$cust_anni_date' , cust_type='$cust_type' , corpo_company_name='$corpo_company_name' , cust_landline_no='$cust_landline_no' , cust_alt_email_id='$cust_alt_email_id' where enquiry_id='$enquiry_id'");
 
   if(!$sq_enquiry){
     echo "error--Enquiry Information Not Updated.";

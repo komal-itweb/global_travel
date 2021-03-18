@@ -4,6 +4,9 @@ include "../../../model/model.php";
 $email_id_id = $_POST['email_id_id'];
 
 $sq_email_id_info = mysql_fetch_assoc(mysql_query("select * from sms_email_id where email_id_id='$email_id_id'"));
+global $encrypt_decrypt, $secret_key;
+	$email_id = $encrypt_decrypt->fnDecrypt($sq_email_id_info['email_id'], $secret_key);
+  
 ?>
 <div class="modal fade" id="email_id_update_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -20,7 +23,7 @@ $sq_email_id_info = mysql_fetch_assoc(mysql_query("select * from sms_email_id wh
 
       	<div class="row">
       		<div class="col-md-6">
-      			<input type="text" id="email_id1" name="email_id1" value="<?= $sq_email_id_info['email_id'] ?>" placeholder="Email ID" title="Email ID">
+      			<input type="text" id="email_id1" name="email_id1" value="<?= $email_id; ?>" placeholder="Email ID" title="Email ID">
       		</div>
       		<div class="col-md-6">
       			<button class="btn btn-sm btn-success"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;Update</button>

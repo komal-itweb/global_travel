@@ -91,6 +91,9 @@ $enq_details = mysql_fetch_assoc(mysql_query("Select * from enquiry_master where
                       </select>
                     </div>   
                 </div>
+                <div class="row mg_bt_10">
+            <div id="corporate_fields"></div>
+        </div>
                 <div class="row">
                     <div class="col-md-3 col-sm-6 mg_bt_10">
                         <input type="text" class="form-control" id="location_u" name="location_u" placeholder="Location" title="Location" value="<?= $enq_details[location] ?>">
@@ -331,6 +334,9 @@ $(function(){
        var cust_birth_date = $("#cust_birth_date").val();
        var cust_anni_date = $("#cust_anni_date").val();
        var cust_type = $("#cust_type").val();
+       var corpo_company_name = $('#corpo_company_name').val();
+       var cust_landline_no = $('#cust_landline_no').val();
+       var cust_alt_email_id = $('#cust_alt_email_id').val();
       
       var location = $("#location_u").val();
       var enq_state = $("#enq_state1").val();
@@ -366,7 +372,7 @@ $(function(){
       $('#btn_enq_edit').button('loading');
       $.post( 
         base_url+"controller/attractions_offers_enquiry/enquiry_master_update_c.php",
-        { enquiry_id : enquiry_id, mobile_no : mobile_no, email_id : email_id,location :location, landline_no : landline_no ,enquiry : enquiry, enquiry_date : enquiry_date , followup_date : followup_date, reference : reference,enquiry_content : enquiry_content, enquiry_specification : enquiry_specification,assigned_emp_id : assigned_emp_id, name : name, country_code : country_code , enq_state:enq_state,cust_last_name:cust_last_name,cust_birth_date:cust_birth_date,cust_anni_date:cust_anni_date,cust_type:cust_type},
+        { enquiry_id : enquiry_id, mobile_no : mobile_no, email_id : email_id,location :location, landline_no : landline_no ,enquiry : enquiry, enquiry_date : enquiry_date , followup_date : followup_date, reference : reference,enquiry_content : enquiry_content, enquiry_specification : enquiry_specification,assigned_emp_id : assigned_emp_id, name : name, country_code : country_code , enq_state:enq_state,cust_last_name:cust_last_name,cust_birth_date:cust_birth_date,cust_anni_date:cust_anni_date,cust_type:cust_type,cust_alt_email_id:cust_alt_email_id,cust_landline_no:cust_landline_no,corpo_company_name:corpo_company_name},
         function(data){
               $('#enquiry_edit_modal').modal('hide');
                 $('#btn_enq_edit').button('reset');

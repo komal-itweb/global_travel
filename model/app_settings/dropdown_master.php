@@ -392,7 +392,7 @@ function get_new_customer_dropdown($role,$branch_admin_id,$branch_status)
    <option value="0">New Customer</option>
   <?php 
   if($branch_status=='yes' && $role!='Admin'){
-      $sq_query = mysql_query("select * from customer_master where active_flag!='Inactive' and branch_admin_id='$branch_admin_id' order by customer_id desc");
+      $sq_query = mysql_query("select * from customer_master where active_flag!='Inactive' order by customer_id desc");
       while($row_cust = mysql_fetch_assoc($sq_query))
       { 
       	if($row_cust['type']=='Corporate'){ ?>
@@ -427,7 +427,7 @@ function get_customer_dropdown($role,$branch_admin_id,$branch_status)
   <option value="">Select Customer</option>
   <?php 
   if($branch_status=='yes' && $role!='Admin'){
-      $sq_query = mysql_query("select * from customer_master where active_flag!='Inactive' and branch_admin_id='$branch_admin_id' order by customer_id desc");
+      $sq_query = mysql_query("select * from customer_master where active_flag!='Inactive' order by customer_id desc");
       while($row_cust = mysql_fetch_assoc($sq_query))
       { 
       	if($row_cust['type']=='Corporate'||$row_cust['type']=='B2B'){ ?>
@@ -465,22 +465,33 @@ function get_customer_hint(){
     { 
       $contact_no = $encrypt_decrypt->fnDecrypt($row_cust['contact_no'], $secret_key);
       $email_id = $encrypt_decrypt->fnDecrypt($row_cust['email_id'], $secret_key);
+      $state = mysql_fetch_assoc(mysql_query("select * from state_master where id=$row_cust[state_id]"));
+
       if($row_cust['type']=='Corporate'||$row_cust['type']=='B2B'){
         $to_be_push = array(
           "value" => $row_cust['company_name'],
           "label" => $row_cust['company_name'],
           "contact_no" => $contact_no,
           "email_id" => $email_id,
-          "country_code" => $row_cust['country_code']
+          "country_code" => $row_cust['country_code'],
+          "birth_date" => $row_cust['birth_date'],
+          "anni_date" => $row_cust['anni_date'],
+          "type" => '<option value="'.$row_cust[type].'" selected>'.$row_cust[type].'</option>',
+          "state" => '<option value="'.$state[id].'" selected>'.$state[state_name].'</option>'
         );
       }
       else{
         $to_be_push = array(
           "value" =>$row_cust['first_name'].' '.$row_cust['last_name'],
-          "label" =>$row_cust['first_name'].' '.$row_cust['last_name'],
+          "label" =>$row_cust['first_name'],
+          "label_last" =>$row_cust['last_name'],
           "contact_no" => $contact_no,
           "email_id" => $email_id,
-          "country_code" => $row_cust['country_code']
+          "country_code" => $row_cust['country_code'], 
+          "birth_date" => $row_cust['birth_date'],
+          "anni_date" => $row_cust['anni_date'],
+          "type" => '<option value="'.$row_cust[type].'" selected>'.$row_cust[type].'</option>',
+          "state" => '<option value="'.$state[id].'" selected>'.$state[state_name].'</option>'
         );
       }
     }
@@ -492,23 +503,33 @@ else{
      {
       $contact_no = $encrypt_decrypt->fnDecrypt($row_cust['contact_no'], $secret_key);
       $email_id = $encrypt_decrypt->fnDecrypt($row_cust['email_id'], $secret_key);
-       
+      $state=mysql_fetch_assoc(mysql_query("select * from state_master where id=$row_cust[state_id]"));
+      
       if($row_cust['type']=='Corporate'||$row_cust['type']=='B2B'){
         $to_be_push = array(
           "value" => $row_cust['company_name'],
           "label" => $row_cust['company_name'],
           "contact_no" => $contact_no,
           "email_id" => $email_id,
-          "country_code" => $row_cust['country_code']
+          "country_code" => $row_cust['country_code'],
+          "birth_date" => $row_cust['birth_date'],
+          "anni_date" => $row_cust['anni_date'],
+          "type" => '<option value="'.$row_cust[type].'" selected>'.$row_cust[type].'</option>',
+          "state" => '<option value="'.$state[id].'" selected>'.$state[state_name].'</option>'
         );
       }
       else{
         $to_be_push = array(
           "value" =>$row_cust['first_name'].' '.$row_cust['last_name'],
-          "label" =>$row_cust['first_name'].' '.$row_cust['last_name'],
+          "label" =>$row_cust['first_name'],
+          "label_last" =>$row_cust['last_name'],
           "contact_no" => $contact_no,
           "email_id" => $email_id,
-          "country_code" => $row_cust['country_code']
+          "country_code" => $row_cust['country_code'],
+          "birth_date" => $row_cust['birth_date'],
+          "anni_date" => $row_cust['anni_date'],
+          "type" => '<option value="'.$row_cust[type].'" selected>'.$row_cust[type].'</option>',
+          "state" => '<option value="'.$state[id].'" selected>'.$state[state_name].'</option>'
         );
       }
       array_push($final_array, $to_be_push);
@@ -956,7 +977,7 @@ function get_other_charges(){
 
 function get_other_charges_conditions(){
   
-  $sq_cond = mysql_query("select * from tax_conditions where id in('2','11','5','8','12','13','14','15','10','3','7','6','16')");?>
+  $sq_cond = mysql_query("select * from tax_conditions where id in('2','11','5','8','12','13','14','15','10','3','7','6','16','17')");?>
   
   <option value="">Condition</option>
   <?php while($row_cond= mysql_fetch_assoc($sq_cond)){ ?>

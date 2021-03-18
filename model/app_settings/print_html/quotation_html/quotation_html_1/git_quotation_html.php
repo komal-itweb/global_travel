@@ -258,11 +258,11 @@ if($bsmValues[0]->basic != ''){ //inclusive markup
             <table class="table table-bordered no-marg" id="tbl_emp_list">
               <thead>
                 <tr class="table-heading-row">
-                  <th>From</th>
-                  <th>To</th>
-                  <th>Class</th>
-                  <th>Departure</th>
-                  <th>Arrival</th>
+                  <th style="font-size:15px !important;">From</th>
+                  <th style="font-size:15px !important;">To</th>
+                  <th style="font-size:15px !important;">Class</th>
+                  <th style="font-size:15px !important;">Departure</th>
+                  <th style="font-size:15px !important;">Arrival</th>
                 </tr>
               </thead>
               <tbody>  
@@ -271,11 +271,11 @@ if($bsmValues[0]->basic != ''){ //inclusive markup
               while($row_train = mysql_fetch_assoc($sq_train)){  
                 ?>
                 <tr>
-                  <td><?= $row_train['from_location'] ?></td>
-                  <td><?= $row_train['to_location'] ?></td>
-                  <td><?= $row_train['class'] ?></td>
-                  <td><?= date('d-m-Y H:i', strtotime($row_train['departure_date'])) ?></td>
-                  <td><?= date('d-m-Y H:i', strtotime($row_train['arrival_date'])) ?></td>
+                  <td style="font-size:15px !important;"><?= $row_train['from_location'] ?></td>
+                  <td style="font-size:15px !important;"><?= $row_train['to_location'] ?></td>
+                  <td style="font-size:15px !important;"><?= $row_train['class'] ?></td>
+                  <td style="font-size:15px !important;"><?= date('d-m-Y H:i', strtotime($row_train['departure_date'])) ?></td>
+                  <td style="font-size:15px !important;"><?= date('d-m-Y H:i', strtotime($row_train['arrival_date'])) ?></td>
                 </tr>
               <?php } ?>
               </tbody>
@@ -299,12 +299,12 @@ if($bsmValues[0]->basic != ''){ //inclusive markup
             <table class="table table-bordered no-marg" id="tbl_emp_list">
               <thead>
                 <tr class="table-heading-row">
-                  <th>From</th>
-                  <th>To</th>
-                  <th>Airline</th>
-                  <th>Class</th>
-                  <th>Departure</th>
-                  <th>Arrival</th>
+                  <th style="font-size:15px !important;">From</th>
+                  <th style="font-size:15px !important;">To</th>
+                  <th style="font-size:15px !important;">Airline</th>
+                  <th style="font-size:15px !important;">Class</th>
+                  <th style="font-size:15px !important;">Departure</th>
+                  <th style="font-size:15px !important;">Arrival</th>
                 </tr>
               </thead>
               <tbody>
@@ -314,12 +314,12 @@ if($bsmValues[0]->basic != ''){ //inclusive markup
                   $sq_airline = mysql_fetch_assoc(mysql_query("select * from airline_master where airline_id='$row_plane[airline_name]'"));
                 ?>   
                 <tr>
-                  <td><?= $row_plane['from_location'] ?></td>
-                  <td><?= $row_plane['to_location'] ?></td>
-                  <td><?= $sq_airline['airline_name'].' ('.$sq_airline['airline_code'].')' ?></td>
-                  <td><?= $row_plane['class'] ?></td>
-                  <td><?= date('d-m-Y H:i:s', strtotime($row_plane['dapart_time'])) ?></td>
-                  <td><?= date('d-m-Y H:i:s', strtotime($row_plane['arraval_time'])) ?></td>
+                  <td style="font-size:15px !important;"><?= $row_plane['from_location'] ?></td>
+                  <td style="font-size:15px !important;"><?= $row_plane['to_location'] ?></td>
+                  <td style="font-size:15px !important;"><?= $sq_airline['airline_name'].' ('.$sq_airline['airline_code'].')' ?></td>
+                  <td style="font-size:15px !important;"><?= $row_plane['class'] ?></td>
+                  <td style="font-size:15px !important;"><?= date('d-m-Y H:i:s', strtotime($row_plane['dapart_time'])) ?></td>
+                  <td style="font-size:15px !important;"><?= date('d-m-Y H:i:s', strtotime($row_plane['arraval_time'])) ?></td>
                 </tr>
                 <?php } ?>
               </tbody>
@@ -342,11 +342,11 @@ if($bsmValues[0]->basic != ''){ //inclusive markup
             <table class="table table-bordered no-marg" id="tbl_emp_list">
               <thead>
                 <tr class="table-heading-row">
-                  <th>Departure</th>
-                  <th>Arrival</th>
-                  <th>Route</th>
-                  <th>Cabin</th>
-                  <th>Sharing</th>
+                  <th style="font-size:15px !important;">Departure</th>
+                  <th style="font-size:15px !important;">Arrival</th>
+                  <th style="font-size:15px !important;">Route</th>
+                  <th style="font-size:15px !important;">Cabin</th>
+                  <th style="font-size:15px !important;">Sharing</th>
                 </tr>
               </thead>
               <tbody>  
@@ -355,11 +355,11 @@ if($bsmValues[0]->basic != ''){ //inclusive markup
               while($row_cruise = mysql_fetch_assoc($sq_cruise)){  
                 ?>
                 <tr>
-                  <td><?= date('d-m-Y H:i', strtotime($row_cruise['dept_datetime'])) ?></td>
-                  <td><?= date('d-m-Y H:i', strtotime($row_cruise['arrival_datetime'])) ?></td>
-                  <td><?= $row_cruise['route'] ?></td>
-                  <td><?= $row_cruise['cabin'] ?></td>
-                  <td><?= $row_cruise['sharing'] ?></td>
+                  <td style="font-size:15px !important;"><?= date('d-m-Y H:i', strtotime($row_cruise['dept_datetime'])) ?></td>
+                  <td style="font-size:15px !important;"><?= date('d-m-Y H:i', strtotime($row_cruise['arrival_datetime'])) ?></td>
+                  <td style="font-size:15px !important;"><?= $row_cruise['route'] ?></td>
+                  <td style="font-size:15px !important;"><?= $row_cruise['cabin'] ?></td>
+                  <td style="font-size:15px !important;"><?= $row_cruise['sharing'] ?></td>
                 </tr>
               <?php } ?>
               </tbody>

@@ -159,11 +159,11 @@ $quotation_cost = $basic_cost +$service_charge+ $service_tax_amount+ $sq_quotati
                 <table class="table tableTrnasp no-marg" id="tbl_emp_list">
                   <thead>
                     <tr class="table-heading-row">
-                      <th>From</th>
-                      <th>To</th>
-                      <th>Class</th>
-                      <th>Departure</th>
-                      <th>Arrival</th>
+                      <th style="font-size:15px !important;">From</th>
+                      <th style="font-size:15px !important;">To</th>
+                      <th style="font-size:15px !important;">Class</th>
+                      <th style="font-size:15px !important;">Departure</th>
+                      <th style="font-size:15px !important;">Arrival</th>
                     </tr>
                   </thead>
                   <tbody>  
@@ -172,11 +172,11 @@ $quotation_cost = $basic_cost +$service_charge+ $service_tax_amount+ $sq_quotati
                   while($row_train = mysql_fetch_assoc($sq_train)){  
                     ?>
                     <tr>
-                      <td><?= $row_train['from_location'] ?></td>
-                      <td><?= $row_train['to_location'] ?></td>
-                      <td><?= $row_train['class'] ?></td>
-                      <td><?= date('d-m-Y H:i', strtotime($row_train['departure_date'])) ?></td>
-                      <td><?= date('d-m-Y H:i', strtotime($row_train['arrival_date'])) ?></td>
+                      <td style="font-size:15px;"><?= $row_train['from_location'] ?></td>
+                      <td style="font-size:15px;"><?= $row_train['to_location'] ?></td>
+                      <td style="font-size:15px;"><?= $row_train['class'] ?></td>
+                      <td style="font-size:15px;"><?= date('d-m-Y H:i', strtotime($row_train['departure_date'])) ?></td>
+                      <td style="font-size:15px;"><?= date('d-m-Y H:i', strtotime($row_train['arrival_date'])) ?></td>
                     </tr>
                   <?php } ?>
                   </tbody>
@@ -198,13 +198,13 @@ $quotation_cost = $basic_cost +$service_charge+ $service_tax_amount+ $sq_quotati
             <div class="transportDetails">
               <div class="table-responsive">
                 <table class="table tableTrnasp no-marg" id="tbl_emp_list">
-                  <thead>
+                <thead>
                     <tr class="table-heading-row">
-                      <th>From</th>
-                      <th>To</th>
-                      <th>Airline</th>
-                      <th>Departure</th>
-                      <th>Arrival</th>
+                      <th style="font-size:15px !important;">From</th>
+                      <th style="font-size:15px !important;">To</th>
+                      <th style="font-size:15px !important;">Airline</th>
+                      <th style="font-size:15px !important;">Departure</th>
+                      <th style="font-size:15px !important;">Arrival</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -214,11 +214,11 @@ $quotation_cost = $basic_cost +$service_charge+ $service_tax_amount+ $sq_quotati
                       $sq_airline = mysql_fetch_assoc(mysql_query("select * from airline_master where airline_id='$row_plane[airline_name]'"));
                     ?>   
                     <tr>
-                      <td><?= $row_plane['from_location'] ?></td>
-                      <td><?= $row_plane['to_location'] ?></td>
-                      <td><?= $sq_airline['airline_name'].' ('.$sq_airline['airline_code'].')' ?></td>
-                      <td><?= date('d-m-Y H:i:s', strtotime($row_plane['dapart_time'])) ?></td>
-                      <td><?= date('d-m-Y H:i:s', strtotime($row_plane['arraval_time'])) ?></td>
+                      <td style="font-size:15px;"><?= $row_plane['from_location'] ?></td>
+                      <td style="font-size:15px;"><?= $row_plane['to_location'] ?></td>
+                      <td style="font-size:15px;"><?= $sq_airline['airline_name'].' ('.$sq_airline['airline_code'].')' ?></td>
+                      <td style="font-size:15px;"><?= date('d-m-Y H:i:s', strtotime($row_plane['dapart_time'])) ?></td>
+                      <td style="font-size:15px;"><?= date('d-m-Y H:i:s', strtotime($row_plane['arraval_time'])) ?></td>
                     </tr>
                     <?php } ?>
                   </tbody>
@@ -241,11 +241,11 @@ $quotation_cost = $basic_cost +$service_charge+ $service_tax_amount+ $sq_quotati
                 <table class="table tableTrnasp no-marg" id="tbl_emp_list">
                   <thead>
                     <tr class="table-heading-row">
-                      <th>Departure</th>
-                      <th>Arrival</th>
-                      <th>Route</th>
-                      <th>Cabin</th>
-                      <th>Sharing</th>
+                      <th style="font-size:15px !important;">Departure</th>
+                      <th style="font-size:15px !important;">Arrival</th>
+                      <th style="font-size:15px !important;">Route</th>
+                      <th style="font-size:15px !important;">Cabin</th>
+                      <th style="font-size:15px !important;">Sharing</th>
                     </tr>
                   </thead>
                   <tbody>  
@@ -254,11 +254,11 @@ $quotation_cost = $basic_cost +$service_charge+ $service_tax_amount+ $sq_quotati
                   while($row_cruise = mysql_fetch_assoc($sq_cruise)){  
                     ?>
                     <tr>
-                      <td><?= date('d-m-Y H:i', strtotime($row_cruise['dept_datetime'])) ?></td>
-                      <td><?= date('d-m-Y H:i', strtotime($row_cruise['arrival_datetime'])) ?></td>
-                      <td><?= $row_cruise['route'] ?></td>
-                      <td><?= $row_cruise['cabin'] ?></td>
-                      <td><?= $row_cruise['sharing'] ?></td>
+                      <td style="font-size:15px;"><?= date('d-m-Y H:i', strtotime($row_cruise['dept_datetime'])) ?></td>
+                      <td style="font-size:15px;"><?= date('d-m-Y H:i', strtotime($row_cruise['arrival_datetime'])) ?></td>
+                      <td style="font-size:15px;"><?= $row_cruise['route'] ?></td>
+                      <td style="font-size:15px;"><?= $row_cruise['cabin'] ?></td>
+                      <td style="font-size:15px;"><?= $row_cruise['sharing'] ?></td>
                     </tr>
                   <?php } ?>
                   </tbody>
@@ -281,10 +281,10 @@ $quotation_cost = $basic_cost +$service_charge+ $service_tax_amount+ $sq_quotati
                   <table class="table tableTrnasp no-marg" id="tbl_emp_list">
                     <thead>
                       <tr class="table-heading-row">
-                        <th>City</th>
-                        <th>Hotel Name</th>
-                        <th>Check_IN</th>
-                        <th>Check_OUT</th>
+                        <th style="font-size:15px !important;">City</th>
+                        <th style="font-size:15px !important;">Hotel Name</th>
+                        <th style="font-size:15px !important;">Check_IN</th>
+                        <th style="font-size:15px !important;">Check_OUT</th>
                       </tr>
                     </thead>
                     <tbody> 
@@ -309,10 +309,10 @@ $quotation_cost = $basic_cost +$service_charge+ $service_tax_amount+ $sq_quotati
                           }
                       }
                       ?>
-                        <td><?php echo $city_name['city_name']; ?></td>
-                        <td><?php echo $hotel_name['hotel_name'].$similar_text; ?></td>
-                        <td><?= get_date_user($row_hotel['check_in']) ?></td>
-                        <td><?= get_date_user($row_hotel['check_out']) ?></td>
+                        <td style="font-size:15px;"><?php echo $city_name['city_name']; ?></td>
+                        <td style="font-size:15px;"><?php echo $hotel_name['hotel_name'].$similar_text; ?></td>
+                        <td style="font-size:15px;"><?= get_date_user($row_hotel['check_in']) ?></td>
+                        <td style="font-size:15px;"><?= get_date_user($row_hotel['check_out']) ?></td>
                       </tr>
                     <?php } ?>
                     </tbody>
@@ -336,11 +336,11 @@ $quotation_cost = $basic_cost +$service_charge+ $service_tax_amount+ $sq_quotati
                 <table class="table no-marg tableTrnasp">
                   <thead>
                     <tr class="table-heading-row">
-                      <th>VEHICLE</th>
-                      <th>START DATE</th>
-                      <th>PICKUP LOCATION</th>
-                      <th>DROP LOCATION</th>
-                      <th>TOTAL VEHICLES</th>
+                      <th style="font-size:15px !important;">VEHICLE</th>
+                      <th style="font-size:15px !important;">START DATE</th>
+                      <th style="font-size:15px !important;">PICKUP LOCATION</th>
+                      <th style="font-size:15px !important;">DROP LOCATION</th>
+                      <th style="font-size:15px !important;">TOTAL VEHICLES</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -382,11 +382,11 @@ $quotation_cost = $basic_cost +$service_charge+ $service_tax_amount+ $sq_quotati
                       }
                       ?>
                       <tr>
-                        <td><?= $transport_name['vehicle_name'].$similar_text ?></td>
-                        <td><?= date('d-m-Y', strtotime($row_hotel['start_date'])) ?></td>
-                        <td><?= $pickup ?></td>
-                        <td><?= $drop ?></td>
-                        <td><?= $row_hotel['vehicle_count'] ?></td>
+                        <td style="font-size:15px;"><?= $transport_name['vehicle_name'].$similar_text ?></td>
+                        <td style="font-size:15px;"><?= date('d-m-Y', strtotime($row_hotel['start_date'])) ?></td>
+                        <td style="font-size:15px;"><?= $pickup ?></td>
+                        <td style="font-size:15px;"><?= $drop ?></td>
+                        <td style="font-size:15px;"><?= $row_hotel['vehicle_count'] ?></td>
                       </tr>
                     <?php } ?>
                   </tbody>
@@ -409,11 +409,11 @@ $quotation_cost = $basic_cost +$service_charge+ $service_tax_amount+ $sq_quotati
                 <table class="table no-marg tableTrnasp">
                   <thead>
                     <tr class="table-heading-row">
-                      <th>City </th>
-                      <th>Activity Date</th>
-                      <th>Activity Name</th>
-                      <th>Transfer Option</th>
-                      <th>Cost</th>
+                      <th style="font-size:15px !important;">City </th>
+                      <th style="font-size:15px !important;">Activity Date</th>
+                      <th style="font-size:15px !important;">Activity Name</th>
+                      <th style="font-size:15px !important;">Transfer Option</th>
+                      <th style="font-size:15px !important;">Cost</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -425,11 +425,11 @@ $quotation_cost = $basic_cost +$service_charge+ $service_tax_amount+ $sq_quotati
                       $sq_ex_name = mysql_fetch_assoc(mysql_query("select * from excursion_master_tariff where entry_id='$row_ex[excursion_name]'"));
                       ?>
                       <tr>
-                        <td><?= $sq_city['city_name'] ?></td>
-                        <td><?= get_datetime_user($row_ex['exc_date']) ?></td>
-                        <td><?= $sq_ex_name['excursion_name'] ?></td>
-                        <td><?= $row_ex['transfer_option'] ?></td>
-                        <td><?= $row_ex['excursion_amount'] ?></td>
+                        <td style="font-size:15px;"><?= $sq_city['city_name'] ?></td>
+                        <td style="font-size:15px;"><?= get_datetime_user($row_ex['exc_date']) ?></td>
+                        <td style="font-size:15px;"><?= $sq_ex_name['excursion_name'] ?></td>
+                        <td style="font-size:15px;"><?= $row_ex['transfer_option'] ?></td>
+                        <td style="font-size:15px;"><?= $row_ex['excursion_amount'] ?></td>
                       </tr>
                       <?php }	?>
                   </tbody>

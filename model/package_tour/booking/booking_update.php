@@ -543,7 +543,7 @@ function package_tour_travelers_details_master_update($booking_id, $m_honorific,
               echo "error--Traveling details not updated!";
               exit;
             }
-      
+          }
       }
 
       //**Saves Cruise Information    

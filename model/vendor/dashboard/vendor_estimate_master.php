@@ -7,6 +7,7 @@ public function vendor_estimate_save(){
     $estimate_type_id = $_POST['estimate_type_id'];
     $vendor_type_arr = $_POST['vendor_type_arr'];
     $vendor_type_id_arr = $_POST['vendor_type_id_arr'];
+    $booking_type_arr = $_POST['booking_type_arr'];
     $basic_cost_arr = $_POST['basic_cost_arr'];
     $non_recoverable_taxes_arr = $_POST['non_recoverable_taxes_arr'];
     $service_charge_arr = $_POST['service_charge_arr'];
@@ -42,7 +43,7 @@ public function vendor_estimate_save(){
 
             $remark_arr1 = addslashes($remark_arr[$i]);
             
-            $sq_est = mysql_query("insert into vendor_estimate(estimate_id, estimate_type, estimate_type_id, branch_admin_id,financial_year_id, emp_id, vendor_type, vendor_type_id, basic_cost, non_recoverable_taxes, service_charge, other_charges, service_tax_subtotal, discount, our_commission, tds, net_total, roundoff,remark, created_at, invoice_proof_url, invoice_id, due_date, purchase_date, reflections) values('$estimate_id', '$estimate_type', '$estimate_type_id', '$branch_admin_id','$financial_year_id', '$emp_id', '$vendor_type_arr[$i]', '$vendor_type_id_arr[$i]', '$basic_cost_arr[$i]', '$non_recoverable_taxes_arr[$i]', '$service_charge_arr[$i]', '$other_charges_arr[$i]', '$service_tax_subtotal_arr[$i]', '$discount_arr[$i]', '$our_commission_arr[$i]', '$tds_arr[$i]', '$net_total_arr[$i]', '$roundoff_arr[$i]','$remark_arr1', '$created_at','$invoice_url_arr[$i]','$invoice_id_arr[$i]','$payment_due_date_arr1[$i]','$purchase_date_arr1[$i]','$reflections1')");
+            $sq_est = mysql_query("insert into vendor_estimate(estimate_id, estimate_type, estimate_type_id, branch_admin_id,financial_year_id, emp_id, vendor_type, vendor_type_id,booking_type, basic_cost, non_recoverable_taxes, service_charge, other_charges, service_tax_subtotal, discount, our_commission, tds, net_total, roundoff,remark, created_at, invoice_proof_url, invoice_id, due_date, purchase_date, reflections) values('$estimate_id', '$estimate_type', '$estimate_type_id', '$branch_admin_id','$financial_year_id', '$emp_id', '$vendor_type_arr[$i]', '$vendor_type_id_arr[$i]','$booking_type_arr[$i]' , '$basic_cost_arr[$i]', '$non_recoverable_taxes_arr[$i]', '$service_charge_arr[$i]', '$other_charges_arr[$i]', '$service_tax_subtotal_arr[$i]', '$discount_arr[$i]', '$our_commission_arr[$i]', '$tds_arr[$i]', '$net_total_arr[$i]', '$roundoff_arr[$i]','$remark_arr1', '$created_at','$invoice_url_arr[$i]','$invoice_id_arr[$i]','$payment_due_date_arr1[$i]','$purchase_date_arr1[$i]','$reflections1')");
             if(!$sq_est){
                 $GLOBALS['flag'] = false;
                 echo "error--Supplier Cost not saved!";     
@@ -305,6 +306,7 @@ public function vendor_estimate_update(){
     $vendor_type = $_POST['vendor_type'];   
     $estimate_type_id = $_POST['estimate_type_id'];
     $vendor_type_id = $_POST['vendor_type_id'];
+    $booking_type = $_POST['booking_type'];
 
     $basic_cost = $_POST['basic_cost'];
     $non_recoverable_taxes = $_POST['non_recoverable_taxes'];
@@ -331,7 +333,7 @@ public function vendor_estimate_update(){
 
     begin_t();
     $remark1 = addslashes($remark);
-    $sq_est = mysql_query("update vendor_estimate set estimate_type='$estimate_type', estimate_type_id='$estimate_type_id', vendor_type='$vendor_type', vendor_type_id='$vendor_type_id', basic_cost='$basic_cost', non_recoverable_taxes='$non_recoverable_taxes', service_charge='$service_charge', other_charges='$other_charges', service_tax_subtotal='$service_tax_subtotal', discount='$discount', our_commission='$our_commission', tds='$tds', net_total='$net_total', roundoff='$roundoff',remark='$remark1',invoice_proof_url = '$invoice_url',invoice_id='$invoice_id', due_date='$payment_due_date',purchase_date ='$purchase_date',reflections='$reflections1' where estimate_id='$estimate_id'");
+    $sq_est = mysql_query("update vendor_estimate set estimate_type='$estimate_type', estimate_type_id='$estimate_type_id', vendor_type='$vendor_type', vendor_type_id='$vendor_type_id', booking_type='$booking_type',basic_cost='$basic_cost', non_recoverable_taxes='$non_recoverable_taxes', service_charge='$service_charge', other_charges='$other_charges', service_tax_subtotal='$service_tax_subtotal', discount='$discount', our_commission='$our_commission', tds='$tds', net_total='$net_total', roundoff='$roundoff',remark='$remark1',invoice_proof_url = '$invoice_url',invoice_id='$invoice_id', due_date='$payment_due_date',purchase_date ='$purchase_date',reflections='$reflections1' where estimate_id='$estimate_id'");
     if($sq_est){
 
         //Finance Update

@@ -129,13 +129,7 @@ function get_tax_charges(new_taxes_rules,taxes_result,basic_amount,basic_amounti
                 var rate_in_text = '';
                 var tax_amount = parseFloat(rate);
             }
-          if(  tax_amount = (tax_amount !== '' ||  tax_amount !== undefined)){
-              if(isNaN(tax_amount)){
-                    parseFloat(0).toFixed(2);
-                }
-                else{ parseFloat(tax_amount).toFixed(2);}
-                } 
-                else{ parseFloat(0).toFixed(2);}
+            tax_amount = (tax_amount !== '' || typeof tax_amount !== NaN || tax_amount !== undefined)? parseFloat(tax_amount).toFixed(2) : parseFloat(0).toFixed(2);
             
             var new_service_charge = parseFloat(charge_amount) - parseFloat(total_tax);
             new_service_charge = (new_service_charge !== '' || typeof new_service_charge !== NaN || new_service_charge !== undefined)? parseFloat(new_service_charge).toFixed(2) : parseFloat(0).toFixed(2);
@@ -238,13 +232,13 @@ function get_tax_rules_on_conditions(final_taxes_rules,basic_amount,payment_mode
                                     console.log( data[1])
                                         switch(for1) {
                                             case '!=':
-                                                if(data[0] !== data[1] || data[1] === '')
+                                                if(data[0] !== value || data[0] === '')
                                                 place_flag = true;
                                                 else
                                                 place_flag = false;
                                             break;
                                             case '==':
-                                                if(data[0] === data[1] || data[1] === '')
+                                                if(data[0] === value || data[0] === '')
                                                 place_flag = true;
                                                 else
                                                 place_flag = false;
@@ -345,6 +339,33 @@ function get_tax_rules_on_conditions(final_taxes_rules,basic_amount,payment_mode
                     case '6':
                         flag = false
                     break;
+                    case '17':
+                        var booking_type_flag = null;
+                        var booking_type= $('#booking_type_s-'+offset).val();
+
+                        if(booking_type !== ''){
+                            switch (for1) {
+                                case '!=':
+                                    if (booking_type !== value || booking_type === '')
+                                    {
+                                        booking_type_flag = true;
+                                    }
+                                    else booking_type_flag = false;
+                                    break;
+                                case '==':
+                                    if (booking_type === value  || booking_type === '')
+                                    {
+                                        booking_type_flag = true;
+                                    }
+                                    else booking_type_flag = false;
+                                    break;
+                            }
+                            flag = booking_type_flag;
+                        }
+                        else {
+                            flag = false;
+                        }
+                        break;
                 }
                 conditions_flag_array.push(flag);
             });

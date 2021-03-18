@@ -178,32 +178,32 @@
 
 			</div>
 			<div class="col-md-2 col-sm-4 col-xs-12 mg_bt_10">
-				<select id="sup_id1" name="sup_id1" style="width:100%" title="Supplier" onchange="calculate_total_amount(this.id);get_auto_values('booking_date1','basic_cost','payment_mode','service_charge','markup','save','true','service_charge','discount',true);">
 					<?php 
 	                  $supplier_id = $sq_ticket['supplier_id'];
-	                  $sq_sup1 = mysql_fetch_assoc(mysql_query("select * from ticket_vendor where vendor_id='$sq_ticket[supplier_id]'"));
+					  $supplier_id_arr=explode(',' , $sq_ticket['supplier_id']);
 
-	                  if ($sq_sup1['vendor_id']!="") {
+					$supplier_name='';
+					foreach ($supplier_id_arr as $item) {
+						$sq_sup1 = mysql_fetch_assoc(mysql_query("select * from ticket_vendor where vendor_id='$item'"));
+						$supplier_name .= $sq_sup1['vendor_name'].',';
+					}
+	                if ($supplier_name!="") {
 	                 ?>
-	                  	  <option value="<?= $sq_sup1['vendor_id'] ?>"><?= $sq_sup1['vendor_name'] ?></option>
+					 <input type="text" name="sup_id1" id="sup_id1" class="form-control" value=<?php echo $supplier_name;?> disabled>
 					<?php 
 	                  }
-	                  else{
+	                 
 	                 ?>
-	                  	<option value="">Select Supplier</option>
-					<?php 
-	                  }
-	                 ?>
-	                
-					<?php 
+					
+
+					<!-- <?php 
 					$sq_sup = mysql_query("select * from ticket_vendor where active_flag='Active' ");
 					while($row_sup = mysql_fetch_assoc($sq_sup)){
 						?>
 						<option value="<?= $row_sup['vendor_id'] ?>"><?= $row_sup['vendor_name'] ?></option>
 						<?php
 					}
-					?>
-				</select>
+					?> -->
 			</div>
 
 		</div>
@@ -237,7 +237,6 @@
 
 
 <script>
-$('#sup_id1').select2();
 $(function(){
 
 	$('#frm_tab3').validate({

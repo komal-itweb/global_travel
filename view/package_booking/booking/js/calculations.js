@@ -2,7 +2,9 @@ function calculate_tour_cost(id) {
 
 	var hotel_expenses = $('#txt_hotel_expenses').val();
 	var travel_expenses = $('#txt_travel_total_expense1').val();
+	//var travel_expenses = 0;
 	var travel_expenses_up = $('#txt_travel_total_expense').val();
+	//var travel_expenses_up = 0;
 	var tour_cost = $('#service_charge').val();
 	var tour_service_tax = $('#txt_tour_service_tax').val();
 	var rue_cost = $('#rue_cost').val();
@@ -37,6 +39,8 @@ function calculate_tour_cost(id) {
 function calculate_total_tour_cost() {
 
 	var tour_service_tax = $('#txt_tour_service_tax').val();
+	var travel_expenses = $('#txt_travel_total_expense1').val();
+
 	var basic_total = $('#total_basic_amt').val();
 	var rue_cost = $('#rue_cost').val();
 	var service_tax_subtotal = $('#tour_service_tax_subtotal').val();
@@ -49,7 +53,7 @@ function calculate_total_tour_cost() {
 		service_charge = 0;
 	}
 	var basic_amount = $('#total_basic_amt').val();
-	var total = parseFloat(basic_amount) + parseFloat(service_charge);
+	var total = parseFloat(basic_amount) + parseFloat(service_charge)-parseFloat(travel_expenses);
 	$('#subtotal').val(total.toFixed(2));
 	var total = $('#subtotal').val();
 	total = parseFloat(rue_cost) * parseFloat(total);

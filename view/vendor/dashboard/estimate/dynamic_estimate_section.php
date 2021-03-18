@@ -19,7 +19,7 @@ $offset = $_POST['dynamic_estimate_count'];
 
 	<div class="row">
 		<div class="col-md-2 col-sm-4 col-xs-12">
-			<select name="vendor_type" id="vendor_type_s-<?= $offset ?>" title="Supplier Type" onchange="vendor_type_data_load(this.value, 'div_vendor_type_content_s-<?= $offset ?>', '_s-<?= $offset ?>','','estimate')">
+			<select name="vendor_type" id="vendor_type_s-<?= $offset ?>" title="Supplier Type" onchange="vendor_type_data_load(this.value, 'div_vendor_type_content_s-<?= $offset ?>', '_s-<?= $offset ?>','','estimate','')">
 				<option value="">*Supplier Type</option>
 				<?php 
 				$sq_vendor = mysql_query("select * from vendor_type_master order by vendor_type");

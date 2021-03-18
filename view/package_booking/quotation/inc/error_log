@@ -1,0 +1,5 @@
+[04-Mar-2021 11:46:37 Asia/Kolkata] PHP Fatal error:  Call to undefined function array_column() in /home/itourscloud/public_html/global/view/package_booking/quotation/inc/get_packages.php on line 22
+[04-Mar-2021 11:47:19 Asia/Kolkata] PHP Fatal error:  Call to undefined function array_column() in /home/itourscloud/public_html/global/view/package_booking/quotation/inc/get_packages.php on line 22
+[04-Mar-2021 11:52:16 Asia/Kolkata] PHP Fatal error:  Call to undefined function array_column() in /home/itourscloud/public_html/global/view/package_booking/quotation/inc/get_packages.php on line 22
+[04-Mar-2021 11:52:53 Asia/Kolkata] PHP Fatal error:  Call to undefined function array_column() in /home/itourscloud/public_html/global/view/package_booking/quotation/inc/get_packages.php on line 22
+[04-Mar-2021 12:01:52 Asia/Kolkata] PHP Fatal error:  Call to undefined function array_column() in /home/itourscloud/public_html/global/view/package_booking/quotation/inc/get_packages.php on line 22

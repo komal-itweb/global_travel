@@ -51,7 +51,7 @@ $reflections = json_decode($sq_vendor_estimate['reflections']);
 
 				<div class="row">
 					<div class="col-md-4 col-sm-6 col-xs-12 mg_bt_10">
-						<select name="vendor_type1" id="vendor_type1" title="Vendor Type" onchange="vendor_type_data_load(this.value, 'div_vendor_type_content1', '1','','estimate')" disabled>
+						<select name="vendor_type1" id="vendor_type1" title="Vendor Type" onchange="vendor_type_data_load(this.value, 'div_vendor_type_content1', '1','','estimate','')" disabled>
 							<option value="<?= $sq_vendor_estimate['vendor_type'] ?>"><?= $sq_vendor_estimate['vendor_type'] ?></option>
 							<?php 
 							$sq_vendor = mysql_query("select * from vendor_type_master order by vendor_type");
@@ -65,7 +65,7 @@ $reflections = json_decode($sq_vendor_estimate['reflections']);
 					</div>
 					<div id="div_vendor_type_content1" style="pointer-events: none;"></div>
 					<script>
-						vendor_type_data_load('<?= $sq_vendor_estimate['vendor_type'] ?>', 'div_vendor_type_content1', '1',<?= $sq_vendor_estimate['vendor_type_id'] ?>,'estimate');
+						vendor_type_data_load('<?= $sq_vendor_estimate['vendor_type'] ?>', 'div_vendor_type_content1', '1',<?= $sq_vendor_estimate['vendor_type_id'] ?>,'estimate','<?= $sq_vendor_estimate['booking_type'] ?>');
 					</script>
 				</div>
 
@@ -198,6 +198,7 @@ $(function(){
 
 				var estimate_id = $('#estimate_id_update').val();
 				var estimate_type = $('#estimate_type1').val();
+				var booking_type = $('#booking_type1').val();
  				var vendor_type = $('#vendor_type1').val(); 	 				
  				var estimate_type_id = get_estimate_type_id('estimate_type1', '1');
  				var vendor_type_id = get_vendor_type_id('vendor_type1', '1');
@@ -247,7 +248,7 @@ $(function(){
 						$.ajax({
 							type:'post',
 							url: base_url+'controller/vendor/dashboard/estimate/vendor_estimate_update.php',
-							data:{ estimate_id : estimate_id, estimate_type : estimate_type, vendor_type : vendor_type, estimate_type_id : estimate_type_id, vendor_type_id : vendor_type_id, basic_cost : basic_cost, non_recoverable_taxes : non_recoverable_taxes, service_charge : service_charge, other_charges : other_charges,service_tax_subtotal : service_tax_subtotal, discount : discount, our_commission : our_commission, tds : tds, net_total : net_total, roundoff : roundoff,remark : remark, invoice_id : invoice_id, payment_due_date : payment_due_date,invoice_url : invoice_url,purchase_date : purchase_date,reflections:reflections },
+							data:{ estimate_id : estimate_id, estimate_type : estimate_type, vendor_type : vendor_type, estimate_type_id : estimate_type_id, vendor_type_id : vendor_type_id, basic_cost : basic_cost, non_recoverable_taxes : non_recoverable_taxes, service_charge : service_charge, other_charges : other_charges,service_tax_subtotal : service_tax_subtotal, discount : discount, our_commission : our_commission, tds : tds, net_total : net_total, roundoff : roundoff,remark : remark, invoice_id : invoice_id, payment_due_date : payment_due_date,invoice_url : invoice_url,purchase_date : purchase_date,reflections:reflections , booking_type:booking_type},
 							success:function(result){
 								$('#btn_update_estimate').button('reset');
 								msg_alert(result);

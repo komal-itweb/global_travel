@@ -112,7 +112,7 @@ function values_load(id){
 		$("#value"+count).html(html);
 	}
 	else if(condition === "17"){
-		html = '<option value="">Select Value</option><option value="Online">Online</option><option value="Offline">Offline</option>';
+		html = '<option value="">Select Value</option><option value="Online">Online(18%)</option><option value="Offline 18">Offline(18%)</option><option value="Offline 12">Offline(12%)</option>';
 		$("#value"+count).html(html);
 	}
 	else if(condition === "1" || condition === "5" || condition === "6" || condition === "7" || condition === "12"){

@@ -48,7 +48,7 @@ else { $emp_name = $sq_emp['first_name'].' ' .$sq_emp['last_name']; }
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-offset-md-3 mg_tp_20" style="top:30px">
+      <div class="col-md-4 col-offset-md-3 mg_tp_10" style="top:10px">
         <div class="print_header_logo">
           <ul class="no-pad no-marg font_s_12 noType">
             <li><h3 class=" font_5 font_s_16 no-marg no-pad caps_text"><?php echo $app_name; ?></h3></li>
@@ -64,7 +64,7 @@ else { $emp_name = $sq_emp['first_name'].' ' .$sq_emp['last_name']; }
           <img src="<?= $admin_logo_url ?>" class="img-responsive mg_tp_10">
         </div>
       </div>
-      <div class="col-md-4 mg_tp_20" style="top:30px">
+      <div class="col-md-4 mg_tp_10" style="top:10px">
         <div class="print_header_contact text-right">
           <span class="title"><?php echo $sq_hotel['hotel_name']; ?></span><br>
           <p> <i class="fa fa-address-card" style="margin-right: 5px;"></i><?php echo $sq_hotel['hotel_address']; ?></p>
@@ -76,7 +76,7 @@ else { $emp_name = $sq_emp['first_name'].' ' .$sq_emp['last_name']; }
     </section>
 
     <!-- print-detail -->
-    <section class="print_sec main_block">
+    <section class="print_sec main_block" style="top:-10px;">
     <div class="section_heding">
         <h2>BOOKING DETAILS</h2>
         <div class="section_heding_img">
@@ -123,7 +123,7 @@ else { $emp_name = $sq_emp['first_name'].' ' .$sq_emp['last_name']; }
     </section>
 
     <!-- BOOKING -->
-    <section class="print_sec main_block">
+    <section class="print_sec main_block" style="margin-top:-20px;">
       <div class="row">
         
         <div class="col-md-6 mg_bt_10">
@@ -173,16 +173,16 @@ else { $emp_name = $sq_emp['first_name'].' ' .$sq_emp['last_name']; }
       </div>
     </section>
 <!--- other details --->
-    <section class="print_sec main_block">
+    <section class="print_sec main_block" style="margin-top:-40px;" >
       <div class="row">
-        <div class="col-md-12 mg_bt_10">
+        <div class="col-md-12 ">
         <span style="font-size:14px;font-weight:bold;">Other Details :</span><?= $sq_booking['other_comment'];?>
         </div>
       </div>
     </section>
     
     <!-- Terms and Conditions -->
-    <section class="print_sec main_block">
+    <section class="print_sec main_block" style="margin-top:-40px;">
       <div class="row">
         <div class="col-md-12">
           <div class="section_heding">

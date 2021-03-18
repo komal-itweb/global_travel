@@ -172,6 +172,7 @@ $(function(){
 				var payment_due_date_arr = new Array();
 				var invoice_url_arr = new Array();
 				var purchase_date_arr = new Array();
+				var booking_type_arr = new Array();
 				var branch_admin_id = $('#branch_admin_id1').val();
 			    var emp_id = $('#emp_id').val();
 				var purchase_sc = $('#purchase_sc').val();
@@ -196,6 +197,7 @@ $(function(){
 					var vendor_type = $('#vendor_type'+offset).val();
 					
 					var vendor_type_id = get_vendor_type_id(id, offset);
+					var booking_type =$('#booking_type'+offset).val();
 					var basic_cost = $('#basic_cost'+offset).val();
 					var non_recoverable_taxes = $('#non_recoverable_taxes'+offset).val();
 					var service_charge = $('#service_charge'+offset).val();
@@ -232,6 +234,7 @@ $(function(){
 
 					vendor_type_arr.push(vendor_type);
 					vendor_type_id_arr.push(vendor_type_id);
+					booking_type_arr.push(booking_type);
 					basic_cost_arr.push(basic_cost);
 					non_recoverable_taxes_arr.push(non_recoverable_taxes);
 					service_charge_arr.push(service_charge);
@@ -292,7 +295,7 @@ $(function(){
 	            $.ajax({
 	              type:'post',
 	              url: base_url+'controller/vendor/dashboard/estimate/vendor_estimate_save.php',
-	              data:{ estimate_type : estimate_type, estimate_type_id : estimate_type_id, vendor_type_arr : vendor_type_arr, vendor_type_id_arr : vendor_type_id_arr, basic_cost_arr : basic_cost_arr, non_recoverable_taxes_arr : non_recoverable_taxes_arr, service_charge_arr : service_charge_arr, other_charges_arr : other_charges_arr, service_tax_subtotal_arr : service_tax_subtotal_arr, discount_arr : discount_arr, our_commission_arr : our_commission_arr, tds_arr : tds_arr, net_total_arr : net_total_arr, roundoff_arr : roundoff_arr,remark_arr : remark_arr, invoice_id_arr : invoice_id_arr, payment_due_date_arr : payment_due_date_arr , invoice_url_arr : invoice_url_arr,purchase_date_arr : purchase_date_arr, branch_admin_id : branch_admin_id , emp_id : emp_id, reflections : reflections},
+	              data:{ estimate_type : estimate_type, estimate_type_id : estimate_type_id, vendor_type_arr : vendor_type_arr, vendor_type_id_arr : vendor_type_id_arr, booking_type_arr :booking_type_arr, basic_cost_arr : basic_cost_arr, non_recoverable_taxes_arr : non_recoverable_taxes_arr, service_charge_arr : service_charge_arr, other_charges_arr : other_charges_arr, service_tax_subtotal_arr : service_tax_subtotal_arr, discount_arr : discount_arr, our_commission_arr : our_commission_arr, tds_arr : tds_arr, net_total_arr : net_total_arr, roundoff_arr : roundoff_arr,remark_arr : remark_arr, invoice_id_arr : invoice_id_arr, payment_due_date_arr : payment_due_date_arr , invoice_url_arr : invoice_url_arr,purchase_date_arr : purchase_date_arr, branch_admin_id : branch_admin_id , emp_id : emp_id, reflections : reflections},
 	              success:function(result){
 	              	$('#btn_save_estimate').button('reset');
 	                msg_alert(result);

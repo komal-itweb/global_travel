@@ -155,7 +155,7 @@
 				<input type="text" name="booking_date" id="booking_date" placeholder="Booking Date" value="<?= date('d-m-Y') ?>" title="Booking Date" onchange="check_valid_date(this.id);get_auto_values('booking_date','basic_cost','payment_mode','service_charge','markup','save','true','service_charge','discount',true);">
 			</div>
 			<div class="col-md-2 col-sm-4 col-xs-12 mg_bt_10">
-				<select id="sup_id" name="sup_id" style="width:100%" title="Supplier" onchange="get_auto_values('booking_date','basic_cost','payment_mode','service_charge','markup','save','true','service_charge','discount',true);">
+				<select id="sup_id" name="sup_id" style="width:100%" title="Supplier" multiple>
 					<option value="">Select Supplier</option>
 					<?php 
 					$sq_sup = mysql_query("select * from ticket_vendor where active_flag='Active' ");

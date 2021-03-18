@@ -383,7 +383,7 @@ public function finance_update($sq_payment_info, $clearance_status1)
 			//////company's tax on credit card charges
 			$tax_charges = ($sq_credit_charges['tax_charges_in'] =='Flat') ? $sq_credit_charges['tax_on_credit_card_charges'] : ($company_card_charges * ($sq_credit_charges['tax_on_credit_card_charges']/100));
 			$finance_charges = $company_card_charges + $tax_charges;
-$finance_charges = number_format($finance_charges,2);
+			$finance_charges = number_format($finance_charges,2);
 			$credit_company_amount = $payment_old_value - $finance_charges;
 
 			//////Finance charges ledger///////
@@ -396,7 +396,7 @@ $finance_charges = number_format($finance_charges,2);
 			$ledger_particular = get_ledger_particular('By','Cash/Bank');
 			$gl_id = 231;
 			$payment_side = "Credit";
-			$clearance_status = ($payment_mode=="Cheque"||$payment_mode=="Credit Card") ? "Pending" : "";
+			$clearance_status = ($payment_mode=="Cheque" || $payment_mode=="Credit Card") ? "Pending" : "";
 			$transaction_master->transaction_save($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular, $gl_id,'', $payment_side, $clearance_status, $row_spec,$branch_admin_id,$ledger_particular,$type);
 			//////Credit company amount///////
 			$module_name = "Miscellaneous Booking";
@@ -408,7 +408,7 @@ $finance_charges = number_format($finance_charges,2);
 			$ledger_particular = get_ledger_particular('By','Cash/Bank');
 			$gl_id = $company_gl;
 			$payment_side = "Credit";
-			$clearance_status = ($payment_mode=="Cheque"||$payment_mode=="Credit Card") ? "Pending" : "";
+			$clearance_status = ($payment_mode=="Cheque" || $payment_mode=="Credit Card") ? "Pending" : "";
 			$transaction_master->transaction_save($module_name, $module_entry_id, $transaction_id, $payment_amount, $payment_date, $payment_particular, $gl_id,'', $payment_side, $clearance_status, $row_spec,$branch_admin_id,$ledger_particular,$type);
 		}
 		else{

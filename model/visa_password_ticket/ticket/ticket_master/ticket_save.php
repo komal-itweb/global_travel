@@ -30,6 +30,7 @@ public function ticket_master_save(){
 	$due_date = $_POST['due_date'];
 	$booking_date = $_POST['booking_date'];
 	$sup_id = $_POST['sup_id'];
+	$sup_id=implode(',',$sup_id);
 	$ticket_total_cost = $_POST['ticket_total_cost'];
 	$quotation_id = $_POST['quotation_id'];
 	$ticket_reissue = $_POST['ticket_reissue'];

@@ -33,26 +33,26 @@
                             <div class="col-md-3 col-sm-6 col-xs-12 mg_bt_10">
                             <small>&nbsp;</small>
                                 <label for="txt_hotel_expenses">Tour Amount</label>
-                                <input type="text" id="txt_hotel_expenses" name="txt_hotel_expenses" placeholder="Tour Amount" title="Tour Amount" onchange="validate_balance(this.id);calculate_tour_cost(this.id)" value="0">   
+                                <input type="text" id="txt_hotel_expenses" name="txt_hotel_expenses" placeholder="Tour Amount" title="Tour Amount" onchange="validate_balance(this.id);calculate_tour_cost(this.id);get_auto_values('txt_booking_date','txt_hotel_expenses','payment_mode','service_charge','markup','save','true','basic');" value="0">   
                             </div>
                             <div class="col-md-3 col-sm-6 col-xs-12 mg_bt_10">
                             <small>&nbsp;</small>
                                 <label for="txt_travel_total_expense1"> Travel Amount</label>
-                                <input type="text" id="txt_travel_total_expense1" name="txt_travel_total_expense1" onchange="validate_balance(this.id);calculate_tour_cost(this.id)" placeholder="Travel Cost" title="Travel Cost"  readonly/>
+                                <input type="text" id="txt_travel_total_expense1" name="txt_travel_total_expense1" onchange="validate_balance(this.id);calculate_tour_cost(this.id);" placeholder="Travel Cost" title="Travel Cost" readonly />
                             </div>
-                            <div class="col-md-3 col-sm-6 col-xs-12 mg_bt_10">
+                            <div class="col-md-3 col-sm-6 col-xs-12 mg_bt_10 hidden">
                               <small id="basic_show" style="color:#000000">&nbsp;</small>
                                 <label for="total_basic_amt">Basic Amount</label>
-                                <input type="text" id="total_basic_amt" class="text-right" name="total_basic_amt" onchange="calculate_tour_cost(this.id);get_auto_values('txt_booking_date','total_basic_amt','payment_mode','service_charge','markup','save','true','basic');validate_balance(this.id);" placeholder="Total Basic Cost" title="Total Basic Cost"  />
+                                <input type="text" id="total_basic_amt" class="text-right" name="total_basic_amt" onchange="calculate_tour_cost(this.id);validate_balance(this.id);" placeholder="Total Basic Cost" title="Total Basic Cost"  readonly/>
                             </div>
                             <div class="col-md-3 col-sm-6 col-xs-12 mg_bt_10">
                             <small id="service_show" style="color:#000000">&nbsp;</small>
                                 <label for="service_charge">Service Charge</label>
-                                <input type="text" id="service_charge" name="service_charge" placeholder="Service Charge" title="Service Charge" onchange="get_auto_values('txt_booking_date','total_basic_amt','payment_mode','service_charge','markup','save','false','service_charge','discount');validate_balance(this.id);calculate_tour_cost(this.id)">    
+                                <input type="text" id="service_charge" name="service_charge" placeholder="Service Charge" title="Service Charge" onchange="get_auto_values('txt_booking_date','txt_hotel_expenses','payment_mode','service_charge','markup','save','false','service_charge','discount');validate_balance(this.id);calculate_tour_cost(this.id)">    
                             </div>
                             <div class="col-md-3 col-sm-6 col-xs-12 mg_bt_10">
                                 <label for="txt_total_tour_cost">Subtotal</label>
-                                <input type="text" id="subtotal" name="subtotal" placeholder="Subtotal" title="Subtotal" value="0" onchange="validate_balance(this.id); calculate_total_tour_cost()" readonly>    
+                                <input type="text" id="subtotal" name="subtotal" placeholder="Subtotal" title="Subtotal" value="0" onchange="validate_balance(this.id); calculate_total_tour_cost();" readonly>    
                             </div>     <div class="col-md-3 col-sm-6 col-xs-12 mg_bt_10_xs">
                                 <label for="tour_service_tax_subtotal">Tax Subtotal</label>   
                                 <input type="text" id="tour_service_tax_subtotal" name="tour_service_tax_subtotal" value="0" readonly>
@@ -62,7 +62,7 @@
                                 <input type="text" name="roundoff" id="roundoff" class="text-right" placeholder="Round Off" title="RoundOff" onchange=" calculate_total_tour_cost()" readonly>
                             </div>
                             <div class="col-md-3 col-sm-6 col-xs-12">
-                                <label for="txt_actual_tour_cost1">Total Tour Amount</label>
+                                <label for="txt_actual_tour_cost1">Total Amount</label>
                                 <input type="hidden" id="subtotal_with_rue" name="subtotal_with_rue" disabled>
                                 <input type="text" id="txt_actual_tour_cost1" class="amount_feild_highlight text-right" name="txt_actual_tour_cost1" placeholder="Tour Amount" title="Tour Amount" readonly>
                             </div>
@@ -184,7 +184,7 @@
                                         <input type="text" id="txt_payment_date1" name="txt_payment_date1" placeholder="Date" value="<?php echo date('d-m-Y') ?>" title="Date" onchange="check_valid_date(this.id)"/>
                                     </div>
                                     <div class="col-md-2 col-sm-4 col-xs-12 text_center_xs mg_bt_10_xs mg_tp_10">
-                                        <select id="cmb_payment_mode1" name="cmb_payment_mode1" title="Mode" onchange="payment_installment_enable_disable_fields('1');get_auto_values('txt_booking_date','total_basic_amt','payment_mode','service_charge','markup','save','true','basic','discount',true);get_identifier_block('identifier','cmb_payment_mode1','credit_card_details','credit_charges');get_credit_card_charges('identifier','cmb_payment_mode1','txt_amount1','credit_card_details','credit_charges')"><?php get_payment_mode_dropdown(); ?>
+                                        <select id="cmb_payment_mode1" name="cmb_payment_mode1" title="Mode" onchange="payment_installment_enable_disable_fields('1');get_identifier_block('identifier','cmb_payment_mode1','credit_card_details','credit_charges');get_credit_card_charges('identifier','cmb_payment_mode1','txt_amount1','credit_card_details','credit_charges')"><?php get_payment_mode_dropdown(); ?>
                                         </select>
                                     </div>
                                    
@@ -296,7 +296,7 @@
                                 <input type="text" id="employee_name" name="employee_name" value="<?php echo $booker_name; ?>" placeholder="Employee Name" title="Employee Name" disabled/>
                             </div>
                             <div class="col-md-4 col-sm-6 col-xs-12 mg_bt_10_xs">
-                                <input type="text" id="txt_booking_date" name="txt_booking_date" placeholder="Booking Date" title="Booking Date" value="<?php echo date('d-m-Y') ?>" onchange="get_auto_values('txt_booking_date','total_basic_amt','payment_mode','service_charge','markup','save','true','service_charge','discount',true);check_valid_date(this.id)"/>
+                                <input type="text" id="txt_booking_date" name="txt_booking_date" placeholder="Booking Date" title="Booking Date" value="<?php echo date('d-m-Y') ?>" onchange="get_auto_values('txt_booking_date','txt_hotel_expenses','payment_mode','service_charge','markup','save','true','service_charge','discount',true);check_valid_date(this.id)"/>
                             </div>
                         </div>
                     </div>

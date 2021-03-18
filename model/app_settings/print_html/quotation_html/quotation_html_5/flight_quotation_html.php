@@ -144,16 +144,16 @@ else{
                 <table class="table tableTrnasp no-marg">
                   <thead>
                     <tr class="table-heading-row">
-                      <th>SECTOR FROM</th>
-                      <th>SECTOR TO</th>
-                      <th>Airline</th>
+                      <th style="font-size:15px !important;">SECTOR FROM</th>
+                      <th style="font-size:15px !important;">SECTOR TO</th>
+                      <th style="font-size:15px !important;">Airline</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td><?= $row_plane['from_location'] ?></td>
-                      <td><?= $row_plane['to_location'] ?></td>
-                      <td><?= $sq_airline['airline_name'].' ('.$sq_airline['airline_code'].')' ?></td>
+                      <td style="font-size:15px !important;"><?= $row_plane['from_location'] ?></td>
+                      <td style="font-size:15px !important;"><?= $row_plane['to_location'] ?></td>
+                      <td style="font-size:15px !important;"><?= $sq_airline['airline_name'].' ('.$sq_airline['airline_code'].')' ?></td>
                     </tr>
                   </tbody>
                 </table>
@@ -163,16 +163,16 @@ else{
                 <table class="table tableTrnasp no-marg">
                   <thead>
                     <tr class="table-heading-row">
-                      <th>Class</th>
-                      <th>Departure</th>
-                      <th>Arrival</th>
+                      <th style="font-size:15px !important;">Class</th>
+                      <th style="font-size:15px !important;">Departure</th>
+                      <th style="font-size:15px !important;">Arrival</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td><?= $row_plane['class'] ?></td>
-                      <td><?= date('d-m-Y H:i:s', strtotime($row_plane['dapart_time'])) ?></td>
-                      <td><?= date('d-m-Y H:i:s', strtotime($row_plane['arraval_time'])) ?></td>
+                      <td style="font-size:15px !important;"><?= $row_plane['class'] ?></td>
+                      <td style="font-size:15px !important;"><?= date('d-m-Y H:i:s', strtotime($row_plane['dapart_time'])) ?></td>
+                      <td style="font-size:15px !important;"><?= date('d-m-Y H:i:s', strtotime($row_plane['arraval_time'])) ?></td>
                     </tr>
                   </tbody>
                 </table>

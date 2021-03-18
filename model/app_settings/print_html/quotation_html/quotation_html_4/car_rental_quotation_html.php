@@ -148,30 +148,30 @@ else{
                 <table class="table no-marg tableTrnasp">
                   <thead>
                       <tr class="table-heading-row">
-                      <th>ROUTE</th>
+                      <th style="font-size:15px !important;">ROUTE</th>
                       <?php if($sq_quotation['travel_type']=='Local'){ ?>
-                      <th>FROM DATE</th>
-                      <th>TO DATE</th>
+                      <th style="font-size:15px !important;">FROM DATE</th>
+                      <th style="font-size:15px !important;">TO DATE</th>
                       <?php }else{ ?>
-                      <th>TRAVELING DATE</th>
+                      <th style="font-size:15px !important;">TRAVELING DATE</th>
                         <?php } ?>
-                      <!-- <th>VEHICLE TYPE</th>
-                      <th>TRIP TYPE</th> -->
-                      <th>NO OF VEHICLE</th>
+                      <!-- <th style="font-size:15px !important;">VEHICLE TYPE</th>
+                      <th style="font-size:15px !important;">TRIP TYPE</th> -->
+                      <th style="font-size:15px !important;">NO OF VEHICLE</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                    <td><?= ($sq_quotation['travel_type']=='Outstation')? $sq_quotation['places_to_visit']:$sq_quotation['local_places_to_visit'] ?></td>
+                    <td style="font-size:15px !important;"><?= ($sq_quotation['travel_type']=='Outstation')? $sq_quotation['places_to_visit']:$sq_quotation['local_places_to_visit'] ?></td>
                     <?php if($sq_quotation['travel_type']=='Local'){ ?>
-                    <td><?= get_datetime_user($sq_quotation['from_date']) ?></td>
-                    <td><?= get_datetime_user($sq_quotation['to_date']) ?></td>
+                    <td style="font-size:15px !important;"><?= get_datetime_user($sq_quotation['from_date']) ?></td>
+                    <td style="font-size:15px !important;"><?= get_datetime_user($sq_quotation['to_date']) ?></td>
                     <?php }else{ ?>
-                      <td><?= get_datetime_user($sq_quotation['traveling_date']) ?></td>
+                      <td style="font-size:15px !important;"><?= get_datetime_user($sq_quotation['traveling_date']) ?></td>
                     <?php } ?>
-                    <!-- <td><?= $sq_quotation['vehicle_type'] ?></td>
-                    <td><?= $sq_quotation['trip_type'] ?></td> -->
-                    <td><?=  $no_of_car ?></td>
+                    <!-- <td style="font-size:15px !important;"><?= $sq_quotation['vehicle_type'] ?></td>
+                    <td style="font-size:15px !important;"><?= $sq_quotation['trip_type'] ?></td> -->
+                    <td style="font-size:15px !important;"><?=  $no_of_car ?></td>
                   </tr>
                   </tbody>
                 </table>
@@ -181,20 +181,20 @@ else{
                 <table class="table no-marg tableTrnasp">
                   <thead>
                     <tr class="table-heading-row">
-                      <th>VEHICLE NAME</th>
-                      <!-- <th>PLACES TO VISIT</th> -->
-                      <!-- <th>DAILY KM</th> -->
-                      <th>EXTRA KM COST</th>
-                      <th>EXTRA HR COST</th>
+                      <th style="font-size:15px !important;">VEHICLE NAME</th>
+                      <!-- <th style="font-size:15px !important;">PLACES TO VISIT</th> -->
+                      <!-- <th style="font-size:15px !important;">DAILY KM</th> -->
+                      <th style="font-size:15px !important;">EXTRA KM COST</th>
+                      <th style="font-size:15px !important;">EXTRA HR COST</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td><?= $sq_quotation['vehicle_name'] ?></td>
-                      <!-- <td><?= $sq_quotation['places_to_visit'] ?></td> -->
-                      <!-- <td><?= $sq_quotation['daily_km'] ?></td> -->
-                      <td><?= $sq_quotation['extra_km_cost'] ?></td>
-                      <td><?= $sq_quotation['extra_hr_cost'] ?></td>
+                      <td style="font-size:15px !important;"><?= $sq_quotation['vehicle_name'] ?></td>
+                      <!-- <td style="font-size:15px !important;"><?= $sq_quotation['places_to_visit'] ?></td> -->
+                      <!-- <td style="font-size:15px !important;"><?= $sq_quotation['daily_km'] ?></td> -->
+                      <td style="font-size:15px !important;"><?= $sq_quotation['extra_km_cost'] ?></td>
+                      <td style="font-size:15px !important;"><?= $sq_quotation['extra_hr_cost'] ?></td>
                     </tr>
                   </tbody>
                 </table>

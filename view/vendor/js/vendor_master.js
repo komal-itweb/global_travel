@@ -13,10 +13,10 @@ function get_supplier_costing(estimate_type_id,estimate_type,for_id)
     $('#'+for_id).val(data);
   });
 }
-function vendor_type_data_load(vendor_type, for_id, offset='', vendor_type_id='',page='other')
+function vendor_type_data_load(vendor_type, for_id, offset='', vendor_type_id='',page='other',booking_type='')
 {
   var base_url = $('#base_url').val();
-  $.post(base_url+'view/vendor/inc/vendor_type_data_load.php', { vendor_type : vendor_type, offset : offset, vendor_type_id : vendor_type_id ,page: page}, function(data){
+  $.post(base_url+'view/vendor/inc/vendor_type_data_load.php', { vendor_type : vendor_type, offset : offset, vendor_type_id : vendor_type_id ,page: page,booking_type :booking_type}, function(data){
     $('#'+for_id).html(data);   
   });
 }

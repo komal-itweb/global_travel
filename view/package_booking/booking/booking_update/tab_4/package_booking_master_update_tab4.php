@@ -58,7 +58,7 @@
                         <div class="main_block text-center">
                             <div class="col-md-3 col-sm-6 col-xs-12 mg_bt_10">
                                 <label for="txt_hotel_expenses">Tour Amount</label>
-                                <input type="text" id="txt_hotel_expenses" name="txt_hotel_expenses" placeholder="Tour Amount" title="Tour Amount" value="<?php echo $sq_booking_info['total_hotel_expense']; ?>" onchange="validate_balance(this.id);calculate_tour_cost(this.id)">
+                                <input type="text" id="txt_hotel_expenses" name="txt_hotel_expenses" placeholder="Tour Amount" title="Tour Amount" value="<?php echo $sq_booking_info['total_hotel_expense']; ?>" onchange="validate_balance(this.id);calculate_tour_cost(this.id);get_auto_values('booking_date','txt_hotel_expenses','payment_mode','service_charge','markup','update','true','basic','basic',true);">
                             </div>
                             <div class="col-md-3 col-sm-6 col-xs-12 mg_bt_10_xs">
                                 <label for="txt_travel_total_expense1">Travel Amount</label>
@@ -67,12 +67,12 @@
                             <div class="col-md-3 col-sm-6 col-xs-12 mg_bt_10">
                             <small id="basic_show" style="color:#000000"><?= ($inclusive_b == '') ? '&nbsp;' : 'Inclusive Amount : <span>'.$inclusive_b ?></span></small>
                                 <label for="total_basic_amt">Basic Amount</label>
-                                <input type="text" id="total_basic_amt" class="text-right" name="total_basic_amt" onchange="get_auto_values('booking_date','total_basic_amt','payment_mode','service_charge','markup','update','true','basic','basic',true);validate_balance(this.id);" placeholder="Total Basic Cost" title="Total Basic Cost" value="<?= $basic_cost ?>" readonly />
+                                <input type="text" id="total_basic_amt" class="text-right" name="total_basic_amt" onchange="validate_balance(this.id);" placeholder="Total Basic Cost" title="Total Basic Cost" value="<?= $basic_cost ?>" readonly />
                             </div>
                             <div class="col-md-3 col-sm-6 col-xs-12 mg_bt_10">
                                 <small id="service_show" style="color:#000000"><?= ($inclusive_s == '') ? '&nbsp;' : 'Inclusive Amount : <span>'.$inclusive_s ?></span></small>
                                 <label for="service_charge">Service Charge</label>
-                                <input type="text" id="service_charge" name="service_charge" placeholder="Service Charge" title="Service Charge" value="<?= $service_charge ?>" onchange=" get_auto_values('booking_date','total_basic_amt','payment_mode','service_charge','markup','update','false','service_charge','discount');validate_balance(this.id);calculate_tour_cost(this.id)">
+                                <input type="text" id="service_charge" name="service_charge" placeholder="Service Charge" title="Service Charge" value="<?= $service_charge ?>" onchange=" get_auto_values('booking_date','txt_hotel_expenses','payment_mode','service_charge','markup','update','false','service_charge','discount');validate_balance(this.id);calculate_tour_cost(this.id)">
                             </div>
                             <div class="col-md-3 col-sm-6 col-xs-12 mg_bt_10">
                             <small>&nbsp;</small>

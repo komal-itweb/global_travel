@@ -5,6 +5,7 @@ $vendor_type = $_POST['vendor_type'];
 $offset = $_POST['offset'];
 $vendor_type_id = $_POST['vendor_type_id'];
 $page = $_POST['page'];
+$booking_type = $_POST['booking_type'];
 
 if($vendor_type=="Hotel Vendor"){
 ?>
@@ -31,6 +32,24 @@ if($vendor_type=="Hotel Vendor"){
 		}
 		?>
 	</select>
+</div>
+<div class="col-sm-3 col-xs-12 mg_bt_10_sm_xs">
+	<select name="booking_type<?= $offset ?>" id="booking_type<?= $offset ?>" class="customer_dropdown" style="width:100%" title="Booking Type" onchange="<?php echo ($page=='estimate') ? 'brule_for_one(this.id)' : ''; ?>">
+	<?php if($booking_type==''){?>
+		<option value="">*Select Booking Type</option>
+			
+	<?php	}
+		else {?>
+		<option value="<?= $booking_type?>"><?=$booking_type?></option>
+		<?php
+		}
+		?>
+		<option value="Online">Online(18%)</option>
+		<option value="Offline 18">Offline(18%)</option>
+		<option value="Offline 12">Offline(12%)</option>
+	
+	</select>
+
 </div>
 <input type="hidden" id="state_id<?= $offset ?>">
 <script>
@@ -64,6 +83,15 @@ if($vendor_type=="Transport Vendor"){
 		?>
 	</select>
 </div>
+<div class="col-sm-3 col-xs-12 mg_bt_10_sm_xs hidden">
+	<select name="booking_type<?= $offset ?>" id="booking_type<?= $offset ?>" class="customer_dropdown" style="width:100%" title="Booking Type" onchange="<?php echo ($page=='estimate') ? 'brule_for_one(this.id)' : ''; ?>">
+		<option value="">*Select Booking Type</option>
+		<option value="Online">Online(18%)</option>
+		<option value="Offline 18">Offline(18%)</option>
+		<option value="Offline 12">Offline(12%)</option>
+	</select>
+
+</div>
 <script>
 $('#transport_agency_id<?= $offset ?>').select2();
 </script>
@@ -96,6 +124,15 @@ if($vendor_type=="Car Rental Vendor"){
 			}
 		?>
 	</select>
+</div>
+<div class="col-sm-3 col-xs-12 mg_bt_10_sm_xs hidden">
+	<select name="booking_type<?= $offset ?>" id="booking_type<?= $offset ?>" class="customer_dropdown" style="width:100%" title="Booking Type" onchange="<?php echo ($page=='estimate') ? 'brule_for_one(this.id)' : ''; ?>">
+		<option value="">*Select Booking Type</option>
+		<option value="Online">Online(18%)</option>
+		<option value="Offline 18">Offline(18%)</option>
+		<option value="Offline 12">Offline(12%)</option>
+	</select>
+
 </div>
 <script>
 $('#vendor_id<?= $offset ?>').select2();
@@ -131,6 +168,24 @@ if($vendor_type=="DMC Vendor"){
 		?>
 	</select>
 </div>
+<div class="col-sm-3 col-xs-12 mg_bt_10_sm_xs">
+	<select name="booking_type<?= $offset ?>" id="booking_type<?= $offset ?>" class="customer_dropdown" style="width:100%" title="Booking Type" onchange="<?php echo ($page=='estimate') ? 'brule_for_one(this.id)' : ''; ?>">
+	<?php if($booking_type==''){?>
+		<option value="">*Select Booking Type</option>
+			
+	<?php	}
+		else {?>
+		<option value="<?= $booking_type?>"><?=$booking_type?></option>
+		<?php
+		}
+		?>
+		<option value="Online">Online(18%)</option>
+		<option value="Offline 18">Offline(18%)</option>
+		<option value="Offline 12">Offline(12%)</option>
+	</select>
+
+</div>
+
 <script>
 $('#dmc_id<?= $offset ?>').select2();
 </script>
@@ -164,6 +219,15 @@ if($vendor_type=="Visa Vendor"){
 			}
 		?>
 	</select>
+</div>
+<div class="col-sm-3 col-xs-12 mg_bt_10_sm_xs hidden">
+	<select name="booking_type<?= $offset ?>" id="booking_type<?= $offset ?>" class="customer_dropdown" style="width:100%" title="Booking Type" onchange="<?php echo ($page=='estimate') ? 'brule_for_one(this.id)' : ''; ?>">
+		<option value="">*Select Booking Type</option>
+		<option value="Online">Online(18%)</option>
+		<option value="Offline 18">Offline(18%)</option>
+		<option value="Offline 12">Offline(12%)</option>
+	</select>
+
 </div>
 <script>
 $('#vendor_id<?= $offset ?>').select2();
@@ -199,6 +263,15 @@ if($vendor_type=="Passport Vendor"){
 		?>
 	</select>
 </div>
+<div class="col-sm-3 col-xs-12 mg_bt_10_sm_xs hidden">
+	<select name="booking_type<?= $offset ?>" id="booking_type<?= $offset ?>" class="customer_dropdown" style="width:100%" title="Booking Type" onchange="<?php echo ($page=='estimate') ? 'brule_for_one(this.id)' : ''; ?>">
+		<option value="">*Select Booking Type</option>
+		<option value="Online">Online(18%)</option>
+		<option value="Offline 18">Offline(18%)</option>
+		<option value="Offline 12">Offline(12%)</option>
+	</select>
+
+</div>
 <script>
 $('#vendor_id<?= $offset ?>').select2();
 </script>
@@ -232,6 +305,15 @@ if($vendor_type=="Ticket Vendor"){
 			}
 		?>
 	</select>
+</div>
+<div class="col-sm-3 col-xs-12 mg_bt_10_sm_xs hidden">
+	<select name="booking_type<?= $offset ?>" id="booking_type<?= $offset ?>" class="customer_dropdown" style="width:100%" title="Booking Type" onchange="<?php echo ($page=='estimate') ? 'brule_for_one(this.id)' : ''; ?>">
+		<option value="">*Select Booking Type</option>
+		<option value="Online">Online(18%)</option>
+		<option value="Offline 18">Offline(18%)</option>
+		<option value="Offline 12">Offline(12%)</option>
+	</select>
+
 </div>
 <script>
 $('#vendor_id<?= $offset ?>').select2();
@@ -267,6 +349,15 @@ if($vendor_type=="Train Ticket Vendor"){
 		?>
 	</select>
 </div>
+<div class="col-sm-3 col-xs-12 mg_bt_10_sm_xs hidden">
+	<select name="booking_type<?= $offset ?>" id="booking_type<?= $offset ?>" class="customer_dropdown" style="width:100%" title="Booking Type" onchange="<?php echo ($page=='estimate') ? 'brule_for_one(this.id)' : ''; ?>">
+		<option value="">*Select Booking Type</option>
+		<option value="Online">Online(18%)</option>
+		<option value="Offline 18">Offline(18%)</option>
+		<option value="Offline 12">Offline(12%)</option>
+	</select>
+
+</div>
 <script>
 $('#vendor_id<?= $offset ?>').select2();
 </script>
@@ -301,6 +392,15 @@ if($vendor_type=="Excursion Vendor"){
 		?>
 	</select>
 </div>
+<div class="col-sm-3 col-xs-12 mg_bt_10_sm_xs hidden">
+	<select name="booking_type<?= $offset ?>" id="booking_type<?= $offset ?>" class="customer_dropdown" style="width:100%" title="Booking Type" onchange="<?php echo ($page=='estimate') ? 'brule_for_one(this.id)' : ''; ?>">
+		<option value="">*Select Booking Type</option>
+		<option value="Online">Online(18%)</option>
+		<option value="Offline 18">Offline(18%)</option>
+		<option value="Offline 12">Offline(12%)</option>
+	</select>
+
+</div>
 <script>
 $('#vendor_id<?= $offset ?>').select2();
 </script>
@@ -334,6 +434,15 @@ if($vendor_type=="Insurance Vendor"){
 			}
 		?>
 	</select>
+</div>
+<div class="col-sm-3 col-xs-12 mg_bt_10_sm_xs hidden">
+	<select name="booking_type<?= $offset ?>" id="booking_type<?= $offset ?>" class="customer_dropdown" style="width:100%" title="Booking Type" onchange="<?php echo ($page=='estimate') ? 'brule_for_one(this.id)' : ''; ?>">
+		<option value="">*Select Booking Type</option>
+		<option value="Online">Online(18%)</option>
+		<option value="Offline 18">Offline(18%)</option>
+		<option value="Offline 12">Offline(12%)</option>
+	</select>
+
 </div>
 <script>
 $('#vendor_id<?= $offset ?>').select2();
@@ -435,6 +544,15 @@ if($vendor_type=="Cruise Vendor"){
 		}
 		?>
 	</select>
+</div>
+<div class="col-sm-3 col-xs-12 mg_bt_10_sm_xs hidden">
+	<select name="booking_type<?= $offset ?>" id="booking_type<?= $offset ?>" class="customer_dropdown" style="width:100%" title="Booking Type" onchange="<?php echo ($page=='estimate') ? 'brule_for_one(this.id)' : ''; ?>">
+		<option value="">*Select Booking Type</option>
+		<option value="Online">Online(18%)</option>
+		<option value="Offline 18">Offline(18%)</option>
+		<option value="Offline 12">Offline(12%)</option>
+	</select>
+
 </div>
 <script>
 $('#cruise_id<?= $offset ?>').select2();
